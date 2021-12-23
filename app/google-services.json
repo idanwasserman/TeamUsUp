@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "667405309929",
+    "project_id": "team-us-up",
+    "storage_bucket": "team-us-up.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:667405309929:android:b6bb3f2861fe3d158b1d78",
+        "android_client_info": {
+          "package_name": "com.idan.teamusup"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "667405309929-qqquhrvadqmslcq70485th0ks7qbrkio.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCUkaByAdnC8ohNSmUF-vSC--77xztSvak"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "667405309929-qqquhrvadqmslcq70485th0ks7qbrkio.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

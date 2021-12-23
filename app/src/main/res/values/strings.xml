@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">Team Us Up</string>
+    <string name="cancel">cancel</string>
+    <string name="submit">submit</string>
+
+
+    <!-- Facebook application ID and custom URL scheme (app ID prefixed by 'fb'). -->
+
+    <string name="facebook_app_id">675992037099670</string>
+    <string name="fb_login_protocol_scheme">fb675992037099670</string>
+
+    <string name="facebook_application_id" translatable="false">675992037099670</string>
+    <string name="facebook_login_protocol_scheme" translatable="false">fb675992037099670</string>
+
 </resources>
