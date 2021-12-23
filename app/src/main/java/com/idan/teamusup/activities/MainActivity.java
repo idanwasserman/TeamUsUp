@@ -1,5 +1,6 @@
 package com.idan.teamusup.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -20,12 +21,6 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mFirebaseAuth;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
 
-    List<AuthUI.IdpConfig> providers = Arrays.asList(
-            new AuthUI.IdpConfig.FacebookBuilder().build(), // Facebook builder
-            new AuthUI.IdpConfig.GoogleBuilder().build(),   // Google builder
-            new AuthUI.IdpConfig.EmailBuilder().build(),    // Email builder
-            new AuthUI.IdpConfig.PhoneBuilder().build()     // Phone builder
-    );
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
                         AuthUI.getInstance()
                                 .createSignInIntentBuilder()
                                 .setIsSmartLockEnabled(false)
-                                .setAvailableProviders(providers)
+                                .setAvailableProviders(getProviders())
                                 .setLogo(R.drawable.icn_logo).setTheme(R.style.Theme)
                                 .build(),
                         RC_SIGN_IN
@@ -59,6 +54,17 @@ public class MainActivity extends AppCompatActivity {
 
             }
         };
+    }
+
+    @NonNull
+    private List<AuthUI.IdpConfig> getProviders() {
+        final List<AuthUI.IdpConfig> providers = Arrays.asList(
+                new AuthUI.IdpConfig.FacebookBuilder().build(), // Facebook builder
+                new AuthUI.IdpConfig.GoogleBuilder().build(),   // Google builder
+                new AuthUI.IdpConfig.EmailBuilder().build(),    // Email builder
+                new AuthUI.IdpConfig.PhoneBuilder().build()     // Phone builder
+        );
+        return providers;
     }
 
     @Override
