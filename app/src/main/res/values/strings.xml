@@ -38,5 +38,7 @@
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="under_construction">Under Construction</string>
+    <string name="cancel">Cancel</string>
+    <string name="welcome_back">Welcome back</string>
 
 </resources>

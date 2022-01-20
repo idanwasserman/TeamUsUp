@@ -1,4 +1,4 @@
-package com.idan.teamusup.data;
+package com.idan.teamusup.services;
 
 import android.content.Context;
 import android.content.SharedPreferences;

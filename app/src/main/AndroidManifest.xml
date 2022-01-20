@@ -33,9 +33,6 @@
             android:name=".activities.Activity_Home"
             android:exported="false"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".activities.Activity_AddPlayerManually"
-            android:exported="false" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

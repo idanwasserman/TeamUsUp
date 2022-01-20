@@ -53,12 +53,12 @@ public class Activity_Login extends AppCompatActivity {
 
     final ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(), result -> {
-                if (result.getResultCode() == Activity.RESULT_OK) {
-                    openDataLoadingActivity();
-                } else {
-                    Log.d(TAG, "Login result is not OK!");
-                }
-            });
+        if (result.getResultCode() == Activity.RESULT_OK) {
+            openDataLoadingActivity();
+        } else {
+            Log.d(TAG, "Login result is not OK!");
+        }
+    });
 
     private void openDataLoadingActivity() {
         startActivity(new Intent(getApplicationContext(), Activity_DataLoading.class));
