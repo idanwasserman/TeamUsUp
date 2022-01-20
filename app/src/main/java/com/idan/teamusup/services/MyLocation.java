@@ -1,4 +1,4 @@
-package com.idan.teamusup.logic;
+package com.idan.teamusup.services;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -19,7 +19,6 @@ import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
-import com.idan.teamusup.logic.interfaces.CallBack_Location;
 
 
 public class MyLocation {
@@ -129,6 +128,10 @@ public class MyLocation {
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
                 ||
                 locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+    }
+
+    public interface CallBack_Location {
+        void setLocation(double lat, double lng);
     }
 
 }
