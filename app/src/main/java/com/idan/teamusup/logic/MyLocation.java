@@ -19,28 +19,36 @@ import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
-import com.idan.teamusup.logic.callBacks.CallBack_Location;
+import com.idan.teamusup.logic.interfaces.CallBack_Location;
 
 
 public class MyLocation {
 
-    private static final String TAG = "MyLocation_TAG";
     private static final int PERMISSION_ID = 44;
 
-    private AppCompatActivity activity;
+    private static MyLocation instance;
+    private final AppCompatActivity activity;
 
     private FusedLocationProviderClient locationProvider;
-    private CallBack_Location callBack_location;
     private double lat, lng;
 
-    public MyLocation(AppCompatActivity activity, CallBack_Location callBack_location) {
+    public static MyLocation getInstance() {
+        return instance;
+    }
+
+    public static void init(AppCompatActivity activity) {
+        if (instance == null) {
+            instance = new MyLocation(activity);
+        }
+    }
+
+    private MyLocation(AppCompatActivity activity) {
         this.activity = activity;
-        this.callBack_location = callBack_location;
         locationProvider = LocationServices.getFusedLocationProviderClient(activity);
     }
 
     @SuppressLint("MissingPermission")
-    public void getLastLocation() {
+    public void getLastLocation(CallBack_Location callBack_location) {
         // check if permissions are given
         if (checkPermissions()) {
 
@@ -59,7 +67,7 @@ public class MyLocation {
                     }
                 });
             } else {
-                Toast.makeText(activity, "Please turn on" + " your location...", Toast.LENGTH_LONG).show();
+                Toast.makeText(activity, "Please turn on your location...", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
                 activity.startActivity(intent);
             }
@@ -72,19 +80,18 @@ public class MyLocation {
     @SuppressLint("MissingPermission")
     private void requestNewLocationData() {
         // Initializing LocationRequest object with appropriate methods
-        LocationRequest locationRequest = new LocationRequest();
-        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        locationRequest.setInterval(5);
-        locationRequest.setFastestInterval(0);
-        locationRequest.setNumUpdates(1);
+        LocationRequest locationRequest = LocationRequest.create()
+                .setInterval(100)
+                .setFastestInterval(3000)
+                .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
+                .setMaxWaitTime(100);
 
         // setting LocationRequest on FusedLocationClient
         locationProvider = LocationServices.getFusedLocationProviderClient(activity);
         locationProvider.requestLocationUpdates(locationRequest, locationCallback, Looper.myLooper());
     }
 
-    private LocationCallback locationCallback = new LocationCallback() {
-
+    private final LocationCallback locationCallback = new LocationCallback() {
         @Override
         public void onLocationResult(LocationResult locationResult) {
             Location mLastLocation = locationResult.getLastLocation();
@@ -103,9 +110,6 @@ public class MyLocation {
                 ActivityCompat.checkSelfPermission(
                         activity,
                         Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
-
-        // If we want background location on Android 10.0 and higher, use:
-        // ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_BACKGROUND_LOCATION) == PackageManager.PERMISSION_GRANTED
     }
 
     // method to request for permissions
