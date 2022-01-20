@@ -6,34 +6,52 @@
         <entry key="..\:/Users/idan2/AndroidStudioProjects/TeamUsUp/app/src/main/res/drawable-v24/icn_text_format.xml" value="0.2557291666666667" />
         <entry key="..\:/Users/idan2/AndroidStudioProjects/TeamUsUp/app/src/main/res/drawable-v24/plus.xml" value="0.2604166666666667" />
         <entry key="..\:/Users/idan2/AndroidStudioProjects/TeamUsUp/app/src/main/res/drawable/ic_launcher_background.xml" value="0.3828125" />
+        <entry key="..\:/Users/idan2/AndroidStudioProjects/TeamUsUp/app/src/main/res/drawable/icn_bin.xml" value="0.2994791666666667" />
         <entry key="..\:/Users/idan2/AndroidStudioProjects/TeamUsUp/app/src/main/res/drawable/icn_blue_plus.xml" value="0.3078125" />
+        <entry key="..\:/Users/idan2/AndroidStudioProjects/TeamUsUp/app/src/main/res/drawable/icn_edit.xml" value="0.2994791666666667" />
+        <entry key="..\:/Users/idan2/AndroidStudioProjects/TeamUsUp/app/src/main/res/drawable/icn_friends.xml" value="0.2994791666666667" />
+        <entry key="..\:/Users/idan2/AndroidStudioProjects/TeamUsUp/app/src/main/res/drawable/icn_information.xml" value="0.3828125" />
+        <entry key="..\:/Users/idan2/AndroidStudioProjects/TeamUsUp/app/src/main/res/drawable/icn_level.xml" value="0.2994791666666667" />
         <entry key="..\:/Users/idan2/AndroidStudioProjects/TeamUsUp/app/src/main/res/drawable/icn_location.xml" value="0.2677083333333333" />
         <entry key="..\:/Users/idan2/AndroidStudioProjects/TeamUsUp/app/src/main/res/drawable/icn_logo.xml" value="0.38796296296296295" />
         <entry key="..\:/Users/idan2/AndroidStudioProjects/TeamUsUp/app/src/main/res/drawable/icn_manual_click.xml" value="0.2557291666666667" />
         <entry key="..\:/Users/idan2/AndroidStudioProjects/TeamUsUp/app/src/main/res/drawable/icn_menu.xml" value="0.1734375" />
         <entry key="..\:/Users/idan2/AndroidStudioProjects/TeamUsUp/app/src/main/res/drawable/icn_red_plus.xml" value="0.3078125" />
+        <entry key="..\:/Users/idan2/AndroidStudioProjects/TeamUsUp/app/src/main/res/drawable/icn_settings.xml" value="0.3828125" />
         <entry key="..\:/Users/idan2/AndroidStudioProjects/TeamUsUp/app/src/main/res/drawable/icn_soccer_ball.xml" value="0.3828125" />
+        <entry key="..\:/Users/idan2/AndroidStudioProjects/TeamUsUp/app/src/main/res/drawable/icn_support.xml" value="0.3828125" />
         <entry key="..\:/Users/idan2/AndroidStudioProjects/TeamUsUp/app/src/main/res/drawable/icn_text_format.xml" value="0.2557291666666667" />
+        <entry key="..\:/Users/idan2/AndroidStudioProjects/TeamUsUp/app/src/main/res/drawable/icn_tournament.xml" value="0.3828125" />
         <entry key="..\:/Users/idan2/AndroidStudioProjects/TeamUsUp/app/src/main/res/drawable/icn_user.xml" value="0.3072916666666667" />
         <entry key="..\:/Users/idan2/AndroidStudioProjects/TeamUsUp/app/src/main/res/drawable/plus.xml" value="0.2604166666666667" />
+        <entry key="..\:/Users/idan2/AndroidStudioProjects/TeamUsUp/app/src/main/res/layout/activity_add_player_manually.xml" value="0.264" />
         <entry key="..\:/Users/idan2/AndroidStudioProjects/TeamUsUp/app/src/main/res/layout/activity_add_players.xml" value="0.264" />
+        <entry key="..\:/Users/idan2/AndroidStudioProjects/TeamUsUp/app/src/main/res/layout/activity_data_loading.xml" value="0.27708333333333335" />
         <entry key="..\:/Users/idan2/AndroidStudioProjects/TeamUsUp/app/src/main/res/layout/activity_game.xml" value="0.27708333333333335" />
         <entry key="..\:/Users/idan2/AndroidStudioProjects/TeamUsUp/app/src/main/res/layout/activity_home.xml" value="0.264" />
         <entry key="..\:/Users/idan2/AndroidStudioProjects/TeamUsUp/app/src/main/res/layout/activity_main.xml" value="0.264" />
+        <entry key="..\:/Users/idan2/AndroidStudioProjects/TeamUsUp/app/src/main/res/layout/activity_new_game.xml" value="0.264" />
         <entry key="..\:/Users/idan2/AndroidStudioProjects/TeamUsUp/app/src/main/res/layout/activity_sign_in.xml" value="0.21979166666666666" />
+        <entry key="..\:/Users/idan2/AndroidStudioProjects/TeamUsUp/app/src/main/res/layout/dialog_add_player_manually.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/idan2/AndroidStudioProjects/TeamUsUp/app/src/main/res/layout/dialog_start_game.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/idan2/AndroidStudioProjects/TeamUsUp/app/src/main/res/layout/dialog_start_game_form.xml" value="0.264" />
         <entry key="..\:/Users/idan2/AndroidStudioProjects/TeamUsUp/app/src/main/res/layout/dialog_verify_popup.xml" value="0.264" />
         <entry key="..\:/Users/idan2/AndroidStudioProjects/TeamUsUp/app/src/main/res/layout/fragment__profile.xml" value="0.23645833333333333" />
+        <entry key="..\:/Users/idan2/AndroidStudioProjects/TeamUsUp/app/src/main/res/layout/fragment_about_us.xml" value="0.27239583333333334" />
+        <entry key="..\:/Users/idan2/AndroidStudioProjects/TeamUsUp/app/src/main/res/layout/fragment_add_manually.xml" value="0.32323232323232326" />
         <entry key="..\:/Users/idan2/AndroidStudioProjects/TeamUsUp/app/src/main/res/layout/fragment_find_players.xml" value="0.278125" />
+        <entry key="..\:/Users/idan2/AndroidStudioProjects/TeamUsUp/app/src/main/res/layout/fragment_friends.xml" value="0.4314868804664723" />
         <entry key="..\:/Users/idan2/AndroidStudioProjects/TeamUsUp/app/src/main/res/layout/fragment_game_stats.xml" value="0.4" />
+        <entry key="..\:/Users/idan2/AndroidStudioProjects/TeamUsUp/app/src/main/res/layout/fragment_games.xml" value="0.3015625" />
         <entry key="..\:/Users/idan2/AndroidStudioProjects/TeamUsUp/app/src/main/res/layout/fragment_map.xml" value="0.278125" />
         <entry key="..\:/Users/idan2/AndroidStudioProjects/TeamUsUp/app/src/main/res/layout/fragment_profile.xml" value="0.25052083333333336" />
         <entry key="..\:/Users/idan2/AndroidStudioProjects/TeamUsUp/app/src/main/res/layout/fragment_searching.xml" value="0.26927083333333335" />
         <entry key="..\:/Users/idan2/AndroidStudioProjects/TeamUsUp/app/src/main/res/layout/fragment_settings.xml" value="0.25052083333333336" />
-        <entry key="..\:/Users/idan2/AndroidStudioProjects/TeamUsUp/app/src/main/res/layout/fragment_team.xml" value="0.27708333333333335" />
+        <entry key="..\:/Users/idan2/AndroidStudioProjects/TeamUsUp/app/src/main/res/layout/fragment_support.xml" value="0.27239583333333334" />
+        <entry key="..\:/Users/idan2/AndroidStudioProjects/TeamUsUp/app/src/main/res/layout/fragment_team.xml" value="0.1" />
         <entry key="..\:/Users/idan2/AndroidStudioProjects/TeamUsUp/app/src/main/res/layout/layout_navigation_header.xml" value="0.264" />
-        <entry key="..\:/Users/idan2/AndroidStudioProjects/TeamUsUp/app/src/main/res/layout/list_player.xml" value="0.8" />
+        <entry key="..\:/Users/idan2/AndroidStudioProjects/TeamUsUp/app/src/main/res/layout/list_game.xml" value="0.8" />
+        <entry key="..\:/Users/idan2/AndroidStudioProjects/TeamUsUp/app/src/main/res/layout/list_player.xml" value="0.6" />
         <entry key="..\:/Users/idan2/AndroidStudioProjects/TeamUsUp/app/src/main/res/layout/verify_popup.xml" value="0.26927083333333335" />
         <entry key="..\:/Users/idan2/AndroidStudioProjects/TeamUsUp/app/src/main/res/menu/navigation_menu.xml" value="0.264" />
       </map>

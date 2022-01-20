@@ -40,7 +40,7 @@ public class Activity_Login extends AppCompatActivity {
 
         if (this.user != null) {
             // if the user is already authenticated then we will redirect to Home Page
-            openHomeActivity();
+            openDataLoadingActivity();
         } else {
             this.activityResultLauncher.launch(AuthUI.getInstance()
                     .createSignInIntentBuilder()
@@ -53,14 +53,14 @@ public class Activity_Login extends AppCompatActivity {
 
     final ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(), result -> {
-            if (result.getResultCode() == Activity.RESULT_OK) {
-                openHomeActivity();
-            } else {
-                Log.d(TAG, "Login result is not OK!");
-            }
-    });
+                if (result.getResultCode() == Activity.RESULT_OK) {
+                    openDataLoadingActivity();
+                } else {
+                    Log.d(TAG, "Login result is not OK!");
+                }
+            });
 
-    private void openHomeActivity() {
+    private void openDataLoadingActivity() {
         startActivity(new Intent(getApplicationContext(), Activity_DataLoading.class));
         finish();
     }
