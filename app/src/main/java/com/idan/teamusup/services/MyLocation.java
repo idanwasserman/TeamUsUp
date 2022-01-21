@@ -43,7 +43,7 @@ public class MyLocation {
 
     private MyLocation(AppCompatActivity activity) {
         this.activity = activity;
-        locationProvider = LocationServices.getFusedLocationProviderClient(activity);
+        this.locationProvider = LocationServices.getFusedLocationProviderClient(activity);
     }
 
     @SuppressLint("MissingPermission")
@@ -60,19 +60,20 @@ public class MyLocation {
                     if (location == null) {
                         requestNewLocationData();
                     } else {
-                        lat = location.getLatitude();
-                        lng = location.getLongitude();
-                        callBack_location.setLocation(lat, lng);
+                        this.lat = location.getLatitude();
+                        this.lng = location.getLongitude();
+                        callBack_location.setLocation(this.lat, this.lng);
                     }
                 });
             } else {
-                Toast.makeText(activity, "Please turn on your location...", Toast.LENGTH_LONG).show();
+                Toast.makeText(this.activity, "Please turn on your location...", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                activity.startActivity(intent);
+                this.activity.startActivity(intent);
             }
         } else {
             // if permissions aren't available, request for permissions
             requestPermissions();
+            callBack_location.setLocation(0, 0);
         }
     }
 
@@ -101,20 +102,19 @@ public class MyLocation {
 
     // method to check for permissions
     private boolean checkPermissions() {
-
         return ActivityCompat.checkSelfPermission(
-                activity,
+                this.activity,
                 Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
                 &&
                 ActivityCompat.checkSelfPermission(
-                        activity,
+                        this.activity,
                         Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
     }
 
     // method to request for permissions
     private void requestPermissions() {
         ActivityCompat.requestPermissions(
-                activity,
+                this.activity,
                 new String[]{
                         Manifest.permission.ACCESS_COARSE_LOCATION,
                         Manifest.permission.ACCESS_FINE_LOCATION
@@ -124,7 +124,8 @@ public class MyLocation {
 
     // method to check if location is enabled
     private boolean isLocationEnabled() {
-        LocationManager locationManager = (LocationManager) activity.getSystemService(Context.LOCATION_SERVICE);
+        LocationManager locationManager = (LocationManager) this.activity
+                .getSystemService(Context.LOCATION_SERVICE);
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
                 ||
                 locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
