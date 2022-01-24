@@ -12,9 +12,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.idan.teamusup.R;
 import com.idan.teamusup.data.Constants;
+import com.idan.teamusup.data.Generator;
 import com.idan.teamusup.services.FirebaseRealtimeDB;
 import com.idan.teamusup.data.Instance;
 import com.idan.teamusup.data.Location;
+import com.idan.teamusup.services.MyCamera;
 import com.idan.teamusup.services.MySharedPreferences;
 import com.idan.teamusup.services.UserDatabase;
 import com.idan.teamusup.logic.InstanceServiceImpl;
@@ -57,6 +59,8 @@ public class Activity_DataLoading extends AppCompatActivity {
     private void initHelpingObjects() {
         MySharedPreferences.init(this, getUniqueFilename());
         MyLocation.init(this);
+        MyCamera.init();
+        Generator.init();
         Validator.init(this);
         FirebaseRealtimeDB.init();
         this.instanceService = new InstanceServiceImpl();
@@ -100,6 +104,10 @@ public class Activity_DataLoading extends AppCompatActivity {
     }
 
     private void updateUserInstance(double lat, double lng) {
+        if (lat == 0 && lng == 0) {
+            MyLocation.getInstance().getLastLocation(this.callBack_location);
+        }
+
         this.userInstance.setLocation(new Location(lat, lng));
         this.instanceService.updateUserLocation(this.userInstance);
 

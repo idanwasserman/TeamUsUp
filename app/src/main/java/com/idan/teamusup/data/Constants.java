@@ -5,7 +5,6 @@ public enum Constants {
 
     bundle,
 
-    imageLink,
     instances,
     isNew,
 

@@ -19,6 +19,16 @@
         android:layout_marginBottom="10dp"
         />
 
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="If this process takes too long\ntry to close and open app again"
+        android:textSize="14sp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="16dp"
+        />
+
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/lottie_SPC_loading"
