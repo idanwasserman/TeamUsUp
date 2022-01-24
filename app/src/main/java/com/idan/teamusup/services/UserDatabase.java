@@ -49,7 +49,7 @@ public class UserDatabase {
         return null;
     }
 
-    public void removeInstance(String id) {
+    public void removeInstanceById(String id) {
         Instance toDelete = null;
         for (Instance instance : instances) {
             if (instance.getId().equals(id)) {

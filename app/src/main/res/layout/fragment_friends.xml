@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragment_friends"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.Fragment_Friends">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/friends_TXT_listTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="My friends/players list:"
+                android:textSize="24sp"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="16dp"
+                />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/friends_TXT_emptyTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="List is empty\nClick plus button to add players"
+                android:textSize="18sp"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="16dp"
+                android:layout_below="@+id/friends_TXT_listTitle"
+                android:visibility="invisible"
+                />
+
+            <!-- players list -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/friends_LIST_players"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/friends_TXT_listTitle"
+                android:orientation="horizontal" />
+
+            <!-- FABs -->
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/friends_FAB_addFriends"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:backgroundTint="#673AB7"
+                android:clickable="true"
+                android:focusable="true"
+                app:srcCompat="@drawable/icn_plus"/>
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/friends_FAB_byLocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/friends_FAB_addFriends"
+                android:layout_alignEnd="@+id/friends_FAB_addFriends"
+                android:layout_marginBottom="16dp"
+                android:clickable="true"
+                android:visibility="invisible"
+                app:srcCompat="@drawable/icn_location"
+                />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/friends_FAB_byText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@id/friends_FAB_byLocation"
+                android:layout_alignEnd="@+id/friends_FAB_addFriends"
+                android:layout_marginBottom="16dp"
+                android:clickable="true"
+                android:visibility="invisible"
+                app:srcCompat="@drawable/icn_text_format"
+                />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/friends_FAB_byManual"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@id/friends_FAB_byText"
+                android:layout_alignEnd="@+id/friends_FAB_addFriends"
+                android:layout_marginBottom="16dp"
+                android:clickable="true"
+                android:visibility="invisible"
+                app:srcCompat="@drawable/icn_manual_click"
+                />
+
+            <!-- FABs texts -->
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/friends_TXT_manual"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/friends_FAB_byManual"
+                android:layout_alignEnd="@id/friends_FAB_addFriends"
+                android:layout_alignBottom="@id/friends_FAB_byManual"
+                android:layout_marginEnd="70dp"
+                android:gravity="center"
+                android:text="Manual Typing"
+                android:visibility="invisible"
+                android:background="#FFC107"
+                />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/friends_TXT_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/friends_FAB_byText"
+                android:layout_alignEnd="@id/friends_FAB_addFriends"
+                android:layout_alignBottom="@id/friends_FAB_byText"
+                android:layout_marginEnd="70dp"
+                android:gravity="center"
+                android:text="Convert Text"
+                android:visibility="invisible"
+                />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/friends_TXT_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/friends_FAB_byLocation"
+                android:layout_alignEnd="@id/friends_FAB_addFriends"
+                android:layout_alignBottom="@id/friends_FAB_byLocation"
+                android:layout_marginEnd="70dp"
+                android:gravity="center"
+                android:text="Find Players"
+                android:visibility="invisible"
+                />
+
+
+            <!-- find by location frame -->
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/lottie_SPC_searching"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                app:lottie_rawRes="@raw/lottie_searching"
+                app:lottie_loop="true"
+                app:lottie_autoPlay="true"
+                android:scaleType="fitCenter"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="64dp"
+                android:visibility="invisible"
+                />
+            <FrameLayout
+                android:id="@+id/friends_FRAME_location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/friends_LIST_players"
+                android:visibility="invisible"
+                android:layout_marginTop="32dp"
+                >
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    >
+
+                </RelativeLayout>
+
+            </FrameLayout>
+
+        </RelativeLayout>
+
+</FrameLayout>

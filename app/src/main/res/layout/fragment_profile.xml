@@ -11,60 +11,120 @@
         android:layout_height="match_parent"
         >
 
-        <TextView
-            android:id="@+id/profile_TXT_username"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/profile_IMG_user"
-            android:layout_centerHorizontal="true"
-            android:text="@string/under_construction"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:layout_marginTop="10dp"/>
-
-
-
         <LinearLayout
+            android:layout_margin="16dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
+            android:orientation="vertical"
             >
 
-            <Space
-                android:layout_width="0dp"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                />
+                android:orientation="horizontal"
+                >
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/profile_BTN_logout"
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/profile_picture"
+                    android:textSize="18sp"
+                    />
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/profile_BTN_editPicture"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/edit"
+                    android:textAllCaps="false"
+                    app:cornerRadius="50dp"
+                    android:backgroundTint="#FFF"
+                    android:textColor="#3F51B5"
+                    android:textSize="14sp"
+                    />
+
+
+
+            </LinearLayout>
+
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/profile_IMG_user"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/icn_user"
+                app:riv_oval="true"
+                android:layout_marginBottom="32dp"
+                android:layout_gravity="center"/>
+
+            <View
+                android:layout_marginBottom="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:background="#2196F3"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/username"
+                    android:textSize="18sp"
+                    />
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/profile_BTN_editUsername"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/edit"
+                    android:textAllCaps="false"
+                    app:cornerRadius="50dp"
+                    android:backgroundTint="#FFF"
+                    android:textColor="#3F51B5"
+                    android:textSize="14sp"
+                    />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/profile_TXT_username"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="36dp"
-                android:text="@string/logout"
-                android:textAllCaps="false"
-                app:cornerRadius="50dp"
-                android:backgroundTint="#F44336"/>
-
-            <Space
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                />
+                android:text="@string/username"
+                android:textSize="26sp"
+                android:textStyle="bold"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center"/>
 
         </LinearLayout>
 
-        <com.makeramen.roundedimageview.RoundedImageView
-            android:id="@+id/profile_IMG_user"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/profile_BTN_logout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="36dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/icn_user"
-            app:riv_oval="true" />
+            android:layout_marginBottom="16dp"
+            android:backgroundTint="#F44336"
+            android:text="@string/logout"
+            android:textAllCaps="false"
+            app:cornerRadius="50dp" />
 
     </RelativeLayout>
 
