@@ -7,16 +7,13 @@
         android:title="@string/profile" />
 
     <item
-        android:id="@+id/menuNotifications"
-        android:icon="@drawable/icn_user"
-        android:title="@string/notifications" />
-
+        android:id="@+id/menuGames"
+        android:icon="@drawable/icn_tournament"
+        android:title="@string/games" />
     <item
         android:id="@+id/menuFriends"
-        android:icon="@drawable/icn_user"
+        android:icon="@drawable/icn_friends"
         android:title="@string/friends" />
-
-
 
     <item
         android:id="@+id/menuOthers"
@@ -27,17 +24,17 @@
 
             <item
                 android:id="@+id/menuSettings"
-                android:icon="@drawable/icn_user"
+                android:icon="@drawable/icn_settings"
                 android:title="@string/settings" />
 
             <item
                 android:id="@+id/menuSupport"
-                android:icon="@drawable/icn_user"
+                android:icon="@drawable/icn_support"
                 android:title="@string/support" />
 
             <item
                 android:id="@+id/menuAboutUs"
-                android:icon="@drawable/icn_user"
+                android:icon="@drawable/icn_information"
                 android:title="@string/about_us" />
 
         </menu>

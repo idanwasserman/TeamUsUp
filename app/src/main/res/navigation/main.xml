@@ -15,4 +15,24 @@
         android:name="com.idan.teamusup.fragments.Fragment_Settings"
         android:label="Settings"
         tools:layout="@layout/fragment_settings" />
+    <fragment
+        android:id="@+id/menuGames"
+        android:name="com.idan.teamusup.fragments.Fragment_Games"
+        android:label="Games"
+        tools:layout="@layout/fragment_games" />
+    <fragment
+        android:id="@+id/menuFriends"
+        android:name="com.idan.teamusup.fragments.Fragment_Friends"
+        android:label="Friends"
+        tools:layout="@layout/fragment_friends" />
+    <fragment
+        android:id="@+id/menuAboutUs"
+        android:name="com.idan.teamusup.fragments.Fragment_AboutUs"
+        android:label="fragment_about_us"
+        tools:layout="@layout/fragment_about_us" />
+    <fragment
+        android:id="@+id/menuSupport"
+        android:name="com.idan.teamusup.fragments.Fragment_Support"
+        android:label="fragment_support"
+        tools:layout="@layout/fragment_support" />
 </navigation>

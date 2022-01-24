@@ -5,6 +5,8 @@ public enum Constants {
 
     bundle,
 
+    chosenPlayersArr,
+
     instances,
     isNew,
 
