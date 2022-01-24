@@ -8,6 +8,7 @@ import com.google.firebase.auth.UserInfo;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.idan.teamusup.data.Constants;
+import com.idan.teamusup.data.Generator;
 import com.idan.teamusup.services.FirebaseRealtimeDB;
 import com.idan.teamusup.data.Instance;
 import com.idan.teamusup.data.InstanceType;
@@ -30,12 +31,13 @@ public class InstanceServiceImpl implements InstanceService {
     private static final String TAG = "InstanceServiceImpl_TAG";
 
     @Override
-    public Instance createInstance(String userId, Instance instance) {
+    public Instance createInstance(Instance user, Instance instance) {
         instance.setId(UUID.randomUUID().toString());
         if (instance.getCreatedTimestamp() == null) {
             instance.setCreatedTimestamp(new Date());
         }
-        instance.setCreatedByUserId(userId);
+        instance.setCreatedByUserId(user.getId());
+        instance.setLocation(user.getLocation());
 
         // save instance in user database
         UserDatabase.getDatabase().addInstance(instance);
@@ -74,15 +76,18 @@ public class InstanceServiceImpl implements InstanceService {
         String instancesJson = new Gson().toJson(database.getInstances());
 
         MySharedPreferences.getInstance().putString(
-                createKey(userId, Constants.user.name()), userJson);
+                Generator.getInstance()
+                        .createKey(userId, Constants.user.name()), userJson);
         MySharedPreferences.getInstance().putString(
-                createKey(userId, Constants.instances.name()), instancesJson);
+                Generator.getInstance()
+                        .createKey(userId, Constants.instances.name()), instancesJson);
     }
 
     @Override
     public Instance getUserInstance(FirebaseUser user) {
         String userJson = MySharedPreferences.getInstance().getString(
-                createKey(user.getUid(), Constants.user.name()), null);
+                Generator.getInstance()
+                        .createKey(user.getUid(), Constants.user.name()), null);
         if (userJson == null) {
             Log.d(TAG, "Creates new user instance");
             return createNewUser(user);
@@ -94,7 +99,8 @@ public class InstanceServiceImpl implements InstanceService {
     @Override
     public List<Instance> getDatabaseInstances(FirebaseUser user) {
         String instancesJson = MySharedPreferences.getInstance().getString(
-                createKey(user.getUid(), Constants.instances.name()), null);
+                Generator.getInstance()
+                        .createKey(user.getUid(), Constants.instances.name()), null);
         if (instancesJson == null) {
             return new ArrayList<>();
         } else {
@@ -115,11 +121,6 @@ public class InstanceServiceImpl implements InstanceService {
                 .setName(getDisplayName(user))
                 .setCreatedByUserId(Constants.ADMIN.name())
                 .setAttributes(attributes);
-    }
-
-    private String createKey(String id, String str) {
-        final String DELIMITER = "&&";
-        return (id + DELIMITER + str);
     }
 
     private String getDisplayName(FirebaseUser user) {

@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface InstanceService {
 
-    Instance createInstance(String userId, Instance instance);
+    Instance createInstance(Instance user, Instance instance);
 
     List<Instance> getAllInstancesByType(String type);
 

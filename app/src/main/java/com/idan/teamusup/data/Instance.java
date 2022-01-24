@@ -1,6 +1,7 @@
 package com.idan.teamusup.data;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.google.firebase.auth.FirebaseUser;
 
@@ -91,6 +92,21 @@ public class Instance {
     public Instance setAttributes(Map<String, Object> attributes) {
         this.attributes = attributes;
         return this;
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        if (obj == this) return true;
+
+        if (!(obj instanceof Instance)) return false;
+
+        Instance i = (Instance) obj;
+        return this.id.equals(i.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
     }
 
     @NonNull
