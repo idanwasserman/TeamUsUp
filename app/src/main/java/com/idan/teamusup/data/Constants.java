@@ -18,14 +18,20 @@ public enum Constants {
     name,
 
     photoUrl,
+    matchGoalsTable,
     playersSize,
+
+    score,
 
     totalGames,
     topScorer,
     time,
+    teamsPlayersIds,
     teamSize,
     teamsSize,
     timeSize,
+    team1Keys,
+    team2Keys,
 
     user
 }

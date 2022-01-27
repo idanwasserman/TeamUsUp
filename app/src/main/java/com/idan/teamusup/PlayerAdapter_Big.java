@@ -20,30 +20,26 @@ import com.idan.teamusup.data.Level;
 import java.util.ArrayList;
 import java.util.Map;
 
-public class AdapterPlayer extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class PlayerAdapter_Big extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Activity activity;
     private ArrayList<Instance> players;
     private PlayerItemClickListener playerItemClickListener;
-    private boolean editable;
 
-    public AdapterPlayer(Activity activity, ArrayList<Instance> _players) {
+    public PlayerAdapter_Big(
+            Activity activity,
+            ArrayList<Instance> _players,
+            PlayerItemClickListener playerItemClickListener) {
         this.activity = activity;
         this.players = _players;
-    }
-
-    public AdapterPlayer setPlayerItemClickListener(
-            PlayerItemClickListener playerItemClickListener, boolean editable) {
         this.playerItemClickListener = playerItemClickListener;
-        this.editable = editable;
-        return this;
     }
 
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new PlayerViewHolder(
-                LayoutInflater.from(parent.getContext()).inflate(R.layout.list_player,
+                LayoutInflater.from(parent.getContext()).inflate(R.layout.list_player_big,
                         parent, false));
     }
 
@@ -53,13 +49,6 @@ public class AdapterPlayer extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         Instance player = getPlayer(index);
         if (player == null)
             return;
-
-        if (!editable) {
-            playerViewHolder.player_IMG_edit.setClickable(false);
-            playerViewHolder.player_IMG_edit.setVisibility(View.INVISIBLE);
-            playerViewHolder.player_IMG_delete.setClickable(false);
-            playerViewHolder.player_IMG_delete.setVisibility(View.INVISIBLE);
-        }
 
         String photoUrl = getPhotoUrl(player);
         String levelStr = getLevel(player);
@@ -74,7 +63,6 @@ public class AdapterPlayer extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         }
         playerViewHolder.player_LBL_level.setText(levelStr);
         playerViewHolder.player_LBL_name.setText(player.getName());
-        playerViewHolder.player_LBL_counter.setText("0");
     }
 
     private String getPhotoUrl(Instance player) {
@@ -114,48 +102,32 @@ public class AdapterPlayer extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     }
 
     public interface PlayerItemClickListener {
-        void editPlayerClicked(Instance player, int position);
-        void deletePlayerClicked(Instance player, int position);
         void playerClicked(Instance player, int position);
     }
 
     public class PlayerViewHolder extends RecyclerView.ViewHolder {
 
         public AppCompatImageView player_IMG_image;
-        public AppCompatImageView player_IMG_edit;
-        public AppCompatImageView player_IMG_delete;
         public MaterialTextView player_LBL_level;
         public MaterialTextView player_LBL_name;
-        public MaterialTextView player_LBL_counter;
 
         private long lastClickTime = 0;
 
         public PlayerViewHolder(final View itemView) {
             super(itemView);
             this.player_IMG_image = itemView.findViewById(R.id.player_IMG_image);
-            this.player_IMG_edit = itemView.findViewById(R.id.player_IMG_edit);
-            this.player_IMG_delete = itemView.findViewById(R.id.player_IMG_delete);
             this.player_LBL_level = itemView.findViewById(R.id.player_LBL_level);
             this.player_LBL_name = itemView.findViewById(R.id.player_LBL_name);
-            this.player_LBL_counter = itemView.findViewById(R.id.player_LBL_counter);
 
             itemView.setOnClickListener(v -> {
                 if (SystemClock.elapsedRealtime() - lastClickTime < 1000) return;
                 lastClickTime = SystemClock.elapsedRealtime();
-                playerItemClickListener.playerClicked(
-                        getPlayer(getAdapterPosition()),
-                        getAdapterPosition());
+                if (playerItemClickListener != null) {
+                    playerItemClickListener.playerClicked(
+                            getPlayer(getAdapterPosition()),
+                            getAdapterPosition());
+                }
             });
-
-            player_IMG_edit.setOnClickListener(v ->
-                    playerItemClickListener.editPlayerClicked(
-                            getPlayer(getAdapterPosition()),
-                            getAdapterPosition()));
-
-            player_IMG_delete.setOnClickListener(v ->
-                    playerItemClickListener.deletePlayerClicked(
-                            getPlayer(getAdapterPosition()),
-                            getAdapterPosition()));
 
         }
     }

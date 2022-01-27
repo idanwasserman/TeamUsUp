@@ -5,11 +5,12 @@ import androidx.annotation.Nullable;
 
 import com.google.firebase.auth.FirebaseUser;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Instance {
+public class Instance implements Serializable {
 
     private String id;
     private InstanceType type;

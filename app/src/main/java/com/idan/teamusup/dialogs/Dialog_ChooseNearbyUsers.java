@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.textview.MaterialTextView;
-import com.idan.teamusup.AdapterPlayer;
+import com.idan.teamusup.PlayerAdapter_Big;
 import com.idan.teamusup.R;
 import com.idan.teamusup.data.Instance;
 
@@ -29,7 +29,7 @@ public class Dialog_ChooseNearbyUsers extends AppCompatDialogFragment {
 
     private ArrayList<Instance> usersInstances;
     private RecyclerView dialog_LIST_users;
-    private AdapterPlayer adapterPlayer;
+    private PlayerAdapter_Big adapterPlayer;
     private MaterialTextView dialog_TXT_chosenUsers;
     private boolean[] chosenPositions;
     private String[] chosenUsersNames;
@@ -67,7 +67,7 @@ public class Dialog_ChooseNearbyUsers extends AppCompatDialogFragment {
     }
 
     private void initAdapter() {
-        this.adapterPlayer = new AdapterPlayer(getActivity(), this.usersInstances);
+        this.adapterPlayer = new PlayerAdapter_Big(getActivity(), this.usersInstances, this.playerItemClickListener);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(
                 getActivity(), LinearLayoutManager.HORIZONTAL, false);
 
@@ -75,20 +75,11 @@ public class Dialog_ChooseNearbyUsers extends AppCompatDialogFragment {
         this.dialog_LIST_users.setHasFixedSize(true);
         this.dialog_LIST_users.setItemAnimator(new DefaultItemAnimator());
         this.dialog_LIST_users.setAdapter(this.adapterPlayer);
-        this.adapterPlayer.setPlayerItemClickListener(playerItemClickListener, false);
 
     }
 
-    private final AdapterPlayer.PlayerItemClickListener
-            playerItemClickListener = new AdapterPlayer.PlayerItemClickListener() {
-        @Override
-        public void editPlayerClicked(Instance player, int position) {
-        }
-
-        @Override
-        public void deletePlayerClicked(Instance player, int position) {
-        }
-
+    private final PlayerAdapter_Big.PlayerItemClickListener
+            playerItemClickListener = new PlayerAdapter_Big.PlayerItemClickListener() {
         @Override
         public void playerClicked(Instance player, int position) {
             if (chosenPositions[position]) {

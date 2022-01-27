@@ -28,6 +28,7 @@ import com.idan.teamusup.activities.Activity_NewGame;
 import com.idan.teamusup.data.Constants;
 import com.idan.teamusup.data.Instance;
 import com.idan.teamusup.data.InstanceType;
+import com.idan.teamusup.services.MyLocation;
 import com.idan.teamusup.services.UserDatabase;
 import com.idan.teamusup.dialogs.Dialog_CreateGameForm;
 import com.idan.teamusup.logic.InstanceServiceImpl;
@@ -77,7 +78,7 @@ public class Fragment_Games extends Fragment {
         }
 
         this.userInstance = UserDatabase.getDatabase().getUser();
-        this.instanceService = new InstanceServiceImpl();
+        this.instanceService = InstanceServiceImpl.getService();
         findViews(view);
         setGamesFromDatabase();
         initGameAdapter();
@@ -109,28 +110,19 @@ public class Fragment_Games extends Fragment {
         });
     }
 
-    private LatLng getLocationFromBundle() {
-        Bundle bundle = getActivity().getIntent().getBundleExtra(Constants.bundle.name());
-        return new LatLng(
-                bundle.getDouble(Constants.lat.name()),
-                bundle.getDouble(Constants.lng.name())
-        );
-    }
-
     private void initButtons() {
-        games_BTN_newGame.setOnClickListener(v -> startActivity(new Intent(getActivity().getApplicationContext(), Activity_NewGame.class)));//openCreateGameDialog());
-        games_BTN_refreshLocation.setOnClickListener(v ->
-                setFocusOnMapByLocation(new LatLng(
-                        this.userInstance.getLocation().getLat(),
-                        this.userInstance.getLocation().getLng())));
-    }
+        games_BTN_newGame.setOnClickListener(v ->
+                startActivity(new Intent(getActivity().getApplicationContext(), Activity_NewGame.class)));
 
-    private void openCreateGameDialog() {
-        Dialog_CreateGameForm createGameForm = new Dialog_CreateGameForm(
-                        (AppCompatActivity) getActivity(),
-                        createGameFormDialogListener);
-        final String DIALOG_TAG = "create game form dialog";
-        createGameForm.show(getActivity().getSupportFragmentManager(), DIALOG_TAG);
+        games_BTN_refreshLocation.setOnClickListener(v ->
+                MyLocation.getInstance().setFocusOnMapByLocation(
+                        this.mMap,
+                        this.markerOptions,
+                        new LatLng(
+                                this.userInstance.getLocation().getLat(),
+                                this.userInstance.getLocation().getLng()),
+                        ZOOM));
+
     }
 
     private Dialog_CreateGameForm.CreateGameFormDialogListener createGameFormDialogListener =
@@ -166,9 +158,12 @@ public class Fragment_Games extends Fragment {
     }
 
     private AdapterGame.GameItemClickListener gameItemClickListener = (game, position) ->
-            setFocusOnMapByLocation(new LatLng(
-                    game.getLocation().getLat(),
-                    game.getLocation().getLng()));
+            MyLocation.getInstance().setFocusOnMapByLocation(
+                    this.mMap,
+                    this.markerOptions,
+                    new LatLng(
+                            game.getLocation().getLat(),
+                            game.getLocation().getLng()), ZOOM);
 
     private void setFocusOnMapByLocation(LatLng latLng) {
         this.mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, ZOOM));
@@ -183,10 +178,6 @@ public class Fragment_Games extends Fragment {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             Collections.sort(gamesList, Comparator.comparing(Instance::getCreatedTimestamp));
         }
-    }
-
-    private void updateDatabase(boolean sort) {
-
     }
 
     private void findViews(View view) {

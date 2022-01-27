@@ -16,10 +16,20 @@ import java.util.Map;
 
 public class PlayerServiceImpl implements PlayerService {
 
-    private InstanceService instanceService;
+    private static PlayerServiceImpl service;
+    private InstanceService instanceService = InstanceServiceImpl.getService();
 
-    public PlayerServiceImpl(InstanceService instanceService) {
-        this.instanceService = instanceService;
+    private PlayerServiceImpl() {}
+
+    public static PlayerServiceImpl init() {
+        if (service == null) {
+            service = new PlayerServiceImpl();
+        }
+        return service;
+    }
+
+    public static PlayerServiceImpl getService() {
+        return service;
     }
 
     @Override
@@ -32,7 +42,6 @@ public class PlayerServiceImpl implements PlayerService {
         attributes.put(Constants.level.name(), level);
         attributes.put(Constants.photoUrl.name(), photoUrl);
         return this.instanceService.createInstance(
-                user,
                 new Instance()
                         .setName(name)
                         .setType(InstanceType.Player)
@@ -52,7 +61,6 @@ public class PlayerServiceImpl implements PlayerService {
 
             players.add(
                     this.instanceService.createInstance(
-                            user,
                             new Instance()
                                     .setName(line)
                                     .setAttributes(attributes)

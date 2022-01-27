@@ -30,8 +30,25 @@ public class InstanceServiceImpl implements InstanceService {
 
     private static final String TAG = "InstanceServiceImpl_TAG";
 
+    private static InstanceServiceImpl service;
+
+    public static InstanceServiceImpl getService() {
+        return service;
+    }
+
+    private InstanceServiceImpl() {}
+
+    public static InstanceServiceImpl init() {
+        if (service == null) {
+            service = new InstanceServiceImpl();
+        }
+        return service;
+    }
+
     @Override
-    public Instance createInstance(Instance user, Instance instance) {
+    public Instance createInstance(Instance instance) {
+        Instance user = UserDatabase.getDatabase().getUser();
+
         instance.setId(UUID.randomUUID().toString());
         if (instance.getCreatedTimestamp() == null) {
             instance.setCreatedTimestamp(new Date());

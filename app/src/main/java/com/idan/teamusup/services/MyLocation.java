@@ -19,6 +19,10 @@ import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 
 public class MyLocation {
@@ -75,6 +79,13 @@ public class MyLocation {
             requestPermissions();
             callBack_location.setLocation(0, 0);
         }
+    }
+
+    public void setFocusOnMapByLocation(GoogleMap mMap, MarkerOptions markerOptions, LatLng latLng, int zoom) {
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom));
+        markerOptions.position(latLng);
+        mMap.clear();
+        mMap.addMarker(markerOptions);
     }
 
     @SuppressLint("MissingPermission")

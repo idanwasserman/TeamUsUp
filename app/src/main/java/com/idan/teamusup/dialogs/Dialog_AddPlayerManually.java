@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -18,6 +19,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDialogFragment;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputLayout;
 import com.idan.teamusup.R;
@@ -36,14 +38,31 @@ public class Dialog_AddPlayerManually extends AppCompatDialogFragment {
     private MaterialButton dialog_BTN_camera;
     private ImageView dialog_IMG_image;
 
-    private String photoUrl;
+    private RadioButton dialog_RB_beginner;
+    private RadioButton dialog_RB_normal;
+    private RadioButton dialog_RB_professional;
+
+    private String name, photoUrl;
     private Level level = Level.Normal; // default
+    private boolean isOldUser = false;
 
     public Dialog_AddPlayerManually(AddPlayerDialogListener addPlayerDialogListener) {
         if (addPlayerDialogListener == null) {
             throw new RuntimeException("Must implement AddPlayerDialogListener");
         }
         this.addPlayerDialogListener = addPlayerDialogListener;
+    }
+    public Dialog_AddPlayerManually(
+            AddPlayerDialogListener addPlayerDialogListener,
+            String name, Level level, String photoUrl, boolean isOldUser) {
+        if (addPlayerDialogListener == null) {
+            throw new RuntimeException("Must implement AddPlayerDialogListener");
+        }
+        this.addPlayerDialogListener = addPlayerDialogListener;
+        this.name = name;
+        this.level = level;
+        this.photoUrl = photoUrl;
+        this.isOldUser = isOldUser;
     }
 
     @NonNull
@@ -54,6 +73,9 @@ public class Dialog_AddPlayerManually extends AppCompatDialogFragment {
         View view = inflater.inflate(R.layout.dialog_add_player_manually, null);
 
         findViews(view);
+        if (isOldUser) {
+            updateViews();
+        }
         this.dialog_BTN_camera.setOnClickListener(v -> openCamera());
         this.dialog_RG_level.setOnCheckedChangeListener(this.onCheckedChangeListener);
 
@@ -71,6 +93,27 @@ public class Dialog_AddPlayerManually extends AppCompatDialogFragment {
                                 this.photoUrl));
 
         return builder.create();
+    }
+
+    private void updateViews() {
+        this.dialog_TXTI_name.getEditText().setText(this.name);
+        if (this.level != Level.Normal) {
+            this.dialog_RB_normal.setChecked(false);
+            switch (this.level) {
+                case Beginner:
+                    this.dialog_RB_beginner.setChecked(true);
+                    break;
+                case Professional:
+                    this.dialog_RB_professional.setChecked(true);
+                    break;
+            }
+        }
+        if (this.photoUrl != null && !this.photoUrl.isEmpty()) {
+            Glide
+                    .with(getActivity())
+                    .load(photoUrl)
+                    .into(this.dialog_IMG_image);
+        }
     }
 
     @Override
@@ -126,6 +169,10 @@ public class Dialog_AddPlayerManually extends AppCompatDialogFragment {
         this.dialog_RG_level = view.findViewById(R.id.dialog_RG_level);
         this.dialog_BTN_camera = view.findViewById(R.id.dialog_BTN_camera);
         this.dialog_IMG_image = view.findViewById(R.id.dialog_IMG_image);
+
+        this.dialog_RB_beginner = view.findViewById(R.id.dialog_RB_beginner);
+        this.dialog_RB_normal = view.findViewById(R.id.dialog_RB_normal);
+        this.dialog_RB_professional = view.findViewById(R.id.dialog_RB_professional);
     }
 
 }

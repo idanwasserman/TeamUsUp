@@ -47,11 +47,10 @@ public class Activity_Home extends AppCompatActivity
         findViews();
 
         this.home_IMG_menu.setOnClickListener(v -> this.drawerLayout.openDrawer(GravityCompat.START));
-        this.instanceService = new InstanceServiceImpl();
+        this.instanceService = InstanceServiceImpl.getService();
         this.headerView = this.navigationView.getHeaderView(0);
 
         Instance userInstance = UserDatabase.getDatabase().getUser();
-        Log.d(TAG, "User instance: " + userInstance);
 
         setHeader(userInstance.getName(), this.headerView);
         setPhoto((String) userInstance.getAttributes().get(Constants.photoUrl.name()), this.headerView);

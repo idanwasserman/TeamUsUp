@@ -46,7 +46,8 @@ public class Activity_Login extends AppCompatActivity {
                     .createSignInIntentBuilder()
                     .setIsSmartLockEnabled(false)
                     .setAvailableProviders(getProviders())
-                    .setLogo(R.drawable.icn_logo).setTheme(R.style.Theme)
+                    .setLogo(R.drawable.icn_logo)
+                    .setTheme(R.style.Theme)
                     .build());
         }
     }

@@ -51,5 +51,9 @@
     <string name="beginner">Beginner</string>
     <string name="normal">Normal</string>
     <string name="professional">Professional</string>
+    <string name="start">Start</string>
+    <string name="random">Random</string>
+    <string name="finish">Finish</string>
+    <string name="undo">Undo</string>
 
 </resources>

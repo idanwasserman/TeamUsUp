@@ -13,6 +13,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.idan.teamusup.R;
 import com.idan.teamusup.data.Constants;
 import com.idan.teamusup.data.Generator;
+import com.idan.teamusup.logic.RandomPlayers;
 import com.idan.teamusup.services.FirebaseRealtimeDB;
 import com.idan.teamusup.data.Instance;
 import com.idan.teamusup.data.Location;
@@ -61,9 +62,10 @@ public class Activity_DataLoading extends AppCompatActivity {
         MyLocation.init(this);
         MyCamera.init();
         Generator.init();
+        RandomPlayers.init();
         Validator.init(this);
         FirebaseRealtimeDB.init();
-        this.instanceService = new InstanceServiceImpl();
+        this.instanceService = InstanceServiceImpl.init();
     }
 
     private String getUniqueFilename() {

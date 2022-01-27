@@ -27,6 +27,7 @@ public class MyCamera {
             instance = new MyCamera();
         }
     }
+
     public void openCamera(
             String title,
             final ActivityResultLauncher<Intent> activityResultLauncher,
@@ -35,12 +36,14 @@ public class MyCamera {
         this.title = title;
         activityResultLauncher.launch(new Intent(MediaStore.ACTION_IMAGE_CAPTURE));
     }
+
     public void onCameraResult(Intent data) {
         if (data == null) return;
         Bitmap photo = (Bitmap) data.getExtras().get("data");
         // Set the image in imageview for display
         this.callBack_photoUrl.setPhotoUrl(photo);
     }
+
     // FIXME check permissions
     public String getImageUri(Context inContext, Bitmap inImage) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
@@ -53,6 +56,7 @@ public class MyCamera {
         }
         return Uri.parse(path).toString();
     }
+
     public interface CallBack_PhotoUrl {
         void setPhotoUrl(Bitmap photo);
     }

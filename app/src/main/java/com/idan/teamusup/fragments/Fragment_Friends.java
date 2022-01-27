@@ -1,6 +1,5 @@
 package com.idan.teamusup.fragments;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Build;
@@ -11,22 +10,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textview.MaterialTextView;
-import com.idan.teamusup.AdapterPlayer;
+import com.idan.teamusup.PlayerAdapter_Small;
 import com.idan.teamusup.R;
+import com.idan.teamusup.data.Constants;
 import com.idan.teamusup.data.Instance;
 import com.idan.teamusup.data.InstanceType;
 import com.idan.teamusup.data.Level;
@@ -34,6 +32,7 @@ import com.idan.teamusup.data.SortInstanceByName;
 import com.idan.teamusup.dialogs.Dialog_AddPlayerManually;
 import com.idan.teamusup.dialogs.Dialog_AddPlayersByText;
 import com.idan.teamusup.dialogs.Dialog_ChooseNearbyUsers;
+import com.idan.teamusup.dialogs.Dialog_FindNearbyUsers;
 import com.idan.teamusup.logic.InstanceServiceImpl;
 import com.idan.teamusup.logic.PlayerServiceImpl;
 import com.idan.teamusup.logic.interfaces.InstanceService;
@@ -77,7 +76,7 @@ public class Fragment_Friends extends Fragment {
     // Players/Friends list
     private ArrayList<Instance> playersInstances;
     private RecyclerView friends_LIST_players;
-    private AdapterPlayer adapterPlayer;
+    private PlayerAdapter_Small adapterPlayer;
     private ArrayList<Instance> usersNearby;
 
 
@@ -99,8 +98,8 @@ public class Fragment_Friends extends Fragment {
         View view = inflater.inflate(R.layout.fragment_friends, container, false);
 
         this.userInstance = UserDatabase.getDatabase().getUser();
-        this.instanceService = new InstanceServiceImpl();
-        this.playerService = new PlayerServiceImpl(this.instanceService);
+        this.instanceService = InstanceServiceImpl.getService();
+        this.playerService = PlayerServiceImpl.getService();
 
         findViews(view);
         findAnimations();
@@ -119,15 +118,14 @@ public class Fragment_Friends extends Fragment {
 
     // Adapter methods:
     private void initAdapterPlayer() {
-        this.adapterPlayer = new AdapterPlayer(this.activity, this.playersInstances);
+        this.adapterPlayer = new PlayerAdapter_Small(this.activity, this.playersInstances, this.playerItemClickListener);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(
-                this.activity, LinearLayoutManager.HORIZONTAL, false);
+                this.activity, LinearLayoutManager.VERTICAL, false);
 
-        this.friends_LIST_players.setLayoutManager(new GridLayoutManager(this.activity, 2));//.setLayoutManager(linearLayoutManager);
+        this.friends_LIST_players.setLayoutManager(linearLayoutManager);//.setLayoutManager(new GridLayoutManager(this.activity, 2));//
         this.friends_LIST_players.setHasFixedSize(true);
         this.friends_LIST_players.setItemAnimator(new DefaultItemAnimator());
         this.friends_LIST_players.setAdapter(this.adapterPlayer);
-        this.adapterPlayer.setPlayerItemClickListener(this.playerItemClickListener, true);
     }
 
     private void setPlayersFromDatabase() {
@@ -244,16 +242,11 @@ public class Fragment_Friends extends Fragment {
     private FirebaseRealtimeDB.CallBack_Users
             callBack_users = users -> addPlayers(users);
 
-    private final AdapterPlayer.PlayerItemClickListener
-            playerItemClickListener = new AdapterPlayer.PlayerItemClickListener() {
+    private PlayerAdapter_Small.PlayerItemClickListener
+            playerItemClickListener = new PlayerAdapter_Small.PlayerItemClickListener() {
         @Override
         public void editPlayerClicked(Instance player, int position) {
-            // TODO edit player feature
-            StringBuilder sb = new StringBuilder();
-            sb.append(player.getName());
-            sb.reverse();
-            player.setName(sb.toString());
-            updateAdapterPlayer(true);
+            editPlayer(player, position);
         }
 
         @Override
@@ -272,6 +265,17 @@ public class Fragment_Friends extends Fragment {
 
         }
     };
+
+    private void editPlayer(Instance player, int position) {
+        new Dialog_AddPlayerManually(
+                (Dialog_AddPlayerManually.AddPlayerDialogListener) (name, level, photoUrl) -> {
+
+        },
+                player.getName(),
+                (Level) player.getAttributes().get(Constants.level.name()),
+                (String) player.getAttributes().get(Constants.photoUrl.name()),
+                true).show(getActivity().getSupportFragmentManager(), "edit player dialog");
+    }
 
 
     // Buttons:

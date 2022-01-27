@@ -12,6 +12,7 @@ public class UserDatabase {
 
     Instance user;
     List<Instance> instances;
+    List<Instance> temp;
 
     private UserDatabase(Instance user, List<Instance> instances) {
         this.user = user;
@@ -34,6 +35,14 @@ public class UserDatabase {
 
     public List<Instance> getInstances() {
         return instances;
+    }
+
+    public List<Instance> getTemp() {
+        return temp;
+    }
+
+    public void setTemp(List<Instance> temp) {
+        this.temp = temp;
     }
 
     public void addInstance(Instance instance) {
