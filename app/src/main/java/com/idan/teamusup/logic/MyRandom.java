@@ -137,4 +137,9 @@ public class MyRandom {
 
         return groupMatchesOrder;
     }
+
+    public int randomInt(int range) {
+        return this.rand.nextInt(range);
+    }
+
 }

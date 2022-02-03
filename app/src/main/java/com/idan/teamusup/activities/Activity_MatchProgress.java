@@ -29,9 +29,8 @@ import java.util.Locale;
 
 public class Activity_MatchProgress extends AppCompatActivity {
 
-    private static final String TAG = "TAG_Activity_MatchProgress";
     private final static int NUM_OF_TEAMS = 2;
-    private static final long ONE_MINUTE_IN_MILLIS = 60000;
+    private final static long ONE_MINUTE_IN_MILLIS = 60000;
 
     // Views
     private MaterialTextView match_TXT_title;
@@ -53,8 +52,8 @@ public class Activity_MatchProgress extends AppCompatActivity {
     private long timeLeftInMillis = ONE_MINUTE_IN_MILLIS;
     private int timeSize;
 
-    // helping object
-    private Bundle bundle;
+    // Helping object
+//    private Bundle bundle;
     private Vibrator vibrator;
     private MatchController matchController;
     private GameController gameController;
@@ -78,17 +77,18 @@ public class Activity_MatchProgress extends AppCompatActivity {
         this.adapters = new PlayerAdapter_Big[2];
         this.timeLeftInMillis = this.timeSize * ONE_MINUTE_IN_MILLIS;
         this.vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-        this.match_TXT_title.setText("Match #" + this.gameController.getMatchNumber());
+        this.match_TXT_title.setText(String.format(
+                Locale.getDefault(), "Match#%d", this.gameController.getMatchNumber()));
 
-        this.gameController.startingNewMatch();
+        this.gameController.startNewMatch();
         this.teams = this.gameController.getCurrentMatchTeams();
 
         this.matchController = MatchController.init(this.teams);
     }
 
     private void unpackBundle() {
-        this.bundle = getIntent().getBundleExtra(Constants.bundle.name());
-        this.timeSize = this.bundle.getInt(Constants.timeSize.name());
+        Bundle bundle = getIntent().getBundleExtra(Constants.bundle.name());
+        this.timeSize = bundle.getInt(Constants.timeSize.name());
     }
 
     private void endMatch() {
@@ -130,7 +130,7 @@ public class Activity_MatchProgress extends AppCompatActivity {
     private void notifyUserMatchResults() {
         String winningTeamColor = this.matchController.getWinningTeamColor();
         String text;
-        if (winningTeamColor == MatchController.DRAW_STR) {
+        if (winningTeamColor.equals(MatchController.DRAW_STR)) {
             text = "The match ended in a draw";
         } else {
             text = "Team " + winningTeamColor + " won!";
@@ -165,11 +165,12 @@ public class Activity_MatchProgress extends AppCompatActivity {
         }
     }
 
-    private PlayerAdapter_Big.PlayerItemClickListener playerItemClickListener = (player, position) -> {
-        updateScores(player, position);
-    };
+    private final PlayerAdapter_Big.PlayerItemClickListener
+            playerItemClickListener = this::updateScores;
 
     private void updateScores(Instance player, int position) {
+        if (player == null) return;
+
         Toast.makeText(this, player.getName() + " scored!", Toast.LENGTH_SHORT).show();
         int teamNumber = this.matchController.goalScored(player);
         if (teamNumber == MatchController.ERROR) return;
@@ -196,7 +197,7 @@ public class Activity_MatchProgress extends AppCompatActivity {
                 timerRunning = false;
                 match_BTN_startPause.setBackgroundColor(
                         ContextCompat.getColor(getApplicationContext(), R.color.kind_of_blue));
-                match_BTN_startPause.setText("start");
+                match_BTN_startPause.setText(R.string.start);
                 match_BTN_startPause.setVisibility(View.INVISIBLE);
                 match_BTN_reset.setVisibility(View.VISIBLE);
             }
@@ -205,7 +206,7 @@ public class Activity_MatchProgress extends AppCompatActivity {
         this.timerRunning = true;
         this.match_BTN_startPause.setBackgroundColor(
                 ContextCompat.getColor(getApplicationContext(), R.color.kind_of_red));
-        this.match_BTN_startPause.setText("pause");
+        this.match_BTN_startPause.setText(R.string.pause);
         this.match_BTN_reset.setVisibility(View.INVISIBLE);
     }
 
@@ -219,7 +220,7 @@ public class Activity_MatchProgress extends AppCompatActivity {
         this.timerRunning = false;
         this.match_BTN_startPause.setBackgroundColor(
                 ContextCompat.getColor(getApplicationContext(), R.color.kind_of_blue));
-        this.match_BTN_startPause.setText("start");
+        this.match_BTN_startPause.setText(R.string.start);
         this.match_BTN_reset.setVisibility(View.VISIBLE);
     }
 

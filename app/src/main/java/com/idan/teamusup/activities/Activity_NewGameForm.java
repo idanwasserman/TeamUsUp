@@ -1,26 +1,28 @@
 package com.idan.teamusup.activities;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.widget.Toast;
-
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.android.material.textview.MaterialTextView;
-import com.idan.teamusup.adapters.PlayerAdapter_Big;
 import com.idan.teamusup.R;
+import com.idan.teamusup.adapters.PlayerAdapter_Big;
 import com.idan.teamusup.data.Constants;
 import com.idan.teamusup.data.Instance;
 import com.idan.teamusup.data.InstanceType;
 import com.idan.teamusup.data.Size;
 import com.idan.teamusup.data.SortInstanceByName;
 import com.idan.teamusup.logic.GameController;
+import com.idan.teamusup.logic.GameServiceImpl;
 import com.idan.teamusup.logic.InstanceServiceImpl;
 import com.idan.teamusup.logic.interfaces.InstanceService;
 import com.idan.teamusup.services.UserDatabase;
@@ -28,31 +30,31 @@ import com.idan.teamusup.services.UserDatabase;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 public class Activity_NewGameForm extends AppCompatActivity {
 
-    private static final String TAG = "Activity_NewGame_TAG";
-
+    // All players
     private ArrayList<Instance> allPlayers;
     private RecyclerView newGame_LIST_allPlayers;
     private PlayerAdapter_Big adapterAllPlayers;
 
+    // Game players (chose from all players)
     private ArrayList<Instance> gamePlayers;
     private RecyclerView newGame_LIST_gamePlayers;
     private PlayerAdapter_Big adapterGamePlayers;
-
     private Set<Instance> chosenPlayers;
 
+    // Views
     private MaterialButton form_BTN_submit;
-    private TextInputLayout form_TXTI_playersSize;
-    private TextInputLayout form_TXTI_teamsSize;
-    private TextInputLayout form_TXTI_timeSize;
-
+    private TextInputLayout[] formSizes;
     private MaterialTextView newGame_TXT_numOfSelected;
 
+    // Details
     private Integer timeSize, teamsSize, playersSize;
 
+    // Helping objects
     private InstanceService instanceService;
     private Instance userInstance;
 
@@ -107,49 +109,42 @@ public class Activity_NewGameForm extends AppCompatActivity {
     }
 
     private boolean checkAllFields() {
-        if ((this.playersSize = getIntegerFromTextInputLayout(this.form_TXTI_playersSize)) == null) {
-            this.form_TXTI_playersSize.getEditText().setError("This field is required");
-            return false;
-        } else if (this.playersSize < 2 || this.playersSize > 11) {
-            this.form_TXTI_playersSize.getEditText().setError("Proper values: [2-11]");
-            return false;
+        this.playersSize = getIntegerFromTextInputLayout(this.formSizes[Size.player.ordinal()]);
+        this.teamsSize = getIntegerFromTextInputLayout(this.formSizes[Size.team.ordinal()]);
+        this.timeSize = getIntegerFromTextInputLayout(this.formSizes[Size.time.ordinal()]);
+
+        Integer[] size = new Integer[Size.size.ordinal()];
+        size[Size.team.ordinal()] = this.teamsSize;
+        size[Size.player.ordinal()] = this.playersSize;
+        size[Size.time.ordinal()] = this.timeSize;
+
+        String[] result =  GameServiceImpl
+                .getService()
+                .checkAllFields(size, this.gamePlayers.size());
+        if (result == null) return true;
+
+        if (result[0].equals(Constants.Toast.name())) {
+            Toast.makeText(this, result[1], Toast.LENGTH_SHORT).show();
+        } else {
+            int errPosition = Size.valueOf(result[0]).ordinal();
+            int arrSize = Size.size.ordinal();
+            for (int i = 0; i < arrSize; i++) {
+                if (i == errPosition) {
+                    this.formSizes[i].setError(result[1]);
+                } else {
+                    this.formSizes[i].setError(null);
+                }
+            }
         }
 
-        if ((this.teamsSize = getIntegerFromTextInputLayout(this.form_TXTI_teamsSize)) == null) {
-            this.form_TXTI_teamsSize.getEditText().setError("This field is required");
-            return false;
-        } else if (this.teamsSize < 2 || this. teamsSize > 4) {
-            this.form_TXTI_teamsSize.getEditText().setError("Proper values: [2-4]");
-            return false;
-        }
-
-        if ((this.timeSize = getIntegerFromTextInputLayout(this.form_TXTI_timeSize)) == null) {
-            this.form_TXTI_timeSize.getEditText().setError("This field is required");
-            return false;
-        } else if (this.timeSize > 100 || this.timeSize < 1) {
-            this.form_TXTI_timeSize.getEditText().setError("Proper values: [1-99]");
-            return false;
-        }
-
-        if (this.gamePlayers.size() != this.teamsSize * this.playersSize) {
-            return false;
-        }
-        if (this.gamePlayers.size() > this.playersSize * this.teamsSize) {
-            Toast.makeText(this, "You chose too many players", Toast.LENGTH_SHORT).show();
-            return false;
-        } else if ((this.teamsSize > 2 && this.gamePlayers.size() < this.teamsSize * 2 + 1)
-                ||
-                (this.teamsSize == 2 && this.gamePlayers.size() < this.teamsSize * 2)) {
-            Toast.makeText(this, "You chose too few players", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-
-        return true;
+        return false;
     }
 
     private Integer getIntegerFromTextInputLayout(TextInputLayout textInputLayout) {
         try {
-            return Integer.parseInt(textInputLayout.getEditText().getText().toString());
+            Editable editable = Objects.requireNonNull(textInputLayout.getEditText()).getText();
+            if (editable == null) return null;
+            return Integer.parseInt(editable.toString());
         } catch (NumberFormatException e) {
             return null;
         }
@@ -175,12 +170,13 @@ public class Activity_NewGameForm extends AppCompatActivity {
         this.newGame_LIST_gamePlayers.setAdapter(this.adapterGamePlayers);
     }
 
-    private PlayerAdapter_Big.PlayerItemClickListener
-            adapterAllPlayersListener = (player, position) -> addPlayer(player, position);
+    private final PlayerAdapter_Big.PlayerItemClickListener
+            adapterAllPlayersListener = this::addPlayer;
 
-    private PlayerAdapter_Big.PlayerItemClickListener
-            adapterGamePlayersListener = (player, position) -> removePlayer(player, position);
+    private final PlayerAdapter_Big.PlayerItemClickListener
+            adapterGamePlayersListener = this::removePlayer;
 
+    @SuppressLint("NotifyDataSetChanged")
     private void removePlayer(Instance player, int position) {
         this.gamePlayers.remove(player);
         this.adapterGamePlayers.notifyItemRemoved(position);
@@ -190,9 +186,14 @@ public class Activity_NewGameForm extends AppCompatActivity {
         this.adapterAllPlayers.notifyDataSetChanged();
 
         this.chosenPlayers.remove(player);
-        this.newGame_TXT_numOfSelected.setText(this.chosenPlayers.size() + "");
+        updateSelectedNumberText();
     }
 
+    private void updateSelectedNumberText() {
+        this.newGame_TXT_numOfSelected.setText(String.valueOf(this.chosenPlayers.size()));
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
     private void addPlayer(Instance player, int position) {
         this.gamePlayers.add(player);
         Collections.sort(this.gamePlayers, new SortInstanceByName());
@@ -202,7 +203,7 @@ public class Activity_NewGameForm extends AppCompatActivity {
         this.adapterAllPlayers.notifyItemRemoved(position);
 
         this.chosenPlayers.add(player);
-        this.newGame_TXT_numOfSelected.setText(this.chosenPlayers.size() + "");
+        updateSelectedNumberText();
     }
 
     private void setPlayersLists() {
@@ -222,9 +223,10 @@ public class Activity_NewGameForm extends AppCompatActivity {
         this.newGame_LIST_gamePlayers = findViewById(R.id.newGame_LIST_gamePlayers);
 
         this.form_BTN_submit = findViewById(R.id.form_BTN_submit);
-        this.form_TXTI_playersSize = findViewById(R.id.form_TXTI_playersSize);
-        this.form_TXTI_teamsSize = findViewById(R.id.form_TXTI_teamsSize);
-        this.form_TXTI_timeSize = findViewById(R.id.form_TXTI_timeSize);
+        this.formSizes = new TextInputLayout[Size.size.ordinal()];
+        this.formSizes[Size.team.ordinal()] = findViewById(R.id.form_TXTI_teamsSize);
+        this.formSizes[Size.player.ordinal()] = findViewById(R.id.form_TXTI_playersSize);
+        this.formSizes[Size.time.ordinal()] = findViewById(R.id.form_TXTI_timeSize);
 
         this.newGame_TXT_numOfSelected = findViewById(R.id.newGame_TXT_numOfSelected);
     }

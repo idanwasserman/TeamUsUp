@@ -60,5 +60,6 @@
     <string name="BLUE">BLUE</string>
     <string name="matches">Matches</string>
     <string name="points">Points</string>
+    <string name="pause">Pause</string>
 
 </resources>

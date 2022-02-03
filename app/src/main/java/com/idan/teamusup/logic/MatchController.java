@@ -24,11 +24,11 @@ public class MatchController {
     private static final int DRAW = 2;
     public static final String DRAW_STR = "DRAW";
 
-    private ArrayList<Instance>[] teamsPlayers;
-    private int[] score;
-    private Map<String, Object> goalsTable;
-    private Date createdTimeStamp;
-    private Stack<Instance> goalsStack;
+    private final ArrayList<Instance>[] teamsPlayers;
+    private final int[] score;
+    private final Map<String, Object> goalsTable;
+    private final Date createdTimeStamp;
+    private final Stack<Instance> goalsStack;
 
     public static MatchController getInstance() {
         return instance;
@@ -107,7 +107,7 @@ public class MatchController {
 
     public Instance endMatch(String team) {
         GameController gameController = GameController.getInstance();
-        int[] teamIndexes = gameController.getCurrentMatchTeamsIndexes();
+        Integer[] teamIndexes = gameController.getCurrentMatchTeamsIndexes();
 
         if (team == null) {
             gameController.addTeamsToOrder(
@@ -165,6 +165,8 @@ public class MatchController {
         for (int i = 0; i < NUM_OF_TEAMS; i++) {
             teamsIdsArray[i] = new HashSet<>();
             for (Instance player : this.teamsPlayers[i]) {
+                if (player == null) continue;
+
                 teamsIdsArray[i].add(player.getId());
             }
         }

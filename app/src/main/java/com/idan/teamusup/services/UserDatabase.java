@@ -12,12 +12,16 @@ public class UserDatabase {
 
     Instance user;
     List<Instance> instances;
-    List<Instance> tempList;
 
     private UserDatabase(Instance user, List<Instance> instances) {
         this.user = user;
         this.instances = instances;
-        this.instances.add(user);
+        addUserOnce();
+    }
+
+    private void addUserOnce() {
+        if (this.instances.contains(this.user)) return;
+        this.instances.add(this.user);
     }
 
     public static void init(Instance user, List<Instance> instances) {
@@ -36,14 +40,6 @@ public class UserDatabase {
 
     public List<Instance> getInstances() {
         return instances;
-    }
-
-    public List<Instance> getTempList() {
-        return tempList;
-    }
-
-    public void setTempList(List<Instance> tempList) {
-        this.tempList = tempList;
     }
 
     public void addInstance(Instance instance) {

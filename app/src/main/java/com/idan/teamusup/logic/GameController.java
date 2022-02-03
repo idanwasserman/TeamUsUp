@@ -25,17 +25,17 @@ public class GameController {
     private static final String TAG = "TAG_GameController";
 
     // Date & Location
-    private Date createdTimeStamp;
-    private Location location;
+    private final Date createdTimeStamp;
+    private final Location location;
 
     // All participating players
-    private List<Instance> allPlayers;
+    private final List<Instance> allPlayers;
 
     // All the teams that played
     private List<Instance>[] allTeams;
 
     // All matches Played
-    private List<Instance> allMatches;
+    private final List<Instance> allMatches;
 
     // Game stats
     private Map<String, Integer> playersGoalsTable;
@@ -45,9 +45,9 @@ public class GameController {
 
     // Helping objects
     private ArrayList<Instance>[] currentMatchTeams;
-    private int[] currentMatchTeamsIndexes;
+    private Integer[] currentMatchTeamsIndexes;
     private LinkedList<Integer> groupMatchesOrder;
-    private int teamsSize, timeSize, playerSize;
+    private final int teamsSize, timeSize, playerSize;
 
     private GameTablesUpdateListener gameTablesUpdateListener;
 
@@ -80,7 +80,7 @@ public class GameController {
 
     private void initHelpingObjects() {
         this.currentMatchTeams = new ArrayList[2];
-        this.currentMatchTeamsIndexes = new int[2];
+        this.currentMatchTeamsIndexes = new Integer[2];
 
         this.groupMatchesOrder = MyRandom.getInstance().randomGroupMatchesOrder(teamsSize);
         this.uniqueTeams = new HashSet<>();
@@ -143,6 +143,7 @@ public class GameController {
                 .getAttributes()
                 .get(Constants.teamsPlayersIds.name());
         int[] score = (int[]) match.getAttributes().get(Constants.score.name());
+        assert teamsPlayersIdsSetArray != null;
         int[] hashCodes = new int[] {
                 teamsPlayersIdsSetArray[0].hashCode(),
                 teamsPlayersIdsSetArray[1].hashCode()
@@ -206,6 +207,7 @@ public class GameController {
         Set<String>[] teamsPlayersIdsSetArray = (Set<String>[]) match
                 .getAttributes()
                 .get(Constants.teamsPlayersIds.name());
+        assert teamsPlayersIdsSetArray != null;
         boolean b1 = this.uniqueTeams.add(teamsPlayersIdsSetArray[0]);
         Log.d(TAG, "updateUniqueTeams: team1 is " + (b1 ? "new" : "old"));
         boolean b2 = this.uniqueTeams.add(teamsPlayersIdsSetArray[1]);
@@ -234,21 +236,38 @@ public class GameController {
         return this.currentMatchTeams;
     }
 
-    public int[] getCurrentMatchTeamsIndexes() {
+    public Integer[] getCurrentMatchTeamsIndexes() {
         return currentMatchTeamsIndexes;
     }
 
-    public void startingNewMatch() {
-        Log.d(TAG, "startingNewMatch: groupMatchesOrder: " + groupMatchesOrder.toString());
+    public void startNewMatch() {
+        for (int i = 0; i < 2; i++) {
+            this.currentMatchTeamsIndexes[i] = this.groupMatchesOrder.pollFirst();
+        }
+        fillCurrentMatchTeams();
+    }
 
-        int team1 = this.groupMatchesOrder.pollFirst();
-        int team2 = this.groupMatchesOrder.pollFirst();
+    private void fillCurrentMatchTeams() {
+        int[] teamsIndexes = new int[] {
+                this.currentMatchTeamsIndexes[0],
+                this.currentMatchTeamsIndexes[1] };
 
-        this.currentMatchTeamsIndexes[0] = team1;
-        this.currentMatchTeamsIndexes[1] = team2;
+        for (int i = 0; i < 2; i++) {
+            if (this.allTeams[teamsIndexes[i]].size() != this.playerSize) {
+                Integer lastTeamInOrder = this.groupMatchesOrder.peekLast();
+                if (lastTeamInOrder == null) throw new RuntimeException("fillCurrentMatchTeams: lastTeamInOrder == null");
 
-        this.currentMatchTeams[0] = (ArrayList<Instance>) this.allTeams[team1];
-        this.currentMatchTeams[1] = (ArrayList<Instance>) this.allTeams[team2];
+                int missingPlayersAmount = this.playerSize - this.allTeams[teamsIndexes[i]].size();
+                for (int j = 0; j < missingPlayersAmount; j++) {
+                    int lastTeamInOrderSize = this.allTeams[lastTeamInOrder].size();
+                    int randomIndex = MyRandom.getInstance().randomInt(lastTeamInOrderSize);
+                    Instance playerToAdd = this.allTeams[lastTeamInOrder].remove(randomIndex);
+                    this.allTeams[teamsIndexes[i]].add(playerToAdd);
+                }
+            }
+
+            this.currentMatchTeams[i] = (ArrayList<Instance>) this.allTeams[teamsIndexes[i]];
+        }
     }
 
     public Instance endGame() {
@@ -298,13 +317,15 @@ public class GameController {
                 if (counter == 0) {
                     sb.append(player.getName());
                 } else {
-                    sb.append("," + player.getName());
+                    sb.append(", ").append(player.getName());
                 }
                 counter++;
             }
         }
 
-        sb.append(" - (" + maxGoals + ")");
+        sb      .append(" - (")
+                .append(maxGoals)
+                .append(")");
         return sb.toString();
     }
 

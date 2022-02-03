@@ -1,5 +1,6 @@
 package com.idan.teamusup.activities;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Build;
@@ -34,8 +35,6 @@ import java.util.Map;
 @RequiresApi(api = Build.VERSION_CODES.N)
 public class Activity_RandomGroups extends AppCompatActivity {
 
-    private static final String TAG = "TAG_Activity_RandomGroups";
-
     // Views
     private MaterialButton random_BTN_start;
     private MaterialButton random_BTN_random;
@@ -56,8 +55,7 @@ public class Activity_RandomGroups extends AppCompatActivity {
     private ArrayList<Instance> allPlayers;
 
     private Bundle bundle;
-    private int playersSize, teamsSize;
-    private boolean isNew, randomAgainPressed = false;
+    private int teamsSize;
 
     private GameController gameController;
 
@@ -116,7 +114,7 @@ public class Activity_RandomGroups extends AppCompatActivity {
     
     // Listeners
 
-    private GameController.GameTablesUpdateListener
+    private final GameController.GameTablesUpdateListener
             standingsTableUpdateListener = new GameController.GameTablesUpdateListener() {
         @Override
         public void updateStandingsTable(List<int[]> pointsTable) {
@@ -149,6 +147,10 @@ public class Activity_RandomGroups extends AppCompatActivity {
         for (int i = 0; i < this.teamsSize; i++) {
             this.teams[i].removeAll(this.teams[i]);
             Collections.addAll(this.teams[i], randomTeamsArr[i]);
+
+            // remove all nulls
+            while (this.teams[i].remove(null));
+
             this.textViews[i].setText(
                     GameServiceImpl
                             .getService()
@@ -157,7 +159,6 @@ public class Activity_RandomGroups extends AppCompatActivity {
     }
 
     private void randomAgain() {
-        this.randomAgainPressed = true;
         randomPlayersToTeams();
         updateAdapters();
     }
@@ -169,13 +170,12 @@ public class Activity_RandomGroups extends AppCompatActivity {
         // Get GameDay details
         this.bundle = getIntent().getBundleExtra(Constants.bundle.name());
         this.teamsSize = this.bundle.getInt(Constants.teamsSize.name());
-        this.playersSize = this.bundle.getInt(Constants.playersSize.name());
-        this.isNew = this.bundle.getBoolean(Constants.isNew.name());
     }
 
 
     // adapters methods:
 
+    @SuppressLint("NotifyDataSetChanged")
     private void updateAdapters() {
         for (int i = 0; i < this.teamsSize; i++) {
             this.adapters[i].notifyDataSetChanged();
@@ -264,12 +264,10 @@ public class Activity_RandomGroups extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         new AlertDialog.Builder(this)
-                .setMessage("Are you sure you want to exit?")
+                .setMessage("Are you sure you want to end game?")
                 .setCancelable(false)
                 .setNegativeButton(R.string.no, null)
-                .setPositiveButton(R.string.yes, (dialog, which) -> {
-                    endGame();
-                })
+                .setPositiveButton(R.string.yes, (dialog, which) -> endGame())
                 .show();
     }
 

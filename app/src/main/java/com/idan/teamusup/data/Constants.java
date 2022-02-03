@@ -1,23 +1,17 @@
 package com.idan.teamusup.data;
 
 public enum Constants {
+
     ADMIN,
 
     BLUE,
     bundle,
 
-    chosenPlayersArr,
-
     instances,
     isNew,
 
-    lat,
-    lng,
     level,
-    listener,
     location,
-
-    matchNumber,
 
     name,
 
@@ -32,17 +26,14 @@ public enum Constants {
 
     totalGames,
     topScorer,
-    topScorerAmount,
     time,
     teamsPlayersIds,
     teamSize,
     teamsSize,
     timeSize,
-    team1Keys,
-    team2Keys,
+    Toast,
 
     uniqueTeams,
     user,
 
-    winningTeamColor;
 }
