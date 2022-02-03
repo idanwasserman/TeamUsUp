@@ -1,0 +1,657 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:keepScreenOn="true"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Random groups:"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="4dp"
+            android:textSize="20sp"/>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+
+
+                    <FrameLayout
+                        android:id="@+id/random_frame_recycler"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        >
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            >
+
+                            <FrameLayout
+                                android:id="@+id/frame1"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:padding="4dp"
+                                android:background="#03A9F4"
+                                >
+
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/random_LIST_team1"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal" />
+
+                            </FrameLayout>
+
+                            <FrameLayout
+                                android:id="@+id/frame2"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="#FF2229"
+                                >
+
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/random_LIST_team2"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal" />
+
+                            </FrameLayout>
+
+                            <FrameLayout
+                                android:id="@+id/frame3"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="#673AB7"
+                                >
+
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/random_LIST_team3"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal" />
+
+                            </FrameLayout>
+
+                            <FrameLayout
+                                android:id="@+id/frame4"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="#FFEB3B"
+                                >
+
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/random_LIST_team4"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal" />
+
+                            </FrameLayout>
+
+                        </LinearLayout>
+
+                    </FrameLayout>
+
+                    <FrameLayout
+                        android:id="@+id/random_frame_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="visible"
+                        android:layout_marginTop="16dp"
+                        >
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:layout_margin="8dp"
+                            >
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                >
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal"
+                                    >
+
+                                    <Space
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        />
+
+                                    <com.google.android.material.textview.MaterialTextView
+                                        android:id="@+id/random_TXT_team1"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textSize="20sp"
+                                        android:text="team #1: "
+                                        android:gravity="center"
+                                        />
+
+                                    <Space
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        />
+
+                                    <com.google.android.material.textview.MaterialTextView
+                                        android:id="@+id/random_TXT_team2"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textSize="20sp"
+                                        android:text="team #2: "
+                                        android:gravity="center"
+                                        />
+
+                                    <Space
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        />
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal"
+                                    android:layout_marginTop="16dp"
+                                    >
+
+                                    <Space
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        />
+
+                                    <com.google.android.material.textview.MaterialTextView
+                                        android:id="@+id/random_TXT_team3"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textSize="20sp"
+                                        android:gravity="center"
+                                        android:text="team #3: "
+                                        />
+
+                                    <Space
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        />
+
+                                    <com.google.android.material.textview.MaterialTextView
+                                        android:id="@+id/random_TXT_team4"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textSize="20sp"
+                                        android:gravity="center"
+                                        android:text="team #4: "
+                                        />
+
+                                    <Space
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        />
+
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </FrameLayout>
+
+                </RelativeLayout>
+
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Standing Table"
+                    android:textSize="16sp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_margin="16dp"
+                    />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    >
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="10sp"
+                            android:text="Id"
+                            />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/table_TXT_id"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0"
+                            android:textSize="10sp"
+                            />
+
+                    </LinearLayout>
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:layout_width="wrap_content"
+                            android:textSize="10sp"
+                            android:layout_height="wrap_content"
+                            android:text="pts"
+                            />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/table_TXT_points"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0"
+                            android:textSize="10sp"
+                            />
+
+                    </LinearLayout>
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_weight="3"
+                        android:orientation="vertical">
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:layout_width="wrap_content"
+                            android:textSize="10sp"
+                            android:layout_height="wrap_content"
+                            android:text="@string/matches"
+                            />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/table_TXT_matches"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0"
+                            android:textSize="10sp"
+                            />
+
+                    </LinearLayout>
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="10sp"
+                            android:text="W"
+                            />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/table_TXT_wins"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0"
+                            android:textSize="10sp"
+                            />
+
+                    </LinearLayout>
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:gravity="center"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="10sp"
+                            android:text="D"
+                            />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/table_TXT_draws"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0"
+                            android:textSize="10sp"
+                            />
+
+                    </LinearLayout>
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:layout_width="wrap_content"
+                            android:textSize="10sp"
+                            android:layout_height="wrap_content"
+                            android:text="L"
+                            />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/table_TXT_losses"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0"
+                            android:textSize="10sp"
+                            />
+
+                    </LinearLayout>
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:layout_width="wrap_content"
+                            android:textSize="10sp"
+                            android:layout_height="wrap_content"
+                            android:text="GF"
+                            />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/table_TXT_goalsScored"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0"
+                            android:textSize="10sp"
+                            />
+
+                    </LinearLayout>
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:layout_width="wrap_content"
+                            android:textSize="10sp"
+                            android:layout_height="wrap_content"
+                            android:text="GA"
+                            />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/table_TXT_goalsAgainst"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0"
+                            android:textSize="10sp"
+                            />
+
+                    </LinearLayout>
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:gravity="center"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:layout_width="wrap_content"
+                            android:textSize="10sp"
+                            android:layout_height="wrap_content"
+                            android:text="GD"
+                            />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/table_TXT_goalsDiff"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0"
+                            android:textSize="10sp"
+                            />
+
+                    </LinearLayout>
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        />
+
+                </LinearLayout>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Scoring Table"
+                    android:textSize="16sp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_margin="16dp"
+                    />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/table_TXT_scoring"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textSize="10sp"
+                    android:layout_gravity="center_horizontal"
+                    />
+
+            </LinearLayout>
+
+
+
+        </ScrollView>
+
+        <LinearLayout
+            android:id="@+id/linear_layout_buttons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_margin="8dp"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/random_BTN_random"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="#E91E63"
+                    android:text="@string/random"
+                    app:cornerRadius="50dp"
+                    />
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/random_BTN_view"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="#FF5722"
+                    android:text="view"
+                    app:cornerRadius="50dp"
+                    />
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/random_BTN_start"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="#4CAF50"
+                    android:text="@string/start"
+                    app:cornerRadius="50dp"
+                    />
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/random_BTN_finish"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="#E91E1E"
+                    android:text="@string/finish"
+                    app:cornerRadius="50dp"
+                    />
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+</RelativeLayout>

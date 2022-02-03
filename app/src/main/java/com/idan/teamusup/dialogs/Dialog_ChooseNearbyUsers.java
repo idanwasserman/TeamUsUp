@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.textview.MaterialTextView;
-import com.idan.teamusup.PlayerAdapter_Big;
+import com.idan.teamusup.adapters.PlayerAdapter_Big;
 import com.idan.teamusup.R;
 import com.idan.teamusup.data.Instance;
 
