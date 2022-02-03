@@ -12,11 +12,12 @@ public class UserDatabase {
 
     Instance user;
     List<Instance> instances;
-    List<Instance> temp;
+    List<Instance> tempList;
 
     private UserDatabase(Instance user, List<Instance> instances) {
         this.user = user;
         this.instances = instances;
+        this.instances.add(user);
     }
 
     public static void init(Instance user, List<Instance> instances) {
@@ -37,12 +38,12 @@ public class UserDatabase {
         return instances;
     }
 
-    public List<Instance> getTemp() {
-        return temp;
+    public List<Instance> getTempList() {
+        return tempList;
     }
 
-    public void setTemp(List<Instance> temp) {
-        this.temp = temp;
+    public void setTempList(List<Instance> tempList) {
+        this.tempList = tempList;
     }
 
     public void addInstance(Instance instance) {

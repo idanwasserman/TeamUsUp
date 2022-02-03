@@ -13,7 +13,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.idan.teamusup.R;
 import com.idan.teamusup.data.Constants;
 import com.idan.teamusup.data.Generator;
-import com.idan.teamusup.logic.RandomPlayers;
+import com.idan.teamusup.logic.GameServiceImpl;
+import com.idan.teamusup.logic.MyRandom;
+import com.idan.teamusup.logic.PlayerServiceImpl;
 import com.idan.teamusup.services.FirebaseRealtimeDB;
 import com.idan.teamusup.data.Instance;
 import com.idan.teamusup.data.Location;
@@ -49,7 +51,12 @@ public class Activity_DataLoading extends AppCompatActivity {
         initHelpingObjects();
         loadUserInstance();
         loadDatabase();
+        anotherInit();
         MyLocation.getInstance().getLastLocation(this.callBack_location);
+    }
+
+    private void anotherInit() {
+        GameServiceImpl.init();
     }
 
     private boolean isUserLoggedIn() {
@@ -58,14 +65,15 @@ public class Activity_DataLoading extends AppCompatActivity {
     }
 
     private void initHelpingObjects() {
+        this.instanceService = InstanceServiceImpl.init();
         MySharedPreferences.init(this, getUniqueFilename());
         MyLocation.init(this);
         MyCamera.init();
         Generator.init();
-        RandomPlayers.init();
+        MyRandom.init();
         Validator.init(this);
         FirebaseRealtimeDB.init();
-        this.instanceService = InstanceServiceImpl.init();
+        PlayerServiceImpl.init();
     }
 
     private String getUniqueFilename() {

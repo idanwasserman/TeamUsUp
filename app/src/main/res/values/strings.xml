@@ -55,5 +55,10 @@
     <string name="random">Random</string>
     <string name="finish">Finish</string>
     <string name="undo">Undo</string>
+    <string name="end">End</string>
+    <string name="RED">RED</string>
+    <string name="BLUE">BLUE</string>
+    <string name="matches">Matches</string>
+    <string name="points">Points</string>
 
 </resources>

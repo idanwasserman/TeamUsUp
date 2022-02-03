@@ -17,9 +17,11 @@ import java.util.Map;
 public class PlayerServiceImpl implements PlayerService {
 
     private static PlayerServiceImpl service;
-    private InstanceService instanceService = InstanceServiceImpl.getService();
+    private InstanceService instanceService;
 
-    private PlayerServiceImpl() {}
+    private PlayerServiceImpl() {
+        this.instanceService = InstanceServiceImpl.getService();
+    }
 
     public static PlayerServiceImpl init() {
         if (service == null) {

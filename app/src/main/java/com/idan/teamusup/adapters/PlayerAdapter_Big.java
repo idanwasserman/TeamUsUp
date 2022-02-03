@@ -1,4 +1,4 @@
-package com.idan.teamusup;
+package com.idan.teamusup.adapters;
 
 import android.app.Activity;
 import android.os.SystemClock;
@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.textview.MaterialTextView;
+import com.idan.teamusup.R;
 import com.idan.teamusup.data.Constants;
 import com.idan.teamusup.data.Instance;
 import com.idan.teamusup.data.InstanceType;

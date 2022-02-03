@@ -22,11 +22,19 @@
             android:value="AIzaSyCja7ALMoUO0wg5qxnYVa6ZZNDcCECPc0A" />
 
         <activity
-            android:name=".activities.Activity_NewGame"
+            android:name=".activities.Activity_NewGameForm"
             android:exported="false"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".activities.Activity_Game"
+            android:exported="false"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activities.Activity_RandomGroups"
+            android:exported="false"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activities.Activity_MatchProgress"
             android:exported="false"
             android:screenOrientation="portrait"/>
         <activity

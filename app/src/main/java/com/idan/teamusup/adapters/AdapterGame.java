@@ -1,4 +1,4 @@
-package com.idan.teamusup;
+package com.idan.teamusup.adapters;
 
 import android.app.Activity;
 import android.location.Address;
@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.textview.MaterialTextView;
+import com.idan.teamusup.R;
 import com.idan.teamusup.data.Constants;
 import com.idan.teamusup.data.Instance;
 import com.idan.teamusup.data.Location;
@@ -20,7 +21,6 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -54,23 +54,41 @@ public class AdapterGame extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int index) {
         GameViewHolder gameViewHolder = (GameViewHolder) holder;
         Instance game = getGame(index);
-        String totalGames, topScorer, location, time, teamSize, date;
+        String totalGames, topScorer, location, timeSize, teamSize, date;
         Map<String, Object> attributes = game.getAttributes();
 
-        totalGames = (String) attributes.get(Constants.totalGames.name());
         topScorer = (String) attributes.get(Constants.topScorer.name()); // TODO upgrade to get num of goals too
         location = getCityNameByLocation(game.getLocation());
-        time = (String) attributes.get(Constants.time.name());
-        teamSize = (String) attributes.get(Constants.teamSize.name());
+
+        totalGames = getNumberAsString(attributes, Constants.totalGames.name());
+        timeSize = getNumberAsString(attributes, Constants.timeSize.name());
+        teamSize = getNumberAsString(attributes, Constants.teamSize.name());
+//        totalGames = "" + (Integer) attributes.get(Constants.totalGames.name());
+//        timeSize = "" + (Integer) attributes.get(Constants.timeSize.name());
+//        teamSize = "" + (Integer) attributes.get(Constants.teamSize.name());
         DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         date = formatter.format(game.getCreatedTimestamp());
 
         gameViewHolder.game_LBL_totalGames.setText(totalGames);
         gameViewHolder.game_LBL_topScorer.setText(topScorer);
         gameViewHolder.game_LBL_location.setText(location);
-        gameViewHolder.game_LBL_time.setText(time);
+        gameViewHolder.game_LBL_time.setText(timeSize);
         gameViewHolder.game_LBL_teamSize.setText(teamSize);
         gameViewHolder.game_LBL_date.setText(date);
+    }
+
+    private String getNumberAsString(Map<String, Object> attributes, String key) {
+        Number number;
+        try {
+            number = (Number) attributes.get(key);
+            if (number == null) {
+                number = 0;
+            }
+        } catch (Exception e) {
+            Log.d(TAG, "getNumberAsString: caught exception: " + e);
+            number = 0;
+        }
+        return number.intValue() + "";
     }
 
     private String getCityNameByLocation(Location location) {

@@ -1,7 +1,6 @@
 package com.idan.teamusup.activities;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -22,19 +21,20 @@ import com.idan.teamusup.data.Instance;
 import com.idan.teamusup.fragments.Fragment_Profile;
 import com.idan.teamusup.logic.InstanceServiceImpl;
 import com.idan.teamusup.logic.interfaces.InstanceService;
+import com.idan.teamusup.services.MyLocation;
 import com.idan.teamusup.services.UserDatabase;
 
 
 public class Activity_Home extends AppCompatActivity
-        implements Fragment_Profile.OnCompleteEditingListener {
-
+        implements Fragment_Profile.OnCompleteEditingListener
+{
     private static final String TAG = "Activity_Home_TAG";
 
-    private DrawerLayout drawerLayout;
-    private NavigationView navigationView;
-    private View headerView;
-    private ImageView home_IMG_menu;
-    private TextView home_TXT_title;
+    private DrawerLayout    drawerLayout;
+    private NavigationView  navigationView;
+    private View            headerView;
+    private ImageView       home_IMG_menu;
+    private TextView        home_TXT_title;
 
     private InstanceService instanceService;
 
@@ -110,5 +110,6 @@ public class Activity_Home extends AppCompatActivity
                 .getAttributes()
                 .put(Constants.photoUrl.name(), photoUrl);
     }
+
 }
 
