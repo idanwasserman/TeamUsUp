@@ -6,6 +6,7 @@ import com.idan.teamusup.data.Constants;
 import com.idan.teamusup.data.Instance;
 import com.idan.teamusup.data.InstanceType;
 import com.idan.teamusup.data.Location;
+import com.idan.teamusup.data.Size;
 import com.idan.teamusup.data.TeamDetails;
 import com.idan.teamusup.services.UserDatabase;
 
@@ -46,7 +47,7 @@ public class GameController {
     private ArrayList<Instance>[] currentMatchTeams;
     private int[] currentMatchTeamsIndexes;
     private LinkedList<Integer> groupMatchesOrder;
-    private int teamsSize;
+    private int teamsSize, timeSize, playerSize;
 
     private GameTablesUpdateListener gameTablesUpdateListener;
 
@@ -55,17 +56,20 @@ public class GameController {
         return instance;
     }
 
-    public static GameController init(List<Instance> allPlayers, int teamsSize) {
+    public static GameController init(List<Instance> allPlayers, int[] size) {
         if (instance == null) {
-            instance = new GameController(allPlayers, teamsSize);
+            instance = new GameController(allPlayers, size);
         }
         return instance;
     }
 
-    private GameController(List<Instance> allPlayers, int teamsSize) {
+    private GameController(List<Instance> allPlayers, int[] size) {
         this.createdTimeStamp = new Date();
         this.location = UserDatabase.getDatabase().getUser().getLocation();
-        this.teamsSize = teamsSize;
+
+        this.teamsSize = size[Size.team.ordinal()];
+        this.playerSize = size[Size.player.ordinal()];
+        this.timeSize = size[Size.time.ordinal()];
 
         this.allPlayers = allPlayers;
         this.allMatches = new ArrayList<>();
@@ -86,6 +90,11 @@ public class GameController {
         for (Instance player : allPlayers) {
             this.playersGoalsTable.put(player.getId(), 0);
         }
+    }
+
+    public void cancelMatch() {
+        this.groupMatchesOrder.addFirst(this.currentMatchTeamsIndexes[1]);
+        this.groupMatchesOrder.addFirst(this.currentMatchTeamsIndexes[0]);
     }
 
     public interface GameTablesUpdateListener {
@@ -262,7 +271,10 @@ public class GameController {
 
         attributes.put(Constants.totalGames.name(), (int) this.allMatches.size());
         attributes.put(Constants.topScorer.name(), getTopScorer());
+
         attributes.put(Constants.teamSize.name(), (int) this.teamsSize);
+        attributes.put(Constants.timeSize.name(), (int) this.timeSize);
+        attributes.put(Constants.playersSize.name(), (int) this.playerSize);
 
         return attributes;
     }
@@ -275,10 +287,10 @@ public class GameController {
         Set<String> topScorersIds = findPlayerIdsScoringMax(maxGoals);
 
         // Get the names of the relevant ids
-        return getNamesFromIds(topScorersIds);
+        return getNamesFromIds(maxGoals, topScorersIds);
     }
 
-    private String getNamesFromIds(Set<String> topScorersIds) {
+    private String getNamesFromIds(int maxGoals, Set<String> topScorersIds) {
         StringBuilder sb = new StringBuilder();
         int counter = 0;
         for (Instance player : this.allPlayers) {
@@ -292,6 +304,7 @@ public class GameController {
             }
         }
 
+        sb.append(" - (" + maxGoals + ")");
         return sb.toString();
     }
 

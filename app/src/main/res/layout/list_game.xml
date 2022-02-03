@@ -74,7 +74,18 @@
                     android:ellipsize="end"
                     android:gravity="bottom"
                     android:maxLines="1"
-                    android:text="Team size:"
+                    android:text="Teams:"
+                    android:textSize="14sp"
+                    android:textColor="@color/black"/>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:ellipsize="end"
+                    android:gravity="bottom"
+                    android:maxLines="1"
+                    android:text="Players:"
                     android:textSize="14sp"
                     android:textColor="@color/black"/>
 
@@ -147,6 +158,18 @@
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/game_LBL_teamSize"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:ellipsize="end"
+                    android:gravity="bottom"
+                    android:maxLines="1"
+                    android:text="3"
+                    android:textSize="14sp"
+                    android:textColor="@color/black"/>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/game_LBL_playersSize"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"

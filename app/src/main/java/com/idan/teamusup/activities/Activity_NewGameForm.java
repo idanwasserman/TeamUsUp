@@ -18,6 +18,7 @@ import com.idan.teamusup.R;
 import com.idan.teamusup.data.Constants;
 import com.idan.teamusup.data.Instance;
 import com.idan.teamusup.data.InstanceType;
+import com.idan.teamusup.data.Size;
 import com.idan.teamusup.data.SortInstanceByName;
 import com.idan.teamusup.logic.GameController;
 import com.idan.teamusup.logic.InstanceServiceImpl;
@@ -79,11 +80,19 @@ public class Activity_NewGameForm extends AppCompatActivity {
     private void startNewGame() {
         GameController.init(
                 new ArrayList<>(this.chosenPlayers),
-                this.teamsSize);
+                getSizeArray());
         Intent intent = new Intent(this, Activity_RandomGroups.class);
         intent.putExtra(Constants.bundle.name(), packBundle());
         startActivity(intent);
         finish();
+    }
+
+    private int[] getSizeArray() {
+        int[] size = new int[Size.size.ordinal()];
+        size[Size.team.ordinal()] = this.teamsSize;
+        size[Size.player.ordinal()] = this.playersSize;
+        size[Size.time.ordinal()] = this.timeSize;
+        return size;
     }
 
     private Bundle packBundle() {

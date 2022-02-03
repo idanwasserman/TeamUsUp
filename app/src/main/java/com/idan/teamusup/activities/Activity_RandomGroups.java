@@ -59,6 +59,8 @@ public class Activity_RandomGroups extends AppCompatActivity {
     private int playersSize, teamsSize;
     private boolean isNew, randomAgainPressed = false;
 
+    private GameController gameController;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,8 +83,8 @@ public class Activity_RandomGroups extends AppCompatActivity {
         for (int i = 0; i < this.teamsSize; i++) {
             this.teams[i] = new ArrayList<>();
         }
-
-        GameController.getInstance().setGameTablesUpdateListener(this.standingsTableUpdateListener);
+        this.gameController = GameController.getInstance();
+        this.gameController.setGameTablesUpdateListener(this.standingsTableUpdateListener);
     }
 
     private void endGame() {
@@ -92,7 +94,7 @@ public class Activity_RandomGroups extends AppCompatActivity {
     }
 
     private void saveGame() {
-        Instance game = GameController.getInstance().endGame();
+        Instance game = this.gameController.endGame();
         if (game == null) {
             Toast.makeText(this, "No matches have been played", Toast.LENGTH_SHORT).show();
             return;
@@ -101,15 +103,7 @@ public class Activity_RandomGroups extends AppCompatActivity {
     }
 
     private void startMatch() {
-        int currentMatch;
-        if (this.isNew) {
-            currentMatch = 1;
-            this.isNew = false;
-            this.bundle.putBoolean(Constants.isNew.name(), this.isNew);
-        } else {
-            currentMatch = this.bundle.getInt(Constants.matchNumber.name()) + 1;
-        }
-        this.bundle.putInt(Constants.matchNumber.name(), currentMatch);
+        int currentMatch = this.gameController.getMatchNumber();
         Toast.makeText(this, "Starting match #" + currentMatch, Toast.LENGTH_SHORT).show();
 
         GameController.getInstance().setAllTeams(this.teams);
@@ -119,6 +113,7 @@ public class Activity_RandomGroups extends AppCompatActivity {
         startActivity(intent);
     }
 
+    
     // Listeners
 
     private GameController.GameTablesUpdateListener

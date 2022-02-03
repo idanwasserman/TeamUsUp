@@ -32,6 +32,7 @@ public enum Constants {
 
     totalGames,
     topScorer,
+    topScorerAmount,
     time,
     teamsPlayersIds,
     teamSize,

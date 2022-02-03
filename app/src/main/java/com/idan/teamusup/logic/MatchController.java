@@ -134,6 +134,11 @@ public class MatchController {
                         .setAttributes(packMatchAttributes()));
     }
 
+    public void cancelMatch() {
+        GameController.getInstance().cancelMatch();
+        instance = null;
+    }
+
     private Map<String, Object> packMatchAttributes() {
         Map<String, Object> attributes = new HashMap<>();
         attributes.put(Constants.teamsPlayersIds.name(), getTeamsPlayersIdsSetArray());

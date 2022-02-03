@@ -54,18 +54,18 @@ public class AdapterGame extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int index) {
         GameViewHolder gameViewHolder = (GameViewHolder) holder;
         Instance game = getGame(index);
-        String totalGames, topScorer, location, timeSize, teamSize, date;
+        String totalGames, topScorer, location, timeSize, teamSize, playerSize, date;
         Map<String, Object> attributes = game.getAttributes();
 
-        topScorer = (String) attributes.get(Constants.topScorer.name()); // TODO upgrade to get num of goals too
+        topScorer = (String) attributes.get(Constants.topScorer.name());
+
         location = getCityNameByLocation(game.getLocation());
 
         totalGames = getNumberAsString(attributes, Constants.totalGames.name());
         timeSize = getNumberAsString(attributes, Constants.timeSize.name());
         teamSize = getNumberAsString(attributes, Constants.teamSize.name());
-//        totalGames = "" + (Integer) attributes.get(Constants.totalGames.name());
-//        timeSize = "" + (Integer) attributes.get(Constants.timeSize.name());
-//        teamSize = "" + (Integer) attributes.get(Constants.teamSize.name());
+        playerSize = getNumberAsString(attributes, Constants.playersSize.name());
+
         DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         date = formatter.format(game.getCreatedTimestamp());
 
@@ -74,6 +74,7 @@ public class AdapterGame extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         gameViewHolder.game_LBL_location.setText(location);
         gameViewHolder.game_LBL_time.setText(timeSize);
         gameViewHolder.game_LBL_teamSize.setText(teamSize);
+        gameViewHolder.game_LBL_playersSize.setText(playerSize);
         gameViewHolder.game_LBL_date.setText(date);
     }
 
@@ -125,6 +126,7 @@ public class AdapterGame extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         public MaterialTextView game_LBL_location;
         public MaterialTextView game_LBL_time;
         public MaterialTextView game_LBL_teamSize;
+        public MaterialTextView game_LBL_playersSize;
         public MaterialTextView game_LBL_date;
 
         public GameViewHolder(final View itemView) {
@@ -134,6 +136,7 @@ public class AdapterGame extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             this.game_LBL_location = itemView.findViewById(R.id.game_LBL_location);
             this.game_LBL_time = itemView.findViewById(R.id.game_LBL_time);
             this.game_LBL_teamSize = itemView.findViewById(R.id.game_LBL_teamSize);
+            this.game_LBL_playersSize = itemView.findViewById(R.id.game_LBL_playersSize);
             this.game_LBL_date = itemView.findViewById(R.id.game_LBL_date);
 
             itemView.setOnClickListener(v -> gameItemClickListener.gameClicked(

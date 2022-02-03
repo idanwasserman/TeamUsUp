@@ -58,7 +58,6 @@ public class Activity_MatchProgress extends AppCompatActivity {
     private Vibrator vibrator;
     private MatchController matchController;
     private GameController gameController;
-    private int matchNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +78,7 @@ public class Activity_MatchProgress extends AppCompatActivity {
         this.adapters = new PlayerAdapter_Big[2];
         this.timeLeftInMillis = this.timeSize * ONE_MINUTE_IN_MILLIS;
         this.vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-        this.match_TXT_title.setText("Match #" + this.matchNumber);
+        this.match_TXT_title.setText("Match #" + this.gameController.getMatchNumber());
 
         this.gameController.startingNewMatch();
         this.teams = this.gameController.getCurrentMatchTeams();
@@ -89,7 +88,6 @@ public class Activity_MatchProgress extends AppCompatActivity {
 
     private void unpackBundle() {
         this.bundle = getIntent().getBundleExtra(Constants.bundle.name());
-        this.matchNumber = this.bundle.getInt(Constants.matchNumber.name());
         this.timeSize = this.bundle.getInt(Constants.timeSize.name());
     }
 
@@ -282,7 +280,7 @@ public class Activity_MatchProgress extends AppCompatActivity {
                 .setCancelable(false)
                 .setNegativeButton(R.string.no, null)
                 .setPositiveButton(R.string.yes, (dialog, which) -> {
-                    // TODO delete last match data
+                    this.matchController.cancelMatch();
                     finish();
                 })
                 .show();
