@@ -61,5 +61,18 @@
     <string name="matches">Matches</string>
     <string name="points">Points</string>
     <string name="pause">Pause</string>
+    <string name="player">Player</string>
+    <string name="teams">Teams</string>
+    <string name="game_table">Game Table</string>
+    <string name="zero">0</string>
+    <string name="new_game">New Game</string>
+    <string name="my_location">My Location</string>
+    <string name="my_games">My Games</string>
+    <string name="total_games">Total Games</string>
+    <string name="top_scorer">Top Scorer</string>
+    <string name="match_length">Match Length</string>
+    <string name="players_total">Players (Total)</string>
+    <string name="date">Date</string>
+    <string name="location">Location</string>
 
 </resources>

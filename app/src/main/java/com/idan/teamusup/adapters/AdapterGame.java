@@ -3,7 +3,6 @@ package com.idan.teamusup.adapters;
 import android.app.Activity;
 import android.location.Address;
 import android.location.Geocoder;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,9 +26,9 @@ import java.util.Map;
 
 public class AdapterGame extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private static final String TAG = "AdapterGame_TAG";
-    private Activity activity;
-    private ArrayList<Instance> games;
+    private static final String PATTERN = "dd/MM/yyyy";
+    private final Activity activity;
+    private final ArrayList<Instance> games;
     private GameItemClickListener gameItemClickListener;
 
     public AdapterGame(Activity activity, ArrayList<Instance> _games) {
@@ -54,7 +53,7 @@ public class AdapterGame extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int index) {
         GameViewHolder gameViewHolder = (GameViewHolder) holder;
         Instance game = getGame(index);
-        String totalGames, topScorer, location, timeSize, teamSize, playerSize, date;
+        String totalGames, topScorer, location, timeSize, teamSize, playerSize, totalPlayers, date;
         Map<String, Object> attributes = game.getAttributes();
 
         topScorer = (String) attributes.get(Constants.topScorer.name());
@@ -65,8 +64,11 @@ public class AdapterGame extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         timeSize = getNumberAsString(attributes, Constants.timeSize.name());
         teamSize = getNumberAsString(attributes, Constants.teamSize.name());
         playerSize = getNumberAsString(attributes, Constants.playersSize.name());
+        totalPlayers = getNumberAsString(attributes, Constants.totalPlayers.name());
+        StringBuilder playerSB = new StringBuilder()
+                .append(playerSize).append(" (").append(totalPlayers).append(")");
 
-        DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        DateFormat formatter = new SimpleDateFormat(PATTERN);
         date = formatter.format(game.getCreatedTimestamp());
 
         gameViewHolder.game_LBL_totalGames.setText(totalGames);
@@ -74,7 +76,7 @@ public class AdapterGame extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         gameViewHolder.game_LBL_location.setText(location);
         gameViewHolder.game_LBL_time.setText(timeSize);
         gameViewHolder.game_LBL_teamSize.setText(teamSize);
-        gameViewHolder.game_LBL_playersSize.setText(playerSize);
+        gameViewHolder.game_LBL_playersSize.setText(playerSB.toString());
         gameViewHolder.game_LBL_date.setText(date);
     }
 
@@ -86,7 +88,6 @@ public class AdapterGame extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 number = 0;
             }
         } catch (Exception e) {
-            Log.d(TAG, "getNumberAsString: caught exception: " + e);
             number = 0;
         }
         return number.intValue() + "";
@@ -101,8 +102,11 @@ public class AdapterGame extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        String[] address = addresses.get(0).getAddressLine(0).split(",");
-        // Example of addresses.get(0).getAddressLine(0) - "Rachel Hirshenzon St 32, Rehovot, Israel"
+        String[] address = new String[0];
+        if (addresses != null) {
+            address = addresses.get(0).getAddressLine(0).split(",");
+        }
+        // Example of addresses.get(0).getAddressLine(0) - "Gabriel St 32, Lod, Israel"
         return address[address.length - 2];
     }
 

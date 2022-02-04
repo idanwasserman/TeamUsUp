@@ -41,7 +41,7 @@
                     android:ellipsize="end"
                     android:gravity="bottom"
                     android:maxLines="1"
-                    android:text="Total games:"
+                    android:text="@string/total_games"
                     android:textSize="14sp"
                     android:textColor="@color/black"/>
 
@@ -52,7 +52,7 @@
                     android:ellipsize="end"
                     android:gravity="bottom"
                     android:maxLines="1"
-                    android:text="Top scorer:"
+                    android:text="@string/top_scorer"
                     android:textSize="14sp"
                     android:textColor="@color/black" />
 
@@ -63,7 +63,7 @@
                     android:ellipsize="end"
                     android:gravity="bottom"
                     android:maxLines="1"
-                    android:text="Match length:"
+                    android:text="@string/match_length"
                     android:textSize="14sp"
                     android:textColor="@color/black" />
 
@@ -74,7 +74,7 @@
                     android:ellipsize="end"
                     android:gravity="bottom"
                     android:maxLines="1"
-                    android:text="Teams:"
+                    android:text="@string/teams"
                     android:textSize="14sp"
                     android:textColor="@color/black"/>
 
@@ -85,7 +85,7 @@
                     android:ellipsize="end"
                     android:gravity="bottom"
                     android:maxLines="1"
-                    android:text="Players:"
+                    android:text="@string/players_total"
                     android:textSize="14sp"
                     android:textColor="@color/black"/>
 
@@ -96,7 +96,7 @@
                     android:ellipsize="end"
                     android:gravity="bottom"
                     android:maxLines="1"
-                    android:text="Date:"
+                    android:text="@string/date"
                     android:textSize="14sp"
                     android:textColor="@color/black"/>
 
@@ -107,7 +107,7 @@
                     android:ellipsize="end"
                     android:gravity="bottom"
                     android:maxLines="1"
-                    android:text="Location:"
+                    android:text="@string/location"
                     android:textSize="14sp"
                     android:textColor="@color/black" />
 
@@ -128,7 +128,6 @@
                     android:ellipsize="end"
                     android:gravity="bottom"
                     android:maxLines="1"
-                    android:text="0"
                     android:textSize="14sp"
                     android:textColor="@color/black"/>
 
@@ -140,7 +139,6 @@
                     android:ellipsize="end"
                     android:gravity="bottom"
                     android:maxLines="1"
-                    android:text="Messi (10)"
                     android:textSize="14sp"
                     android:textColor="@color/black" />
 
@@ -152,7 +150,6 @@
                     android:ellipsize="end"
                     android:gravity="bottom"
                     android:maxLines="1"
-                    android:text="8 [min]"
                     android:textSize="14sp"
                     android:textColor="@color/black" />
 
@@ -164,7 +161,6 @@
                     android:ellipsize="end"
                     android:gravity="bottom"
                     android:maxLines="1"
-                    android:text="3"
                     android:textSize="14sp"
                     android:textColor="@color/black"/>
 
@@ -176,7 +172,6 @@
                     android:ellipsize="end"
                     android:gravity="bottom"
                     android:maxLines="1"
-                    android:text="7"
                     android:textSize="14sp"
                     android:textColor="@color/black"/>
 
@@ -188,7 +183,6 @@
                     android:ellipsize="end"
                     android:gravity="bottom"
                     android:maxLines="1"
-                    android:text="31/01/2022"
                     android:textSize="14sp"
                     android:textColor="@color/black"/>
 
@@ -200,7 +194,6 @@
                     android:ellipsize="end"
                     android:gravity="bottom"
                     android:maxLines="1"
-                    android:text="Tel Aviv"
                     android:textSize="14sp"
                     android:textColor="@color/black" />
 

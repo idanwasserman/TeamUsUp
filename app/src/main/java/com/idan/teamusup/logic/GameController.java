@@ -2,15 +2,17 @@ package com.idan.teamusup.logic;
 
 import android.util.Log;
 
+import com.idan.teamusup.activities.Activity_RandomGroups;
 import com.idan.teamusup.data.Constants;
 import com.idan.teamusup.data.Instance;
 import com.idan.teamusup.data.InstanceType;
 import com.idan.teamusup.data.Location;
 import com.idan.teamusup.data.Size;
-import com.idan.teamusup.data.TeamDetails;
+import com.idan.teamusup.data.PlayerStats;
 import com.idan.teamusup.services.UserDatabase;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -22,7 +24,14 @@ import java.util.Set;
 public class GameController {
 
     private static GameController instance;
+
+    private static final int WIN_PTS = 3;
+    private static final int DRAW_PTS = 1;
+    private static final int LOSE_PTS = 0;
     private static final String TAG = "TAG_GameController";
+
+    // Listeners
+    private Activity_RandomGroups.UpdateGameTableListener updateGameTableListener;
 
     // Date & Location
     private final Date createdTimeStamp;
@@ -39,17 +48,14 @@ public class GameController {
 
     // Game stats
     private Map<String, Integer> playersGoalsTable;
-    private List<int[]> pointsTable;
     private Set<Set<String>> uniqueTeams;
-
+    private List<Object> gameTable;
 
     // Helping objects
     private ArrayList<Instance>[] currentMatchTeams;
     private Integer[] currentMatchTeamsIndexes;
     private LinkedList<Integer> groupMatchesOrder;
     private final int teamsSize, timeSize, playerSize;
-
-    private GameTablesUpdateListener gameTablesUpdateListener;
 
 
     public static GameController getInstance() {
@@ -84,12 +90,67 @@ public class GameController {
 
         this.groupMatchesOrder = MyRandom.getInstance().randomGroupMatchesOrder(teamsSize);
         this.uniqueTeams = new HashSet<>();
-        this.pointsTable = new ArrayList<>();
 
         this.playersGoalsTable = new HashMap<>();
         for (Instance player : allPlayers) {
             this.playersGoalsTable.put(player.getId(), 0);
         }
+
+        this.gameTable = new ArrayList<>();
+        for (Instance player : this.allPlayers) {
+            Object[] arr = new Object[PlayerStats.size.ordinal()];
+            Arrays.fill(arr, 0);
+
+            arr[PlayerStats.id.ordinal()] = player.getId();
+            arr[PlayerStats.name.ordinal()] = player.getName();
+
+            this.gameTable.add(arr);
+        }
+    }
+
+    public int getMatchNumber() {
+        return this.allMatches.size() + 1;
+    }
+
+    public List<Instance> getAllPlayers() {
+        return allPlayers;
+    }
+
+    public ArrayList<Instance>[] getCurrentMatchTeams() {
+        return this.currentMatchTeams;
+    }
+
+    public Integer[] getCurrentMatchTeamsIndexes() {
+        return currentMatchTeamsIndexes;
+    }
+
+    private String getTopScorer() {
+        // Find the max num of goals a player scored
+        int maxGoals = findMaxGoals();
+
+        // find all player that scored the same amount of goals
+        Set<String> topScorersIds = findPlayerIdsScoringMax(maxGoals);
+
+        // Get the names of the relevant ids
+        return getNamesFromIds(maxGoals, topScorersIds);
+    }
+
+    private String getNamesFromIds(int maxGoals, Set<String> topScorersIds) {
+        StringBuilder sb = new StringBuilder();
+        int counter = 0;
+        for (Instance player : this.allPlayers) {
+            if (topScorersIds.contains(player.getId())) {
+                if (counter == 0) {
+                    sb.append(player.getName());
+                } else {
+                    sb.append(", ").append(player.getName());
+                }
+                counter++;
+            }
+        }
+
+        sb.append(" - (").append(maxGoals).append(")");
+        return sb.toString();
     }
 
     public void cancelMatch() {
@@ -97,24 +158,15 @@ public class GameController {
         this.groupMatchesOrder.addFirst(this.currentMatchTeamsIndexes[0]);
     }
 
-    public interface GameTablesUpdateListener {
-        void updateStandingsTable(List<int[]> pointsTable);
-        void updateScoringTable(Map<String, Integer> playersGoalsTable);
-    }
 
-    public void setGameTablesUpdateListener(GameTablesUpdateListener gameTablesUpdateListener) {
-        this.gameTablesUpdateListener = gameTablesUpdateListener;
+    public void setUpdateGameTableListener
+            (Activity_RandomGroups.UpdateGameTableListener updateGameTableListener) {
+        this.updateGameTableListener = updateGameTableListener;
     }
 
     public void setAllTeams(ArrayList<Instance>[] allTeams) {
         this.allTeams = allTeams;
     }
-
-    public List<Instance> getAllPlayers() {
-        return allPlayers;
-    }
-
-
 
     public void addTeamsToOrder(int winningTeamNumber, int losingTeamNumber) {
         this.groupMatchesOrder.addFirst(winningTeamNumber);
@@ -122,8 +174,7 @@ public class GameController {
     }
 
     public void addMatch(Instance match) {
-        // Update points table
-        updatePointsTable(match);
+        this.allMatches.add(match);
 
         // Update unique teams
         updateUniqueTeams(match);
@@ -131,76 +182,107 @@ public class GameController {
         // Update player's goals table
         updatePlayersGoalsCounter(match);
 
-        this.allMatches.add(match);
+        // Update game's table
+        updateTable(match);
 
-        this.gameTablesUpdateListener.updateStandingsTable(this.pointsTable);
-        this.gameTablesUpdateListener.updateScoringTable(this.playersGoalsTable);
+        this.updateGameTableListener.updateGameTable(this.gameTable);
     }
 
-    private void updatePointsTable(Instance match) {
-        // Get teams hash code
-        Set<String>[] teamsPlayersIdsSetArray = (Set<String>[]) match
-                .getAttributes()
-                .get(Constants.teamsPlayersIds.name());
-        int[] score = (int[]) match.getAttributes().get(Constants.score.name());
-        assert teamsPlayersIdsSetArray != null;
-        int[] hashCodes = new int[] {
-                teamsPlayersIdsSetArray[0].hashCode(),
-                teamsPlayersIdsSetArray[1].hashCode()
-        };
+    private void updateTable(Instance match) {
+        // Prepare stats objects from match attributes
+        Map<String, Object> matchAttributes = match.getAttributes();
+        if (matchAttributes == null) return;
 
-        for (int i = 0; i < 2; i++) {
-            // Get teams details array
-            int[] teamDetails = findTeamDetails(hashCodes[i]);
+        Map<String, Integer> matchGoalsTable = (Map<String, Integer>)
+                matchAttributes.get(Constants.matchGoalsTable.name());
 
-            // Update array
-            updateTeamDetailsArray(teamDetails, score, i);
+        Set<String>[] teamsPlayersIdsSetArray = (Set<String>[])
+                matchAttributes.get(Constants.teamsPlayersIds.name());
+
+        int[] score = (int[])
+                matchAttributes.get(Constants.score.name());
+
+        if (teamsPlayersIdsSetArray == null || score == null || matchGoalsTable == null) return;
+
+        // Update stats for each team
+        for (int i = 0; i < MatchController.NUM_OF_TEAMS; i++) {
+            // Current team's player points earned from last game
+            int[] points = getPointsFromScore(score, i);
+
+            // Update each team's player stats
+            for (String playerId : teamsPlayersIdsSetArray[i]) {
+                Object[] currArr = getPlayerStatsArrById(playerId);
+
+                updatePlayerGoals(currArr, matchGoalsTable.get(playerId));
+                updatePoints(currArr, points);
+                updateTeamGoals(currArr, score, i);
+            }
         }
     }
 
-    private int[] findTeamDetails(int hashCode) {
-        for (int[] teamDetails : this.pointsTable) {
-            if (teamDetails[TeamDetails.id.ordinal()] == hashCode) {
-                return teamDetails;
+    private void updateTeamGoals(Object[] currArr, int[] score, int teamIndex) {
+        int opponentTeam = teamIndex ^ 1;
+
+        int lastGoalsScored = (int) currArr[PlayerStats.goalsScored.ordinal()];
+        int newGoalsScored = lastGoalsScored + score[teamIndex];
+        currArr[PlayerStats.goalsScored.ordinal()] = newGoalsScored;
+
+        int lastGoalsAgainst = (int) currArr[PlayerStats.goalsAgainst.ordinal()];
+        int newGoalsAgainst = lastGoalsAgainst + score[opponentTeam];
+        currArr[PlayerStats.goalsAgainst.ordinal()] = newGoalsAgainst;
+
+        currArr[PlayerStats.goalsDiff.ordinal()] = newGoalsScored - newGoalsAgainst;
+    }
+
+    private void updatePlayerGoals(Object[] currArr, Integer matchPlayerGoals) {
+        if (matchPlayerGoals == null) matchPlayerGoals = 0;
+        int lastPlayerGoals = (int) currArr[PlayerStats.goals.ordinal()];
+        currArr[PlayerStats.goals.ordinal()] = matchPlayerGoals + lastPlayerGoals;
+    }
+
+    private void updatePoints(Object[] currArr, int[] points) {
+        int matchesPlayed = (int) currArr[PlayerStats.matchesPlayed.ordinal()];
+        currArr[PlayerStats.matchesPlayed.ordinal()] = matchesPlayed + 1;
+
+        int matchResult = (int) currArr[points[0]];
+        currArr[points[0]] = matchResult + 1;
+
+        int playerPoints = (int) currArr[PlayerStats.points.ordinal()];
+        currArr[PlayerStats.points.ordinal()] = playerPoints + points[1];
+    }
+
+    private Object[] getPlayerStatsArrById(String playerId) {
+        for (Object o : this.gameTable) {
+            Object[] arr = (Object[]) o;
+            if (playerId.equals(arr[PlayerStats.id.ordinal()])) {
+                return arr;
             }
         }
 
-        int[] newTeamDetails = new int[TeamDetails.size.ordinal()];
-        newTeamDetails[TeamDetails.id.ordinal()] = hashCode;
-        this.pointsTable.add(newTeamDetails);
-        return newTeamDetails;
+        // In case an error happened and the current player doesn't have his own stats arr
+        Object[] newArr = new Object[PlayerStats.size.ordinal()];
+        newArr[PlayerStats.id.ordinal()] = playerId;
+        newArr[PlayerStats.name.ordinal()] = getPlayerNameById(playerId);
+        return newArr;
     }
 
-    private void updateTeamDetailsArray(int[] teamDetails, int[] score, int i) {
-        teamDetails[TeamDetails.matches.ordinal()] += 1;
-
-        int points = 0;
-        if (i == 0) {
-            if (score[0] > score[1]) {
-                teamDetails[TeamDetails.wins.ordinal()]++;
-                points = 3;
-            } else if (score[0] < score[1]) {
-                teamDetails[TeamDetails.losses.ordinal()]++;
-            } else {
-                teamDetails[TeamDetails.draws.ordinal()]++;
-                points = 1;
-            }
-        } else if (i == 1) {
-            if (score[0] > score[1]) {
-                teamDetails[TeamDetails.losses.ordinal()]++;
-            } else if (score[0] < score[1]) {
-                teamDetails[TeamDetails.wins.ordinal()]++;
-                points = 3;
-            } else {
-                teamDetails[TeamDetails.draws.ordinal()]++;
-                points = 1;
-            }
+    private String getPlayerNameById(String playerId) {
+        for (Instance player : this.allPlayers) {
+            if (player.getId().equals(playerId)) return player.getName();
         }
+        return "";
+    }
 
-        teamDetails[TeamDetails.goalsScored.ordinal()] += score[i];
-        teamDetails[TeamDetails.goalsAgainst.ordinal()] += score[i ^ 1];
-        teamDetails[TeamDetails.goalsDiff.ordinal()] += (score[i] - score[i ^ 1]);
-        teamDetails[TeamDetails.points.ordinal()] += points;
+    private int[] getPointsFromScore(int[] score, int teamIndex) {
+        int opponentTeam = teamIndex ^ 1;
+
+        if (score[teamIndex] > score[opponentTeam]) {
+            return new int[] { PlayerStats.wins.ordinal(), WIN_PTS };
+        } else if (score[teamIndex] < score[opponentTeam]) {
+            return new int[] { PlayerStats.losses.ordinal(), LOSE_PTS };
+        } else {
+            return new int[] { PlayerStats.draws.ordinal(), DRAW_PTS };
+        }
     }
 
     private void updateUniqueTeams(Instance match) {
@@ -232,14 +314,6 @@ public class GameController {
         }
     }
 
-    public ArrayList<Instance>[] getCurrentMatchTeams() {
-        return this.currentMatchTeams;
-    }
-
-    public Integer[] getCurrentMatchTeamsIndexes() {
-        return currentMatchTeamsIndexes;
-    }
-
     public void startNewMatch() {
         for (int i = 0; i < 2; i++) {
             this.currentMatchTeamsIndexes[i] = this.groupMatchesOrder.pollFirst();
@@ -255,7 +329,9 @@ public class GameController {
         for (int i = 0; i < 2; i++) {
             if (this.allTeams[teamsIndexes[i]].size() != this.playerSize) {
                 Integer lastTeamInOrder = this.groupMatchesOrder.peekLast();
-                if (lastTeamInOrder == null) throw new RuntimeException("fillCurrentMatchTeams: lastTeamInOrder == null");
+                if (lastTeamInOrder == null) {
+                    throw new RuntimeException("fillCurrentMatchTeams: lastTeamInOrder == null");
+                }
 
                 int missingPlayersAmount = this.playerSize - this.allTeams[teamsIndexes[i]].size();
                 for (int j = 0; j < missingPlayersAmount; j++) {
@@ -285,48 +361,19 @@ public class GameController {
 
     private Map<String, Object> packAttributes() {
         Map<String, Object> attributes = new HashMap<>();
-        attributes.put(Constants.pointsTable.name(), this.pointsTable);
+
+        attributes.put(Constants.gameTable.name(), this.gameTable);
         attributes.put(Constants.uniqueTeams.name(), this.uniqueTeams);
 
-        attributes.put(Constants.totalGames.name(), (int) this.allMatches.size());
         attributes.put(Constants.topScorer.name(), getTopScorer());
 
-        attributes.put(Constants.teamSize.name(), (int) this.teamsSize);
-        attributes.put(Constants.timeSize.name(), (int) this.timeSize);
-        attributes.put(Constants.playersSize.name(), (int) this.playerSize);
+        attributes.put(Constants.teamSize.name(), this.teamsSize);
+        attributes.put(Constants.timeSize.name(), this.timeSize);
+        attributes.put(Constants.playersSize.name(), this.playerSize);
+        attributes.put(Constants.totalPlayers.name(), this.allPlayers.size());
+        attributes.put(Constants.totalGames.name(), this.allMatches.size());
 
         return attributes;
-    }
-
-    private String getTopScorer() {
-        // Find the max num of goals a player scored
-        int maxGoals = findMaxGoals();
-
-        // find all player that scored the same amount of goals
-        Set<String> topScorersIds = findPlayerIdsScoringMax(maxGoals);
-
-        // Get the names of the relevant ids
-        return getNamesFromIds(maxGoals, topScorersIds);
-    }
-
-    private String getNamesFromIds(int maxGoals, Set<String> topScorersIds) {
-        StringBuilder sb = new StringBuilder();
-        int counter = 0;
-        for (Instance player : this.allPlayers) {
-            if (topScorersIds.contains(player.getId())) {
-                if (counter == 0) {
-                    sb.append(player.getName());
-                } else {
-                    sb.append(", ").append(player.getName());
-                }
-                counter++;
-            }
-        }
-
-        sb      .append(" - (")
-                .append(maxGoals)
-                .append(")");
-        return sb.toString();
     }
 
     private Set<String> findPlayerIdsScoringMax(int maxGoals) {
@@ -349,10 +396,6 @@ public class GameController {
             }
         }
         return maxGoals;
-    }
-
-    public int getMatchNumber() {
-        return this.allMatches.size() + 1;
     }
 
 }

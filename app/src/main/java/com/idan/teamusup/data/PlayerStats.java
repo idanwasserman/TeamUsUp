@@ -1,12 +1,14 @@
 package com.idan.teamusup.data;
 
-public enum TeamDetails {
+public enum PlayerStats {
     id,
-    points,
-    matches,
+    name,
+    goals,
+    matchesPlayed,
     wins,
     draws,
     losses,
+    points,
     goalsScored,
     goalsAgainst,
     goalsDiff,

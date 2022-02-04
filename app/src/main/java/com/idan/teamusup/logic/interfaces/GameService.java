@@ -4,7 +4,6 @@ import com.idan.teamusup.data.Instance;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public interface GameService {
 
@@ -25,15 +24,9 @@ public interface GameService {
     String convertTeamToText(ArrayList<Instance> team, int teamNumber);
 
     /**
-     * @param pointsTable a list of
-     * @return game's points table as text
+     * converts game's table list to text array
+     * @param gameTable the game's table
+     * @return string array of the table's content
      */
-    String[] convertPointsTableToText(List<int[]> pointsTable);
-
-    /**
-     * @param playersGoalsTable a map of player's id and his score amount
-     * @return game's scoring table as text
-     */
-    String convertScoringTableToText(Map<String, Integer> playersGoalsTable);
-
+    String[] convertGameTableToText(List<Object> gameTable);
 }

@@ -21,7 +21,7 @@ import com.idan.teamusup.adapters.PlayerAdapter_Big;
 import com.idan.teamusup.R;
 import com.idan.teamusup.data.Constants;
 import com.idan.teamusup.data.Instance;
-import com.idan.teamusup.data.TeamDetails;
+import com.idan.teamusup.data.PlayerStats;
 import com.idan.teamusup.logic.GameController;
 import com.idan.teamusup.logic.GameServiceImpl;
 import com.idan.teamusup.logic.MyRandom;
@@ -29,7 +29,6 @@ import com.idan.teamusup.logic.MyRandom;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 
 @RequiresApi(api = Build.VERSION_CODES.N)
@@ -42,8 +41,7 @@ public class Activity_RandomGroups extends AppCompatActivity {
     private MaterialButton random_BTN_finish;
     private FrameLayout random_frame_recycler;
     private FrameLayout random_frame_text;
-    private MaterialTextView table_TXT_scoring;
-    private MaterialTextView[] standingTable;
+    private MaterialTextView[] gameTable;
 
     // Lists  recyclers and adapters
     private ArrayList<Instance>[] teams;
@@ -82,7 +80,8 @@ public class Activity_RandomGroups extends AppCompatActivity {
             this.teams[i] = new ArrayList<>();
         }
         this.gameController = GameController.getInstance();
-        this.gameController.setGameTablesUpdateListener(this.standingsTableUpdateListener);
+        this.gameController.setUpdateGameTableListener(this.updateGameTableListener);
+//        this.gameController.setGameTablesUpdateListener(this.standingsTableUpdateListener);
     }
 
     private void endGame() {
@@ -114,26 +113,15 @@ public class Activity_RandomGroups extends AppCompatActivity {
     
     // Listeners
 
-    private final GameController.GameTablesUpdateListener
-            standingsTableUpdateListener = new GameController.GameTablesUpdateListener() {
-        @Override
-        public void updateStandingsTable(List<int[]> pointsTable) {
-            String[] text = GameServiceImpl
-                    .getService()
-                    .convertPointsTableToText(pointsTable);
+    public interface UpdateGameTableListener {
+        void updateGameTable(List<Object> gameTable);
+    }
 
-            int size = TeamDetails.size.ordinal();
-            for (int i = 0; i < size; i++) {
-                standingTable[i].setText(text[i]);
-            }
-        }
-
-        @Override
-        public void updateScoringTable(Map<String, Integer> playersGoalsTable) {
-            table_TXT_scoring.setText(
-                    GameServiceImpl
-                            .getService()
-                            .convertScoringTableToText(playersGoalsTable));
+    private final UpdateGameTableListener updateGameTableListener = gameTable -> {
+        String[] textArr = GameServiceImpl.getService().convertGameTableToText(gameTable);
+        int startIndex = PlayerStats.id.ordinal() + 1;
+        for (int i = startIndex; i < PlayerStats.size.ordinal(); i++) {
+            this.gameTable[i - startIndex].setText(textArr[i]);
         }
     };
 
@@ -213,10 +201,12 @@ public class Activity_RandomGroups extends AppCompatActivity {
         this.random_BTN_finish = findViewById(R.id.random_BTN_finish);
         this.random_frame_recycler = findViewById(R.id.random_frame_recycler);
         this.random_frame_text = findViewById(R.id.random_frame_text);
-        this.table_TXT_scoring = findViewById(R.id.table_TXT_scoring);
 
         this.frameLayouts = new FrameLayout[] {
-                null, null, findViewById(R.id.frame3), findViewById(R.id.frame4)
+                null,
+                null,
+                findViewById(R.id.frame3),
+                findViewById(R.id.frame4)
         };
 
         this.recyclerViews = new RecyclerView[] {
@@ -233,13 +223,14 @@ public class Activity_RandomGroups extends AppCompatActivity {
                 findViewById(R.id.random_TXT_team4)
         };
 
-        this.standingTable = new MaterialTextView[] {
-                findViewById(R.id.table_TXT_id),
-                findViewById(R.id.table_TXT_points),
-                findViewById(R.id.table_TXT_matches),
+        this.gameTable = new MaterialTextView[] {
+                findViewById(R.id.table_TXT_player),
+                findViewById(R.id.table_TXT_goals),
+                findViewById(R.id.table_TXT_matchesPlayed),
                 findViewById(R.id.table_TXT_wins),
                 findViewById(R.id.table_TXT_draws),
                 findViewById(R.id.table_TXT_losses),
+                findViewById(R.id.table_TXT_points),
                 findViewById(R.id.table_TXT_goalsScored),
                 findViewById(R.id.table_TXT_goalsAgainst),
                 findViewById(R.id.table_TXT_goalsDiff)

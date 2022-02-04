@@ -7,6 +7,8 @@ public enum Constants {
     BLUE,
     bundle,
 
+    gameTable,
+
     instances,
     isNew,
 
@@ -18,12 +20,12 @@ public enum Constants {
     photoUrl,
     matchGoalsTable,
     playersSize,
-    pointsTable,
 
     RED,
 
     score,
 
+    totalPlayers,
     totalGames,
     topScorer,
     time,

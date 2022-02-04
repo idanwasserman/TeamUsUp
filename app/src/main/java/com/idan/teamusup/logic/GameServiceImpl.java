@@ -1,22 +1,15 @@
 package com.idan.teamusup.logic;
 
-import androidx.annotation.NonNull;
-
 import com.idan.teamusup.data.Constants;
 import com.idan.teamusup.data.Instance;
+import com.idan.teamusup.data.PlayerStats;
 import com.idan.teamusup.data.Size;
-import com.idan.teamusup.data.TeamDetails;
 import com.idan.teamusup.logic.interfaces.GameService;
-import com.idan.teamusup.services.UserDatabase;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
 
 public class GameServiceImpl implements GameService {
 
@@ -29,11 +22,8 @@ public class GameServiceImpl implements GameService {
 
 
     private static GameServiceImpl service;
-    private final UserDatabase database;
 
-    private GameServiceImpl() {
-        database = UserDatabase.getDatabase();
-    }
+    private GameServiceImpl() {}
 
     public static GameServiceImpl init() {
         if (service == null) {
@@ -119,98 +109,105 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
-    public String[] convertPointsTableToText(List<int[]> pointsTable) {
-        String[] text = new String[TeamDetails.size.ordinal()];
+    public String[] convertGameTableToText(List<Object> gameTable) {
+        // Sort table
+        myTableBubbleSort(gameTable);
 
-        myPointsTableBubbleSort(pointsTable);
+        // Set table's rows & cols
+        int rows = gameTable.size();
+        int cols = PlayerStats.size.ordinal();
 
-        int cols = TeamDetails.size.ordinal();
+        // Initialize arrays
+        String[] textArr = new String[cols];
+        StringBuilder[] sbArr = new StringBuilder[cols];
         for (int i = 0; i < cols; i++) {
-            StringBuilder sb = new StringBuilder();
-            int rows = pointsTable.size();
-            for (int j = 0; j < rows; j++) {
-                if (i == 0) {
-                    sb.append("\n").append(pointsTable.get(j)[i] % 100);
+            sbArr[i] = new StringBuilder();
+        }
+
+        // For each row
+        for (int i = 0; i < rows; i++) {
+
+            // Current player stats array
+            Object[] currArr = getObjectArrFromList(gameTable, i);
+
+            // For each column
+            int startIndex = PlayerStats.id.ordinal() + 1;
+            for (int j = startIndex; j < cols; j++) {
+                String str = currArr[j].toString();
+                if (j == startIndex) {
+                    sbArr[j].append(i + 1).append(")   ");
                 } else {
-                    sb.append("\n").append(pointsTable.get(j)[i]);
+                    double d = Double.parseDouble(str);
+                    int num = (int) d;
+                    str = num + "";
                 }
+                sbArr[j].append(str).append("\n");
             }
-            text[i] = sb.toString();
         }
 
-        return text;
+        for (int i = 0; i < cols; i++) {
+            textArr[i] = sbArr[i].toString();
+        }
+        return textArr;
     }
 
-    private void myPointsTableBubbleSort(List<int[]> pointsTable) {
-        int n = pointsTable.size();
+    /**
+     * bubble sort of a list according to player's stats\n
+     * sorting according to those parameters: player's points -> player's goals -> player's team's goals
+     * @param gameTable the game table list to sort, each element is a player's game stats
+     */
+    private void myTableBubbleSort(List<Object> gameTable) {
+        int n = gameTable.size();
+
         for (int i = 0; i < n - 1; i++) {
+
             for (int j = 0; j < n - i - 1; j++) {
-                if (pointsTable.get(j)[TeamDetails.points.ordinal()] <
-                        pointsTable.get(j + 1)[TeamDetails.points.ordinal()]) {
-                    Collections.swap(pointsTable, j , j + 1);
+                boolean swap = false;
+
+                Object[] jArr = getObjectArrFromList(gameTable, j);
+                Object[] jPlusOneArr = getObjectArrFromList(gameTable, j + 1);
+
+                int pointsIndex = PlayerStats.points.ordinal();
+                Number jPoints = (Number) jArr[pointsIndex];
+                Number jPlusOnePoints = (Number) jPlusOneArr[pointsIndex];
+
+                if (jPoints.intValue() == jPlusOnePoints.intValue()) {
+                    // If players have the same amount of points -> check amount of goals
+
+                    int goalsIndex = PlayerStats.goals.ordinal();
+                    Number jGoals = (Number) jArr[goalsIndex];
+                    Number jPlusOneGoals = (Number) jPlusOneArr[goalsIndex];
+
+                    if (jGoals.intValue() == jPlusOneGoals.intValue()) {
+                        // If players have the same amount of goals -> check goals scored by team
+
+                        int goalsScoredIndex = PlayerStats.goalsScored.ordinal();
+                        Number jGS = (Number) jArr[goalsScoredIndex];
+                        Number jPlusOneGS = (Number) jPlusOneArr[goalsScoredIndex];
+
+                        if (jGS.intValue() < jPlusOneGS.intValue()) {
+                            swap = true;
+                        }
+                    } else if (jGoals.intValue() < jPlusOneGoals.intValue()) {
+                        swap = true;
+                    }
+                } else if (jPoints.intValue() < jPlusOnePoints.intValue()) {
+                    swap = true;
                 }
+
+                if (swap) {
+                    Collections.swap(gameTable, j , j + 1);
+                }
+
             }
         }
     }
 
-    @Override
-    public String convertScoringTableToText(Map<String, Integer> playersGoalsTable) {
-        // For each unique amount of goals -> a linked list of players' names
-        Map<Integer, LinkedList<String>> helper = getIntegerLinkedListMap(playersGoalsTable);
-
-        // Sort goals set to descending order list
-        List<Integer> sortedGoals = new ArrayList<>(helper.keySet());
-        Collections.sort(sortedGoals);
-        Collections.reverse(sortedGoals);
-
-        // Build scoring table
-        return buildScoringTable(sortedGoals, helper).toString();
-    }
-
-    private StringBuilder buildScoringTable(List<Integer> sortedGoals, Map<Integer, LinkedList<String>> helper) {
-        StringBuilder sb = new StringBuilder();
-        int size = sortedGoals.size();
-        int position = 1, counter = 1;
-        for (int i = 0; i < size; i++) {
-            Integer currGoals = sortedGoals.get(i);
-            LinkedList<String> currNamesList = helper.get(currGoals);
-            if (currNamesList == null) continue;
-            for (String name : currNamesList) {
-                sb.append(position).append(") ").append(currGoals).append(" - ").append(name).append("\n");
-                counter++;
-            }
-            position = counter;
-        }
-        return sb;
-    }
-
-    @NonNull
-    private Map<Integer, LinkedList<String>> getIntegerLinkedListMap(
-            Map<String, Integer> playersGoalsTable) {
-        Map<Integer, LinkedList<String>> helper = new HashMap<>();
-
-        Set<String> keys = playersGoalsTable.keySet();
-        for (String key : keys) {
-            Integer value = playersGoalsTable.get(key);
-            if (value == null) continue;
-
-            LinkedList<String> currValList = helper.get(value);
-            if (currValList == null) {
-                currValList = new LinkedList<>();
-                helper.put(value, currValList);
-            }
-
-            currValList.add(getNameById(key));
-        }
-        return helper;
-    }
-
-    private String getNameById(String id) {
-        Instance instance = database.getInstanceById(id);
-        if (instance == null) {
-            return "null";
-        } else {
-            return instance.getName();
+    private Object[] getObjectArrFromList(List<Object> gameTable, int index) {
+        try {
+            return (Object[]) gameTable.get(index);
+        } catch (Exception e) {
+            return ((List<Object>) gameTable.get(index)).toArray(new Object[0]);
         }
     }
 }

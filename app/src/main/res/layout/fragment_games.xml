@@ -11,89 +11,96 @@
         android:layout_height="match_parent"
         >
 
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:padding="10dp"
-            android:layout_margin="5dp"
             >
 
-            <!-- Games list -->
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/games_LIST_games"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal" />
-
-
-            <!-- Map -->
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:layout_margin="10dp"
-                android:padding="5dp"
-                android:backgroundTint="@color/colorGreen"
-                >
-
-                <fragment
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="5"
-                    android:id="@+id/google_map"
-                    android:name="com.google.android.gms.maps.SupportMapFragment"
-                    />
-
-            </FrameLayout>
-
-
-            <!-- Buttons -->
             <LinearLayout
-                android:layout_below="@id/games_LIST_games"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:id="@+id/buttons"
-                >
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-                <Space
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/games_BTN_newGame"
+                <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="#2196F3"
-                    android:text="new game"
-                    app:cornerRadius="50dp" />
+                    android:layout_gravity="center_horizontal"
+                    android:layout_margin="4dp"
+                    android:text="@string/my_games"
+                    android:textSize="16sp" />
 
-                <Space
-                    android:layout_width="0dp"
+                <!-- Games list -->
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/games_LIST_games"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    />
+                    android:orientation="horizontal" />
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/games_BTN_refreshLocation"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="#F44336"
-                    android:text="My Location"
-                    app:cornerRadius="50dp" />
 
-                <Space
-                    android:layout_width="0dp"
+                <!-- Game Table -->
+                <include layout="@layout/layout_game_table"/>
+
+
+                <!-- Buttons -->
+                <LinearLayout
+                    android:id="@+id/buttons"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    />
+                    android:orientation="horizontal">
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/games_BTN_newGame"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="#2196F3"
+                        android:text="@string/new_game"
+                        app:cornerRadius="50dp" />
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/games_BTN_refreshLocation"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="#F44336"
+                        android:text="@string/my_location"
+                        app:cornerRadius="50dp" />
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
+
+                </LinearLayout>
+
+                <!-- Map -->
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:layout_margin="10dp"
+                    android:backgroundTint="@color/colorGreen"
+                    android:padding="5dp">
+
+                    <fragment
+                        android:id="@+id/google_map"
+                        android:name="com.google.android.gms.maps.SupportMapFragment"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+
+                </FrameLayout>
 
             </LinearLayout>
 
-        </LinearLayout>
+        </ScrollView>
+
 
     </RelativeLayout>
 
