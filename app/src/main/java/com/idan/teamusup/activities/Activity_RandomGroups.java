@@ -81,7 +81,6 @@ public class Activity_RandomGroups extends AppCompatActivity {
         }
         this.gameController = GameController.getInstance();
         this.gameController.setUpdateGameTableListener(this.updateGameTableListener);
-//        this.gameController.setGameTablesUpdateListener(this.standingsTableUpdateListener);
     }
 
     private void endGame() {
@@ -92,16 +91,22 @@ public class Activity_RandomGroups extends AppCompatActivity {
 
     private void saveGame() {
         Instance game = this.gameController.endGame();
+        String text;
         if (game == null) {
-            Toast.makeText(this, "No matches have been played", Toast.LENGTH_SHORT).show();
-            return;
+            text = getResources().getString(R.string.no_matches_played);
+        } else {
+            text = getResources().getString(R.string.game_saved);
         }
-        Toast.makeText(this, "Game saved in my db", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
     }
 
     private void startMatch() {
         int currentMatch = this.gameController.getMatchNumber();
-        Toast.makeText(this, "Starting match #" + currentMatch, Toast.LENGTH_SHORT).show();
+        String text = new StringBuilder()
+                .append(getResources().getString(R.string.starting_match_number))
+                .append(currentMatch)
+                .toString();
+        Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
 
         GameController.getInstance().setAllTeams(this.teams);
 
@@ -255,7 +260,7 @@ public class Activity_RandomGroups extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         new AlertDialog.Builder(this)
-                .setMessage("Are you sure you want to end game?")
+                .setMessage(getResources().getString(R.string.end_game_alert))
                 .setCancelable(false)
                 .setNegativeButton(R.string.no, null)
                 .setPositiveButton(R.string.yes, (dialog, which) -> endGame())

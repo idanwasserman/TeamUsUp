@@ -12,14 +12,14 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="16dp">
 
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Fill form:"
+                android:text="@string/fill_form"
                 android:textSize="18sp"
                 android:layout_gravity="center"
                 />
@@ -31,7 +31,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:hint="How many players in a team?"
+                android:hint="@string/how_many_players_in_a_team"
                 app:errorEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -45,7 +45,7 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="How many teams?"
+                android:hint="@string/how_many_teams"
                 app:errorEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -59,7 +59,7 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="How long is a game?"
+                android:hint="@string/how_long_is_a_game"
                 app:errorEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -72,14 +72,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="All Players List:"
+                android:text="@string/all_players"
                 android:textSize="18sp" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="(click to add player to new game)"
+                android:text="@string/click_to_add_player_to_new_game"
                 android:textSize="12sp" />
 
             <androidx.recyclerview.widget.RecyclerView
@@ -100,7 +100,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:text="Game Players List:"
+                    android:text="@string/game_players"
                     android:textSize="18sp"
                     android:layout_marginEnd="8dp"/>
 
@@ -109,15 +109,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:text="1"
+                    android:text="@string/one"
                     android:textSize="12sp" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:text=" player(s) has been chosen"
-                    android:textSize="12sp" />
+                    android:text="@string/players_has_been_chosen"
+                    android:textSize="12sp"
+                    android:layout_marginStart="2dp"/>
 
             </LinearLayout>
 
@@ -125,7 +126,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="(click to remove player)"
+                android:text="@string/click_to_remove_player"
                 android:textSize="12sp" />
 
             <androidx.recyclerview.widget.RecyclerView
@@ -138,8 +139,6 @@
                 android:id="@+id/form_BTN_submit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/match_TXT_countDown"
-                android:layout_centerHorizontal="true"
                 android:layout_gravity="center"
                 android:layout_marginTop="16dp"
                 android:backgroundTint="#2196F3"

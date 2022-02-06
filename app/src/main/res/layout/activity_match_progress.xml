@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="8dp"
-            android:text="Match #1"
+            android:text="@string/matches"
             android:textSize="24sp" />
 
         <FrameLayout
@@ -63,7 +63,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="Score:"
+                android:text="@string/score"
                 android:textSize="26sp" />
 
             <LinearLayout
@@ -76,21 +76,21 @@
                     android:id="@+id/match_TXT_score1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="0"
+                    android:text="@string/zero"
                     android:textColor="#3F51B5"
                     android:textSize="26sp" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text=" : "
-                    android:textSize="26sp" />
+                    android:text="@string/colon"
+                    android:textSize="28sp" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/match_TXT_score2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="0"
+                    android:text="@string/zero"
                     android:textColor="#F43652"
                     android:textSize="26sp" />
 
@@ -115,7 +115,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="32dp"
-                        android:text="00:00"
+                        android:text="@string/zero_timer"
                         android:textSize="36sp" />
 
                     <LinearLayout
@@ -130,7 +130,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:backgroundTint="#2196F3"
-                            android:text="start"
+                            android:text="@string/start"
                             app:cornerRadius="50dp" />
 
                         <com.google.android.material.button.MaterialButton
@@ -139,7 +139,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
                             android:backgroundTint="#3F51B5"
-                            android:text="reset"
+                            android:text="@string/reset"
                             android:visibility="invisible"
                             app:cornerRadius="50dp"
                             tools:visibility="visible" />
@@ -164,8 +164,6 @@
                         android:id="@+id/match_BTN_undo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_above="@id/match_BTN_end"
-                        android:layout_alignStart="@id/match_BTN_end"
                         android:backgroundTint="#FF5722"
                         android:text="@string/undo"
                         app:cornerRadius="50dp" />
@@ -174,8 +172,6 @@
                         android:id="@+id/match_BTN_end"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentBottom="true"
                         android:backgroundTint="#E91E1E"
                         android:text="@string/end"
                         app:cornerRadius="50dp" />

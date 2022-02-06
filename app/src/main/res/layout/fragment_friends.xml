@@ -17,10 +17,11 @@
                 android:id="@+id/friends_TXT_listTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="My friends/players list:"
+                android:text="@string/my_friends"
                 android:textSize="24sp"
-                android:layout_centerHorizontal="true"
-                android:layout_margin="16dp"
+                android:layout_marginStart="64dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="4dp"
                 />
 
             <com.google.android.material.textview.MaterialTextView
@@ -28,7 +29,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="List is empty\nClick plus button to add players"
+                android:text="@string/empty_list_explanation"
                 android:textSize="18sp"
                 android:layout_centerHorizontal="true"
                 android:layout_margin="16dp"
@@ -51,12 +52,13 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="16dp"
+                android:layout_marginEnd="4dp"
+                android:layout_marginBottom="4dp"
                 android:backgroundTint="#673AB7"
                 android:clickable="true"
+                android:contentDescription="@string/TODO"
                 android:focusable="true"
-                app:srcCompat="@drawable/icn_plus"/>
+                app:srcCompat="@drawable/icn_plus" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/friends_FAB_byLocation"
@@ -65,10 +67,9 @@
                 android:layout_above="@+id/friends_FAB_addFriends"
                 android:layout_alignEnd="@+id/friends_FAB_addFriends"
                 android:layout_marginBottom="16dp"
-                android:clickable="true"
                 android:visibility="invisible"
                 app:srcCompat="@drawable/icn_location"
-                />
+                android:contentDescription="@string/TODO" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/friends_FAB_byText"
@@ -77,10 +78,9 @@
                 android:layout_above="@id/friends_FAB_byLocation"
                 android:layout_alignEnd="@+id/friends_FAB_addFriends"
                 android:layout_marginBottom="16dp"
-                android:clickable="true"
                 android:visibility="invisible"
                 app:srcCompat="@drawable/icn_text_format"
-                />
+                android:contentDescription="@string/TODO"/>
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/friends_FAB_byManual"
@@ -89,10 +89,9 @@
                 android:layout_above="@id/friends_FAB_byText"
                 android:layout_alignEnd="@+id/friends_FAB_addFriends"
                 android:layout_marginBottom="16dp"
-                android:clickable="true"
                 android:visibility="invisible"
                 app:srcCompat="@drawable/icn_manual_click"
-                />
+                android:contentDescription="@string/TODO"/>
 
             <!-- FABs texts -->
             <com.google.android.material.textview.MaterialTextView
@@ -104,7 +103,7 @@
                 android:layout_alignBottom="@id/friends_FAB_byManual"
                 android:layout_marginEnd="70dp"
                 android:gravity="center"
-                android:text="Manual Typing"
+                android:text="@string/manual_typing"
                 android:visibility="invisible" />
 
             <com.google.android.material.textview.MaterialTextView
@@ -116,7 +115,7 @@
                 android:layout_alignBottom="@id/friends_FAB_byText"
                 android:layout_marginEnd="70dp"
                 android:gravity="center"
-                android:text="Convert Text"
+                android:text="@string/convert_text"
                 android:visibility="invisible"
                 />
 
@@ -129,40 +128,33 @@
                 android:layout_alignBottom="@id/friends_FAB_byLocation"
                 android:layout_marginEnd="70dp"
                 android:gravity="center"
-                android:text="Find Players"
+                android:text="@string/find_friends"
                 android:visibility="invisible"
                 />
 
 
             <!-- find by location frame -->
-
-            <com.airbnb.lottie.LottieAnimationView
-                android:id="@+id/lottie_SPC_searching"
-                android:layout_width="200dp"
-                android:layout_height="200dp"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="64dp"
-                android:scaleType="fitCenter"
-                android:visibility="invisible"
-                app:lottie_autoPlay="true"
-                app:lottie_loop="true"
-                app:lottie_rawRes="@raw/lottie_searching" />
             <FrameLayout
-                android:id="@+id/friends_FRAME_location"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/friends_LIST_players"
+                android:id="@+id/friends_FRAME_searching"
+                android:layout_width="220dp"
+                android:layout_height="220dp"
                 android:visibility="invisible"
-                android:layout_marginTop="32dp"
+                android:layout_centerHorizontal="true"
+                android:background="#BF18023E"
+                android:layout_above="@id/friends_FAB_addFriends"
                 >
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    >
-
-                </RelativeLayout>
+                <com.airbnb.lottie.LottieAnimationView
+                    android:id="@+id/lottie_SPC_searching"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:layout_marginBottom="64dp"
+                    android:scaleType="fitCenter"
+                    android:layout_gravity="center_horizontal"
+                    app:lottie_autoPlay="true"
+                    app:lottie_loop="true"
+                    app:lottie_rawRes="@raw/lottie_searching"
+                    />
 
             </FrameLayout>
 

@@ -286,7 +286,7 @@
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:backgroundTint="#FF5722"
-                    android:text="view"
+                    android:text="@string/view"
                     app:cornerRadius="50dp"
                     />
 

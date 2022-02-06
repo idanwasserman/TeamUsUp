@@ -3,294 +3,313 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <LinearLayout
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:baselineAligned="false"
+        android:clickable="true"
+        android:focusable="true"
+        android:checkable="true"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_margin="4dp"
+        app:cardCornerRadius="8dp"
+        android:elevation="8dp"
+        app:cardElevation="4dp"
+        android:backgroundTint="#01AE9D"
         >
-
-        <com.google.android.material.textview.MaterialTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/game_table"
-            android:textSize="16sp"
-            android:layout_gravity="center_horizontal"
-            android:layout_margin="4dp"
-            />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:baselineAligned="false"
+            android:padding="8dp"
             >
 
-            <LinearLayout
+            <com.google.android.material.textview.MaterialTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:orientation="vertical">
+                android:text="@string/game_table"
+                android:textSize="16sp"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="4dp"
+                />
 
-                <com.google.android.material.textview.MaterialTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="14sp"
-                    android:text="@string/player"
-                    />
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/table_TXT_player"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/zero"
-                    android:textSize="12sp"
-                    />
-
-            </LinearLayout>
-
-            <HorizontalScrollView
-                android:layout_width="0dp"
-                android:layout_weight="6"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:baselineAligned="false"
                 >
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:orientation="vertical">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:text="@string/player"
+                        />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/table_TXT_player"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/zero"
+                        android:textSize="12sp"
+                        />
+
+                </LinearLayout>
+
+                <HorizontalScrollView
+                    android:layout_width="0dp"
+                    android:layout_weight="6"
+                    android:layout_height="wrap_content"
                     >
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:layout_marginStart="16dp"
-                        android:orientation="vertical">
+                        android:orientation="horizontal"
+                        >
 
-                        <com.google.android.material.textview.MaterialTextView
-                            android:layout_width="wrap_content"
-                            android:textSize="14sp"
-                            android:layout_height="wrap_content"
-                            android:text="Goals"
-                            android:textStyle="bold"
-                            />
-
-                        <com.google.android.material.textview.MaterialTextView
-                            android:id="@+id/table_TXT_goals"
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textStyle="bold"
-                            android:text="@string/zero"
-                            android:textSize="12sp"
-                            />
+                            android:gravity="center"
+                            android:layout_marginStart="16dp"
+                            android:orientation="vertical">
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:layout_width="wrap_content"
+                                android:textSize="14sp"
+                                android:layout_height="wrap_content"
+                                android:text="Goals"
+                                android:textStyle="bold"
+                                />
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/table_TXT_goals"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textStyle="bold"
+                                android:text="@string/zero"
+                                android:textSize="12sp"
+                                />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:layout_marginStart="16dp"
+                            android:orientation="vertical">
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:layout_width="wrap_content"
+                                android:textSize="14sp"
+                                android:layout_height="wrap_content"
+                                android:text="MP"
+                                />
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/table_TXT_matchesPlayed"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/zero"
+                                android:textSize="12sp"
+                                />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:layout_marginStart="16dp"
+                            android:orientation="vertical">
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="14sp"
+                                android:text="W"
+                                />
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/table_TXT_wins"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/zero"
+                                android:textSize="12sp"
+                                />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:layout_marginStart="16dp"
+                            android:orientation="vertical">
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="14sp"
+                                android:text="D"
+                                />
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/table_TXT_draws"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/zero"
+                                android:textSize="12sp"
+                                />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:layout_marginStart="16dp"
+                            android:orientation="vertical">
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:layout_width="wrap_content"
+                                android:textSize="14sp"
+                                android:layout_height="wrap_content"
+                                android:text="L"
+                                />
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/table_TXT_losses"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/zero"
+                                android:textSize="12sp"
+                                />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:layout_width="wrap_content"
+                                android:textStyle="bold"
+                                android:textSize="14sp"
+                                android:layout_height="wrap_content"
+                                android:text="Pts"
+                                />
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/table_TXT_points"
+                                android:layout_width="wrap_content"
+                                android:textStyle="bold"
+                                android:layout_height="wrap_content"
+                                android:text="@string/zero"
+                                android:textSize="12sp"
+                                />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:layout_marginStart="16dp"
+                            android:orientation="vertical">
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:layout_width="wrap_content"
+                                android:textSize="14sp"
+                                android:layout_height="wrap_content"
+                                android:text="GF"
+                                />
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/table_TXT_goalsScored"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/zero"
+                                android:textSize="12sp"
+                                />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:layout_marginStart="16dp"
+                            android:orientation="vertical">
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:layout_width="wrap_content"
+                                android:textSize="14sp"
+                                android:layout_height="wrap_content"
+                                android:text="GA"
+                                />
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/table_TXT_goalsAgainst"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/zero"
+                                android:textSize="12sp"
+                                />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:gravity="center"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginEnd="16dp"
+                            android:orientation="vertical">
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:layout_width="wrap_content"
+                                android:textSize="14sp"
+                                android:layout_height="wrap_content"
+                                android:text="GD"
+                                />
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/table_TXT_goalsDiff"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/zero"
+                                android:textSize="12sp"
+                                />
+
+                        </LinearLayout>
+
 
                     </LinearLayout>
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:layout_marginStart="16dp"
-                        android:orientation="vertical">
+                </HorizontalScrollView>
 
-                        <com.google.android.material.textview.MaterialTextView
-                            android:layout_width="wrap_content"
-                            android:textSize="14sp"
-                            android:layout_height="wrap_content"
-                            android:text="MP"
-                            />
-
-                        <com.google.android.material.textview.MaterialTextView
-                            android:id="@+id/table_TXT_matchesPlayed"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/zero"
-                            android:textSize="12sp"
-                            />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:layout_marginStart="16dp"
-                        android:orientation="vertical">
-
-                        <com.google.android.material.textview.MaterialTextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="14sp"
-                            android:text="W"
-                            />
-
-                        <com.google.android.material.textview.MaterialTextView
-                            android:id="@+id/table_TXT_wins"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/zero"
-                            android:textSize="12sp"
-                            />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:layout_marginStart="16dp"
-                        android:orientation="vertical">
-
-                        <com.google.android.material.textview.MaterialTextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="14sp"
-                            android:text="D"
-                            />
-
-                        <com.google.android.material.textview.MaterialTextView
-                            android:id="@+id/table_TXT_draws"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/zero"
-                            android:textSize="12sp"
-                            />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:layout_marginStart="16dp"
-                        android:orientation="vertical">
-
-                        <com.google.android.material.textview.MaterialTextView
-                            android:layout_width="wrap_content"
-                            android:textSize="14sp"
-                            android:layout_height="wrap_content"
-                            android:text="L"
-                            />
-
-                        <com.google.android.material.textview.MaterialTextView
-                            android:id="@+id/table_TXT_losses"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/zero"
-                            android:textSize="12sp"
-                            />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <com.google.android.material.textview.MaterialTextView
-                            android:layout_width="wrap_content"
-                            android:textStyle="bold"
-                            android:textSize="14sp"
-                            android:layout_height="wrap_content"
-                            android:text="Pts"
-                            />
-
-                        <com.google.android.material.textview.MaterialTextView
-                            android:id="@+id/table_TXT_points"
-                            android:layout_width="wrap_content"
-                            android:textStyle="bold"
-                            android:layout_height="wrap_content"
-                            android:text="@string/zero"
-                            android:textSize="12sp"
-                            />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:layout_marginStart="16dp"
-                        android:orientation="vertical">
-
-                        <com.google.android.material.textview.MaterialTextView
-                            android:layout_width="wrap_content"
-                            android:textSize="14sp"
-                            android:layout_height="wrap_content"
-                            android:text="GF"
-                            />
-
-                        <com.google.android.material.textview.MaterialTextView
-                            android:id="@+id/table_TXT_goalsScored"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/zero"
-                            android:textSize="12sp"
-                            />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:layout_marginStart="16dp"
-                        android:orientation="vertical">
-
-                        <com.google.android.material.textview.MaterialTextView
-                            android:layout_width="wrap_content"
-                            android:textSize="14sp"
-                            android:layout_height="wrap_content"
-                            android:text="GA"
-                            />
-
-                        <com.google.android.material.textview.MaterialTextView
-                            android:id="@+id/table_TXT_goalsAgainst"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/zero"
-                            android:textSize="12sp"
-                            />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:gravity="center"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginEnd="16dp"
-                        android:orientation="vertical">
-
-                        <com.google.android.material.textview.MaterialTextView
-                            android:layout_width="wrap_content"
-                            android:textSize="14sp"
-                            android:layout_height="wrap_content"
-                            android:text="GD"
-                            />
-
-                        <com.google.android.material.textview.MaterialTextView
-                            android:id="@+id/table_TXT_goalsDiff"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/zero"
-                            android:textSize="12sp"
-                            />
-
-                    </LinearLayout>
-
-
-                </LinearLayout>
-
-            </HorizontalScrollView>
+            </LinearLayout>
 
         </LinearLayout>
 
-    </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+
 
 
 

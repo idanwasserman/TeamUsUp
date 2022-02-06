@@ -8,13 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.airbnb.lottie.LottieAnimationView;
 import com.idan.teamusup.R;
 
 
 public class Fragment_Support extends Fragment {
-
-    private LottieAnimationView lottie_SPC_construction;
 
 
     public Fragment_Support() {
@@ -33,6 +30,5 @@ public class Fragment_Support extends Fragment {
     }
 
     private void findViews(View view) {
-        lottie_SPC_construction = view.findViewById(R.id.lottie_SPC_construction);
     }
 }

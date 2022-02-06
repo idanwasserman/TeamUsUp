@@ -33,6 +33,7 @@ import java.util.List;
 public class Activity_DataLoading extends AppCompatActivity {
 
     private static final String TAG = "Activity_DataLoading_TAG";
+    private static final int MILLIS_IN_ONE_SEC = 1000;
 
     private FirebaseUser user;
     private InstanceService instanceService;
@@ -56,7 +57,7 @@ public class Activity_DataLoading extends AppCompatActivity {
     }
 
     private void anotherInit() {
-        GameServiceImpl.init();
+        GameServiceImpl.init(getResources());
     }
 
     private boolean isUserLoggedIn() {
@@ -93,10 +94,16 @@ public class Activity_DataLoading extends AppCompatActivity {
         Boolean isNew = (Boolean) this.userInstance.getAttributes().get(Constants.isNew.name());
         if (isNew != null) {
             if (isNew) {
-                Toast.makeText(this, "Hello new user", Toast.LENGTH_SHORT).show();
+                Toast.makeText(
+                        this,
+                        getResources().getString(R.string.hello_new_user),
+                        Toast.LENGTH_SHORT).show();
                 this.userInstance.getAttributes().put(Constants.isNew.name(), false);
             } else {
-                Toast.makeText(this, "Welcome back", Toast.LENGTH_SHORT).show();
+                Toast.makeText(
+                        this,
+                        getResources().getString(R.string.welcome_back),
+                        Toast.LENGTH_SHORT).show();
             }
         } else {
             this.userInstance.getAttributes().put(Constants.isNew.name(), false);
@@ -105,10 +112,10 @@ public class Activity_DataLoading extends AppCompatActivity {
 
     private void loadDatabase() {
         List<Instance> instances = this.instanceService.getDatabaseInstances(this.user);
-        Toast.makeText(
-                this,
-                "Loaded " + instances.size() + " instances", // TODO delete this
-                Toast.LENGTH_SHORT).show();
+//        Toast.makeText(
+//                this,
+//                "Loaded " + instances.size() + " instances", // TODO delete this
+//                Toast.LENGTH_SHORT).show();
 
         UserDatabase.init(this.userInstance, instances);
     }
@@ -123,7 +130,7 @@ public class Activity_DataLoading extends AppCompatActivity {
 
         final int DELAY_IN_SECONDS = 2;
         Handler handler = new Handler();
-        handler.postDelayed(this.runnableMethod, DELAY_IN_SECONDS * 1000);
+        handler.postDelayed(this.runnableMethod, DELAY_IN_SECONDS * MILLIS_IN_ONE_SEC);
     }
 
     private void openHomeActivity() {

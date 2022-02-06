@@ -1,5 +1,6 @@
 package com.idan.teamusup.fragments;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Build;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -19,7 +21,6 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textview.MaterialTextView;
 import com.idan.teamusup.adapters.PlayerAdapter_Small;
@@ -42,12 +43,15 @@ import com.idan.teamusup.services.UserDatabase;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 
 public class Fragment_Friends extends Fragment {
 
-    private static final String TAG = "Fragment_Friends_TAG";
-
+    //Views
+    private MaterialTextView friends_TXT_emptyTitle;
+    private FrameLayout friends_FRAME_searching;
     // Floating Action Buttons
     private FloatingActionButton friends_FAB_addFriends;
     private FloatingActionButton friends_FAB_byManual;
@@ -65,20 +69,13 @@ public class Fragment_Friends extends Fragment {
     // FABs helping boolean
     private boolean clicked = false;
 
-    private MaterialTextView friends_TXT_emptyTitle;
-    private MaterialTextView friends_TXT_listTitle;
-
-
-    private LottieAnimationView lottie_SPC_searching;
-
-
     // Players/Friends list
     private ArrayList<Instance> playersInstances;
     private RecyclerView friends_LIST_players;
     private PlayerAdapter_Small adapterPlayer;
     private ArrayList<Instance> usersNearby;
 
-
+    // Helping objects
     private PlayerService playerService;
     private InstanceService instanceService;
     private Instance userInstance;
@@ -143,10 +140,9 @@ public class Fragment_Friends extends Fragment {
         }
     }
 
-    private void updateAdapterPlayer(boolean sort) {
-        if (sort) {
-            sortPlayers();
-        }
+    @SuppressLint("NotifyDataSetChanged")
+    private void updateAdapterPlayer() {
+        sortPlayers();
         adapterPlayer.notifyDataSetChanged();
     }
 
@@ -160,27 +156,40 @@ public class Fragment_Friends extends Fragment {
         if (this.playersInstances.size() == 1) {
             this.friends_TXT_emptyTitle.setVisibility(View.INVISIBLE);
         }
-        updateAdapterPlayer(true);
+        updateAdapterPlayer();
 
         // Notify user
-        String playerAddedText = playerInstance.getName() + " added";
+        String playerAddedText = new StringBuilder()
+                .append(playerInstance.getName())
+                .append(" ")
+                .append(getResources().getString(R.string.added))
+                .toString();
         Toast.makeText(this.activity, playerAddedText, Toast.LENGTH_SHORT).show();
     }
 
     private void convertText(String text) {
         List<Instance> playersFromText = this.playerService
                 .convertTextToPlayers(this.userInstance, text);
+
+        String toastText;
         if (playersFromText.size() == 0) {
-            Toast.makeText(this.activity, "0 players added", Toast.LENGTH_SHORT).show();
+            toastText = getResources().getString(R.string.zero_players_added);
+            Toast.makeText(this.activity, toastText, Toast.LENGTH_SHORT).show();
             return;
         }
 
         // Add players to list
         this.playersInstances.addAll(playersFromText);
-        updateAdapterPlayer(true);
+        updateAdapterPlayer();
 
         // Notify user
-        String toastText = "Added " + playersFromText.size() + " new players";
+        toastText = new StringBuilder()
+                .append(getResources().getString(R.string.added))
+                .append(" ")
+                .append(playersFromText.size())
+                .append(" ")
+                .append(getResources().getString(R.string.new_players))
+                .toString();
         Toast.makeText(this.activity, toastText, Toast.LENGTH_SHORT).show();
     }
 
@@ -201,8 +210,11 @@ public class Fragment_Friends extends Fragment {
     }
 
     private void addChosenPlayers(List<Instance> chosenUsers) {
+        this.friends_FRAME_searching.setVisibility(View.INVISIBLE);
+
         if (chosenUsers.size() == 0) {
-            Toast.makeText(this.activity, "0 users has been chosen", Toast.LENGTH_SHORT).show();
+            String text = getResources().getString(R.string.zero_users_chosen);
+            Toast.makeText(this.activity, text, Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -210,38 +222,53 @@ public class Fragment_Friends extends Fragment {
 
         // Add players to list
         this.playersInstances.addAll(players);
-        updateAdapterPlayer(true);
+        updateAdapterPlayer();
 
         // Notify user
-        String toastText = "Added " + players.size() + " new players";
+        String toastText = new StringBuilder()
+                .append(getResources().getString(R.string.added))
+                .append(" ")
+                .append(players.size())
+                .append(" ")
+                .append(getResources().getString(R.string.new_players))
+                .toString();
         Toast.makeText(this.activity, toastText, Toast.LENGTH_SHORT).show();
     }
 
 
-    private Runnable runnableMethod = () -> {
-        new Dialog_ChooseNearbyUsers(this.chooseNearbyUsersDialogListener, this.usersNearby).show(
+    private final Runnable runnableMethod = () -> {
+        Dialog_ChooseNearbyUsers dialog_chooseNearbyUsers = new Dialog_ChooseNearbyUsers(
+                this.chooseNearbyUsersDialogListener, this.usersNearby);
+        dialog_chooseNearbyUsers.setCancelable(false);
+        dialog_chooseNearbyUsers.show(
                 this.activity.getSupportFragmentManager(),
                 "choose nearby users dialog");
-
-        this.lottie_SPC_searching.setVisibility(View.INVISIBLE);
     };
 
     // Listeners:
     private final Dialog_AddPlayerManually.AddPlayerDialogListener
-            addPlayerDialogListener = (name, level, photoUrl) -> addPlayer(name, level, photoUrl);
+            addPlayerDialogListener = this::addPlayer;
 
     private final Dialog_AddPlayersByText.AddPlayersByTextDialogListener
-            addPlayersByTextDialogListener = text -> convertText(text);
+            addPlayersByTextDialogListener = this::convertText;
 
     private final Dialog_ChooseNearbyUsers.ChooseNearbyUsersDialogListener
-            chooseNearbyUsersDialogListener = players -> {
-                addChosenPlayers(players);
-            };
+            chooseNearbyUsersDialogListener = new Dialog_ChooseNearbyUsers.ChooseNearbyUsersDialogListener() {
+        @Override
+        public void submit(List<Instance> players) {
+            addChosenPlayers(players);
+        }
 
-    private FirebaseRealtimeDB.CallBack_Users
-            callBack_users = users -> addPlayers(users);
+        @Override
+        public void cancel() {
+            friends_FRAME_searching.setVisibility(View.INVISIBLE);
+        }
+    };
 
-    private PlayerAdapter_Small.PlayerItemClickListener
+    private final FirebaseRealtimeDB.CallBack_Users
+            callBack_users = this::addPlayers;
+
+    private final PlayerAdapter_Small.PlayerItemClickListener
             playerItemClickListener = new PlayerAdapter_Small.PlayerItemClickListener() {
         @Override
         public void editPlayerClicked(Instance player, int position) {
@@ -251,7 +278,11 @@ public class Fragment_Friends extends Fragment {
         @Override
         public void deletePlayerClicked(Instance player, int position) {
             new AlertDialog.Builder(getActivity())
-                    .setMessage("Are you sure you want to delete " + player.getName())
+                    .setMessage(new StringBuilder()
+                            .append(getResources().getString(R.string.delete_alert))
+                            .append(" ")
+                            .append(player.getName())
+                            .toString())
                     .setCancelable(false)
                     .setNegativeButton(R.string.no, null)
                     .setPositiveButton(R.string.yes, (dialog, which) ->
@@ -267,13 +298,22 @@ public class Fragment_Friends extends Fragment {
 
     private void editPlayer(Instance player, int position) {
         new Dialog_AddPlayerManually(
-                (Dialog_AddPlayerManually.AddPlayerDialogListener) (name, level, photoUrl) -> {
-
-        },
+                (Dialog_AddPlayerManually.AddPlayerDialogListener) (name, level, photoUrl) ->
+                        editPlayer(player, position, name, level, photoUrl),
                 player.getName(),
                 (Level) player.getAttributes().get(Constants.level.name()),
                 (String) player.getAttributes().get(Constants.photoUrl.name()),
-                true).show(getActivity().getSupportFragmentManager(), "edit player dialog");
+                true)
+                        .show(Objects.requireNonNull(getActivity()).getSupportFragmentManager(),
+                                "edit player dialog");
+    }
+
+    private void editPlayer(Instance player, int position, String name, Level level, String photoUrl) {
+        player.setName(name);
+        Map<String, Object> attributes = player.getAttributes();
+        attributes.put(Constants.level.name(), level);
+        attributes.put(Constants.photoUrl.name(), photoUrl);
+        this.adapterPlayer.notifyItemChanged(position);
     }
 
 
@@ -283,12 +323,12 @@ public class Fragment_Friends extends Fragment {
 
         this.friends_FAB_byManual.setOnClickListener(v ->
                 new Dialog_AddPlayerManually(this.addPlayerDialogListener).show(
-                        getActivity().getSupportFragmentManager(),
+                        Objects.requireNonNull(getActivity()).getSupportFragmentManager(),
                         "add player manually dialog"));
 
         this.friends_FAB_byText.setOnClickListener(v ->
                 new Dialog_AddPlayersByText(this.addPlayersByTextDialogListener).show(
-                        getActivity().getSupportFragmentManager(),
+                        Objects.requireNonNull(getActivity()).getSupportFragmentManager(),
                         "add players by text dialog"));
 
         this.friends_FAB_byLocation.setOnClickListener(v -> byLocationFabClicked());
@@ -296,7 +336,7 @@ public class Fragment_Friends extends Fragment {
 
     private void byLocationFabClicked() {
         onAddPlayersButtonClicked();
-        this.lottie_SPC_searching.setVisibility(View.VISIBLE);
+        this.friends_FRAME_searching.setVisibility(View.VISIBLE);
         this.playerService.getNearbyPlayers(this.userInstance, this.callBack_users);
     }
 
@@ -307,14 +347,6 @@ public class Fragment_Friends extends Fragment {
         setAnimation(this.clicked);
         setClickable(this.clicked);
         this.clicked = !this.clicked;
-    }
-
-    private void setMainFabVisibility(boolean visibility) {
-        if (visibility) {
-            this.friends_FAB_addFriends.show();
-        } else {
-            this.friends_FAB_addFriends.hide();
-        }
     }
 
     private void setVisibility(boolean clicked) {
@@ -362,10 +394,8 @@ public class Fragment_Friends extends Fragment {
         this.friends_TXT_text = view.findViewById(R.id.friends_TXT_text);
         this.friends_TXT_location = view.findViewById(R.id.friends_TXT_location);
 
-        this.lottie_SPC_searching = view.findViewById(R.id.lottie_SPC_searching);
-
+        this.friends_FRAME_searching = view.findViewById(R.id.friends_FRAME_searching);
         this.friends_TXT_emptyTitle = view.findViewById(R.id.friends_TXT_emptyTitle);
-        this.friends_TXT_listTitle = view.findViewById(R.id.friends_TXT_listTitle);
     }
 
     private void findAnimations() {

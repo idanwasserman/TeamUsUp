@@ -25,15 +25,14 @@ import java.util.List;
 
 public class Dialog_ChooseNearbyUsers extends AppCompatDialogFragment {
 
-    private ChooseNearbyUsersDialogListener chooseNearbyUsersDialogListener;
+    private final ChooseNearbyUsersDialogListener chooseNearbyUsersDialogListener;
 
-    private ArrayList<Instance> usersInstances;
+    private final ArrayList<Instance> usersInstances;
     private RecyclerView dialog_LIST_users;
-    private PlayerAdapter_Big adapterPlayer;
     private MaterialTextView dialog_TXT_chosenUsers;
-    private boolean[] chosenPositions;
-    private String[] chosenUsersNames;
-    private List<Instance> chosenUsers;
+    private final boolean[] chosenPositions;
+    private final String[] chosenUsersNames;
+    private final List<Instance> chosenUsers;
 
     public Dialog_ChooseNearbyUsers(
             ChooseNearbyUsersDialogListener chooseNearbyUsersDialogListener,
@@ -56,10 +55,9 @@ public class Dialog_ChooseNearbyUsers extends AppCompatDialogFragment {
         initAdapter();
         builder
                 .setView(view)
-                .setTitle("Choose nearby users")
-                .setNegativeButton(R.string.cancel, (dialog, which) -> {
-                    // Do nothing
-                })
+                .setTitle(getResources().getString(R.string.choose_nearby_users))
+                .setNegativeButton(R.string.cancel, (dialog, which) ->
+                        chooseNearbyUsersDialogListener.cancel())
                 .setPositiveButton(R.string.submit, (dialog, which) ->
                         chooseNearbyUsersDialogListener.submit(this.chosenUsers));
 
@@ -67,14 +65,14 @@ public class Dialog_ChooseNearbyUsers extends AppCompatDialogFragment {
     }
 
     private void initAdapter() {
-        this.adapterPlayer = new PlayerAdapter_Big(getActivity(), this.usersInstances, this.playerItemClickListener);
+        PlayerAdapter_Big adapterPlayer = new PlayerAdapter_Big(getActivity(), this.usersInstances, this.playerItemClickListener);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(
                 getActivity(), LinearLayoutManager.HORIZONTAL, false);
 
         this.dialog_LIST_users.setLayoutManager(linearLayoutManager);
         this.dialog_LIST_users.setHasFixedSize(true);
         this.dialog_LIST_users.setItemAnimator(new DefaultItemAnimator());
-        this.dialog_LIST_users.setAdapter(this.adapterPlayer);
+        this.dialog_LIST_users.setAdapter(adapterPlayer);
 
     }
 
@@ -93,11 +91,11 @@ public class Dialog_ChooseNearbyUsers extends AppCompatDialogFragment {
 
     private void updateChosenPlayersText() {
         StringBuilder sb = new StringBuilder();
-        final String TITLE = "Chosen players:";
+        final String TITLE = getResources().getString(R.string.chosen_players);
         sb.append(TITLE);
         for (String name : this.chosenUsersNames) {
             if (name == null) continue;
-            sb.append("\n" + name);
+            sb.append("\n").append(name);
         }
         this.dialog_TXT_chosenUsers.setText(sb.toString());
     }
@@ -121,6 +119,8 @@ public class Dialog_ChooseNearbyUsers extends AppCompatDialogFragment {
 
     public interface ChooseNearbyUsersDialogListener {
         void submit(List<Instance> players);
+
+        void cancel();
     }
 
     private void findViews(View view) {

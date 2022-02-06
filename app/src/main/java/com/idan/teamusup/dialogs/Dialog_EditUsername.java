@@ -14,10 +14,12 @@ import androidx.appcompat.app.AppCompatDialogFragment;
 import com.google.android.material.textfield.TextInputLayout;
 import com.idan.teamusup.R;
 
+import java.util.Objects;
+
 
 public class Dialog_EditUsername extends AppCompatDialogFragment {
 
-    private EditUsernameDialogListener editUsernameDialogListener;
+    private final EditUsernameDialogListener editUsernameDialogListener;
     private TextInputLayout form_TXTI_username;
 
     public Dialog_EditUsername(EditUsernameDialogListener editUsernameDialogListener) {
@@ -34,13 +36,14 @@ public class Dialog_EditUsername extends AppCompatDialogFragment {
 
         builder
                 .setView(view)
-                .setTitle("Edit username")
+                .setTitle(getResources().getString(R.string.edit_username))
                 .setNegativeButton(R.string.cancel, (dialog, which) -> {
                     // Do nothing
                 })
                 .setPositiveButton(R.string.submit, (dialog, which) ->
                         editUsernameDialogListener.editUsername(
-                                this.form_TXTI_username.getEditText().getText().toString()));
+                                Objects.requireNonNull(this.form_TXTI_username.getEditText())
+                                        .getText().toString()));
 
         return builder.create();
     }

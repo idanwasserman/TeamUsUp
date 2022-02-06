@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_above="@id/lottie_SPC_construction"
             android:layout_centerHorizontal="true"
-            android:text="Under Construction"
+            android:text="@string/under_construction"
             android:textSize="20sp"
             android:textStyle="bold" />
 

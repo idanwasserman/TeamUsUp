@@ -9,30 +9,31 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageView;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDialogFragment;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.button.MaterialButton;
-import com.google.android.material.textfield.TextInputLayout;
 import com.idan.teamusup.R;
 import com.idan.teamusup.services.MyCamera;
 import com.makeramen.roundedimageview.RoundedImageView;
+
+import java.util.Objects;
 
 
 public class Dialog_EditProfilePicture extends AppCompatDialogFragment {
 
     private static final String TAG = "TAG_Dialog_EditProfilePicture";
-    private EditProfilePictureDialogListener editProfilePictureDialogListener;
+
+    private final EditProfilePictureDialogListener editProfilePictureDialogListener;
     private RoundedImageView dialog_IMG_image;
     private MaterialButton dialog_BTN_camera;
-    private String photoUrl, oldPhotoUrl, title;
+    private String photoUrl;
+    private final String oldPhotoUrl, title;
 
 
     public Dialog_EditProfilePicture(
@@ -55,7 +56,7 @@ public class Dialog_EditProfilePicture extends AppCompatDialogFragment {
         Log.d(TAG, this.oldPhotoUrl);
         if (this.oldPhotoUrl != null && !this.oldPhotoUrl.isEmpty()) {
             Glide
-                    .with(getActivity())
+                    .with(Objects.requireNonNull(getActivity()))
                     .load(this.oldPhotoUrl)
                     .into(this.dialog_IMG_image);
         }
@@ -76,7 +77,7 @@ public class Dialog_EditProfilePicture extends AppCompatDialogFragment {
     private void openCamera() {
         MyCamera.getInstance().openCamera(title, this.activityResultLauncher, photo -> {
             dialog_IMG_image.setImageBitmap(photo);
-            photoUrl = MyCamera.getInstance().getImageUri(getActivity(), photo);
+            photoUrl = MyCamera.getInstance().getImageUri(Objects.requireNonNull(getActivity()), photo);
         });
     }
 

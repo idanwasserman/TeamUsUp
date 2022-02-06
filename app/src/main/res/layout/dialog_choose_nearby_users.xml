@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:keepScreenOn="true"
@@ -17,7 +15,7 @@
         <com.google.android.material.textview.MaterialTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Click on a player to add/remove to list\nThen click submit to add them to your friends"
+            android:text="@string/choose_nearby_explanation"
             android:gravity="center"
             android:layout_gravity="center"
             android:textSize="16sp"
@@ -35,7 +33,7 @@
             android:id="@+id/dialog_TXT_chosenUsers"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Chosen players:"
+            android:text="@string/chosen_players"
             android:gravity="center"
             android:layout_gravity="center"
             android:textSize="16sp"

@@ -1,7 +1,9 @@
 package com.idan.teamusup.logic;
 
+import android.content.res.Resources;
 import android.util.Log;
 
+import com.idan.teamusup.R;
 import com.idan.teamusup.activities.Activity_RandomGroups;
 import com.idan.teamusup.data.Constants;
 import com.idan.teamusup.data.Instance;
@@ -52,6 +54,7 @@ public class GameController {
     private List<Object> gameTable;
 
     // Helping objects
+    private final Resources resources;
     private ArrayList<Instance>[] currentMatchTeams;
     private Integer[] currentMatchTeamsIndexes;
     private LinkedList<Integer> groupMatchesOrder;
@@ -62,14 +65,14 @@ public class GameController {
         return instance;
     }
 
-    public static GameController init(List<Instance> allPlayers, int[] size) {
+    public static GameController init(Resources resources, List<Instance> allPlayers, int[] size) {
         if (instance == null) {
-            instance = new GameController(allPlayers, size);
+            instance = new GameController(resources, allPlayers, size);
         }
         return instance;
     }
 
-    private GameController(List<Instance> allPlayers, int[] size) {
+    private GameController(Resources resources, List<Instance> allPlayers, int[] size) {
         this.createdTimeStamp = new Date();
         this.location = UserDatabase.getDatabase().getUser().getLocation();
 
@@ -77,6 +80,7 @@ public class GameController {
         this.playerSize = size[Size.player.ordinal()];
         this.timeSize = size[Size.time.ordinal()];
 
+        this.resources = resources;
         this.allPlayers = allPlayers;
         this.allMatches = new ArrayList<>();
         this.allTeams = new ArrayList[this.teamsSize];
@@ -85,8 +89,8 @@ public class GameController {
     }
 
     private void initHelpingObjects() {
-        this.currentMatchTeams = new ArrayList[2];
-        this.currentMatchTeamsIndexes = new Integer[2];
+        this.currentMatchTeams = new ArrayList[MatchController.NUM_OF_TEAMS];
+        this.currentMatchTeamsIndexes = new Integer[MatchController.NUM_OF_TEAMS];
 
         this.groupMatchesOrder = MyRandom.getInstance().randomGroupMatchesOrder(teamsSize);
         this.uniqueTeams = new HashSet<>();
@@ -106,6 +110,10 @@ public class GameController {
 
             this.gameTable.add(arr);
         }
+    }
+
+    public Resources getResources() {
+        return resources;
     }
 
     public int getMatchNumber() {
@@ -351,9 +359,15 @@ public class GameController {
             return null;
         }
 
+        int gameDayNum = InstanceServiceImpl.getService()
+                .getAllInstancesByType(InstanceType.Game.name())
+                .size() + 1;
         return InstanceServiceImpl.getService().createInstance(new Instance()
                 .setType(InstanceType.Game)
-                .setName("GameDay #?")
+                .setName(new StringBuilder()
+                        .append(this.resources.getString(R.string.game_day_number))
+                        .append(gameDayNum)
+                        .toString())
                 .setLocation(this.location)
                 .setCreatedTimestamp(this.createdTimeStamp)
                 .setAttributes(packAttributes()));

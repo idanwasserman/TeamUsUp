@@ -30,8 +30,6 @@ import java.util.Objects;
 
 public class Fragment_Profile extends Fragment {
 
-    private static final String TAG = "Fragment_Profile_TAG";
-
     private MaterialTextView profile_TXT_username;
     private MaterialButton profile_BTN_logout;
     private MaterialButton profile_BTN_editPicture;
@@ -105,19 +103,13 @@ public class Fragment_Profile extends Fragment {
                         (String) this.userInstance.getAttributes().get(Constants.photoUrl.name()),
                         this.editProfilePictureDialogListener)
                         .show(
-                                getActivity().getSupportFragmentManager(),
+                                Objects.requireNonNull(getActivity()).getSupportFragmentManager(),
                                 "edit profile picture dialog"));
 
         this.profile_BTN_editUsername.setOnClickListener(v ->
                 new Dialog_EditUsername(this.editUsernameDialogListener).show(
-                        getActivity().getSupportFragmentManager(),
+                        Objects.requireNonNull(getActivity()).getSupportFragmentManager(),
                         "edit username dialog"));
-    }
-
-    private void openEditUsernameDialog() {
-        Dialog_EditUsername editUsername = new Dialog_EditUsername(this.editUsernameDialogListener);
-        final String DIALOG_TAG = "edit username dialog";
-        editUsername.show(Objects.requireNonNull(getActivity()).getSupportFragmentManager(), DIALOG_TAG);
     }
 
     private final Dialog_EditProfilePicture.EditProfilePictureDialogListener
@@ -135,10 +127,6 @@ public class Fragment_Profile extends Fragment {
                 setUsernameHeader(username);
                 this.onCompleteEditingListener.editUsername(username);
             };
-
-    private void editPicture() {
-        Toast.makeText(getActivity(), "Not implemented yet", Toast.LENGTH_SHORT).show();
-    }
 
     private void logout() {
         AuthUI.getInstance()

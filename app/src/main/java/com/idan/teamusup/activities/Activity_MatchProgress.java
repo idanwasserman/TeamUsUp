@@ -31,6 +31,9 @@ public class Activity_MatchProgress extends AppCompatActivity {
 
     private final static int NUM_OF_TEAMS = 2;
     private final static long ONE_MINUTE_IN_MILLIS = 60000;
+    private static final String TIME_FORMAT = "%02d:%02d";
+    private static final int VIBRATION_DURATION = 500;
+    private static final int MILLIS_IN_A_SEC = 1000;
 
     // Views
     private MaterialTextView match_TXT_title;
@@ -78,7 +81,9 @@ public class Activity_MatchProgress extends AppCompatActivity {
         this.timeLeftInMillis = this.timeSize * ONE_MINUTE_IN_MILLIS;
         this.vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         this.match_TXT_title.setText(String.format(
-                Locale.getDefault(), "Match#%d", this.gameController.getMatchNumber()));
+                Locale.getDefault(),
+                getResources().getString(R.string.match_number),
+                this.gameController.getMatchNumber()));
 
         this.gameController.startNewMatch();
         this.teams = this.gameController.getCurrentMatchTeams();
@@ -95,7 +100,7 @@ public class Activity_MatchProgress extends AppCompatActivity {
         // Check that timer is over
         if (this.timerRunning) {
             new AlertDialog.Builder(this)
-                    .setMessage("Are you sure you want to end match?\nTimer is still running")
+                    .setMessage(getResources().getString(R.string.end_match_timer_running))
                     .setCancelable(false)
                     .setNegativeButton(R.string.no, null)
                     .setPositiveButton(R.string.yes, (dialog, which) -> {
@@ -107,7 +112,7 @@ public class Activity_MatchProgress extends AppCompatActivity {
             // Check if the game is in a draw
             if (this.matchController.isDraw()) {
                 new AlertDialog.Builder(this)
-                        .setMessage("Pick a winning team (match still counts as a draw)")
+                        .setMessage(getResources().getString(R.string.pick_winning_team))
                         .setCancelable(false)
                         .setNegativeButton(R.string.BLUE, (dialog, which) ->
                                 endMatch(Constants.BLUE.name()))
@@ -131,9 +136,15 @@ public class Activity_MatchProgress extends AppCompatActivity {
         String winningTeamColor = this.matchController.getWinningTeamColor();
         String text;
         if (winningTeamColor.equals(MatchController.DRAW_STR)) {
-            text = "The match ended in a draw";
+            text = getResources().getString(R.string.match_ended_draw);
         } else {
-            text = "Team " + winningTeamColor + " won!";
+            text = new StringBuilder()
+                    .append(getResources().getString(R.string.team))
+                    .append(" ")
+                    .append(winningTeamColor)
+                    .append(" ")
+                    .append(getResources().getString(R.string.won))
+                    .toString();
         }
         Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
     }
@@ -171,7 +182,12 @@ public class Activity_MatchProgress extends AppCompatActivity {
     private void updateScores(Instance player, int position) {
         if (player == null) return;
 
-        Toast.makeText(this, player.getName() + " scored!", Toast.LENGTH_SHORT).show();
+        String text = new StringBuilder()
+                .append(player.getName())
+                .append(" ")
+                .append(getResources().getString(R.string.scored))
+                .toString();
+        Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
         int teamNumber = this.matchController.goalScored(player);
         if (teamNumber == MatchController.ERROR) return;
 
@@ -183,7 +199,7 @@ public class Activity_MatchProgress extends AppCompatActivity {
     // Timer methods:
 
     private void startTimer() {
-        this.countDownTimer = new CountDownTimer(this.timeLeftInMillis, 1000) {
+        this.countDownTimer = new CountDownTimer(this.timeLeftInMillis, MILLIS_IN_A_SEC) {
             @Override
             public void onTick(long millisUntilFinished) {
                 timeLeftInMillis = millisUntilFinished;
@@ -192,8 +208,9 @@ public class Activity_MatchProgress extends AppCompatActivity {
 
             @Override
             public void onFinish() {
-                vibrator.vibrate(1000);
-                Toast.makeText(getApplicationContext(), "Time is over!", Toast.LENGTH_SHORT).show();
+                vibrator.vibrate(MILLIS_IN_A_SEC);
+                String text = getResources().getString(R.string.time_is_over);
+                Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT).show();
                 timerRunning = false;
                 match_BTN_startPause.setBackgroundColor(
                         ContextCompat.getColor(getApplicationContext(), R.color.kind_of_blue));
@@ -211,8 +228,9 @@ public class Activity_MatchProgress extends AppCompatActivity {
     }
 
     private void lastMinuteAlert() {
-        Toast.makeText(this, "Last minute!", Toast.LENGTH_SHORT).show();
-        this.vibrator.vibrate(500);
+        String text = getResources().getString(R.string.last_minute);
+        Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
+        this.vibrator.vibrate(VIBRATION_DURATION);
     }
 
     private void pauseTimer() {
@@ -232,10 +250,10 @@ public class Activity_MatchProgress extends AppCompatActivity {
     }
 
     private void updateCountDownText() {
-        int minutes = (int) (timeLeftInMillis / 1000) / 60;
-        int seconds = (int) (timeLeftInMillis / 1000) % 60;
+        int minutes = (int) (timeLeftInMillis / MILLIS_IN_A_SEC) / 60;
+        int seconds = (int) (timeLeftInMillis / MILLIS_IN_A_SEC) % 60;
         String timeLeftFormatted = String.format(
-                Locale.getDefault() ,"%02d:%02d", minutes, seconds);
+                Locale.getDefault() ,TIME_FORMAT, minutes, seconds);
         this.match_TXT_countDown.setText(timeLeftFormatted);
         if (this.timerRunning && minutes == 1 && seconds == 0) lastMinuteAlert();
     }
@@ -277,7 +295,7 @@ public class Activity_MatchProgress extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         new AlertDialog.Builder(this)
-                .setMessage("Are you sure you want to exit match?\nData won't be saved")
+                .setMessage(getResources().getString(R.string.exit_match_alert))
                 .setCancelable(false)
                 .setNegativeButton(R.string.no, null)
                 .setPositiveButton(R.string.yes, (dialog, which) -> {

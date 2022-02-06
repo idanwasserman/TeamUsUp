@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <com.google.android.material.card.MaterialCardView
     android:id="@+id/player_MCV_card"
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -55,7 +54,7 @@
                         android:ellipsize="end"
                         android:gravity="center_horizontal"
                         android:maxLines="1"
-                        android:text="Idan Wasserman"
+                        android:text="@string/username"
                         android:textColor="@color/black"
                         android:textSize="14sp"
                         />
@@ -68,7 +67,7 @@
                         android:ellipsize="end"
                         android:gravity="center_horizontal"
                         android:maxLines="1"
-                        android:text="Professional"
+                        android:text="@string/professional"
                         android:textSize="11sp"
                         />
 

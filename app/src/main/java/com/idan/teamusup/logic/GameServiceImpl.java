@@ -1,5 +1,8 @@
 package com.idan.teamusup.logic;
 
+import android.content.res.Resources;
+
+import com.idan.teamusup.R;
 import com.idan.teamusup.data.Constants;
 import com.idan.teamusup.data.Instance;
 import com.idan.teamusup.data.PlayerStats;
@@ -20,14 +23,16 @@ public class GameServiceImpl implements GameService {
     private static final int MIN_TIME_SIZE = 1;
     private static final int MAX_TIME_SIZE = 99;
 
-
+    private final Resources resources;
     private static GameServiceImpl service;
 
-    private GameServiceImpl() {}
+    private GameServiceImpl(Resources resources) {
+        this.resources = resources;
+    }
 
-    public static GameServiceImpl init() {
+    public static GameServiceImpl init(Resources resources) {
         if (service == null) {
-            service = new GameServiceImpl();
+            service = new GameServiceImpl(resources);
         }
         return service;
     }
@@ -40,11 +45,13 @@ public class GameServiceImpl implements GameService {
     public String[] checkAllFields(Integer[] size, int chosenPlayers) {
         Integer playersSize = size[Size.player.ordinal()];
         if (playersSize == null) {
-            return new String[] { Size.player.name(), "This field is required" };
+            return new String[] {
+                    Size.player.name(),
+                    this.resources.getString(R.string.this_field_is_required) };
         } else if (playersSize < MIN_PLAYERS_SIZE || playersSize > MAX_PLAYERS_SIZE) {
             String errText = String.format(
                     Locale.getDefault(),
-                    "Proper values: [%d-%d]",
+                    this.resources.getString(R.string.proper_values),
                     MIN_PLAYERS_SIZE, MAX_PLAYERS_SIZE);
             return new String[] { Size.player.name(), errText };
         }
@@ -52,23 +59,27 @@ public class GameServiceImpl implements GameService {
 
         Integer teamsSize = size[Size.team.ordinal()];
         if (teamsSize == null) {
-            return new String[] {Size.team.name(), "This field is required"};
+            return new String[] {
+                    Size.team.name(),
+                    this.resources.getString(R.string.this_field_is_required) };
         } else if (teamsSize < MIN_TEAMS_SIZE || teamsSize > MAX_TEAMS_SIZE) {
             String errText = String.format(
                     Locale.getDefault(),
-                    "Proper values: [%d-%d]",
+                    this.resources.getString(R.string.proper_values),
                     MIN_TEAMS_SIZE, MAX_TEAMS_SIZE);
-            return new String[] { Size.time.name(), errText };
+            return new String[] { Size.team.name(), errText };
         }
 
 
         Integer timeSize = size[Size.time.ordinal()];
         if (timeSize == null) {
-            return new String[] {Size.time.name(), "This field is required"};
+            return new String[] {
+                    Size.time.name(),
+                    this.resources.getString(R.string.this_field_is_required) };
         } else if (timeSize < MIN_TIME_SIZE || timeSize > MAX_TIME_SIZE) {
             String errText = String.format(
                     Locale.getDefault(),
-                    "Proper values: [%d-%d]",
+                    this.resources.getString(R.string.proper_values),
                     MIN_TIME_SIZE, MAX_TIME_SIZE);
             return new String[] { Size.time.name(), errText };
         }
@@ -78,17 +89,17 @@ public class GameServiceImpl implements GameService {
             if (chosenPlayers != 2 * playersSize) {
                 return new String[] {
                         Constants.Toast.name(),
-                        "For 2 teams you must select exact amount of players" };
+                        this.resources.getString(R.string.two_teams_exact_amount) };
             }
         } else {
             if (chosenPlayers < ((teamsSize - 1) * playersSize) + 1) {
                 return new String[] {
                         Constants.Toast.name(),
-                        "You didn't choose enough players" };
+                        this.resources.getString(R.string.not_enough_players) };
             } else if (chosenPlayers > (teamsSize * playersSize)) {
                 return new String[] {
                         Constants.Toast.name(),
-                        "You chose too many players" };
+                        this.resources.getString(R.string.too_many_players) };
             }
         }
 
@@ -99,7 +110,10 @@ public class GameServiceImpl implements GameService {
     public String convertTeamToText(ArrayList<Instance> team, int teamNumber) {
         StringBuilder sb = new StringBuilder();
 
-        sb.append("Team #").append(teamNumber+1).append(":");
+        sb      .append(this.resources.getString(R.string.team_number))
+                .append(teamNumber+1);
+//                .append(":");
+
         for (Instance player : team) {
             if (player == null) continue;
             sb.append("\n").append(player.getName());

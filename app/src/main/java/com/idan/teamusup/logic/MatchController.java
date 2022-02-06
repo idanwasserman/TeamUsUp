@@ -2,6 +2,7 @@ package com.idan.teamusup.logic;
 
 import android.util.Log;
 
+import com.idan.teamusup.R;
 import com.idan.teamusup.data.Constants;
 import com.idan.teamusup.data.Instance;
 import com.idan.teamusup.data.InstanceType;
@@ -18,6 +19,9 @@ public class MatchController {
 
     private static MatchController instance;
 
+    /**
+     * num of teams in a match
+     */
     public static final int NUM_OF_TEAMS = 2;
     private static final String TAG = "TAG_MatchController";
     public static final int ERROR = -1;
@@ -139,7 +143,12 @@ public class MatchController {
      * @return string describing result of method
      */
     public String undoLastGoal() {
-        if (this.goalsStack.isEmpty()) return "No one scored yet";
+        if (this.goalsStack.isEmpty()) {
+            return GameController
+                    .getInstance()
+                    .getResources()
+                    .getString(R.string.no_one_has_scored_yet);
+        }
 
         Instance lastGoalPlayer = this.goalsStack.pop();
         updateGoalsTable(lastGoalPlayer.getId(), -1);
@@ -147,7 +156,13 @@ public class MatchController {
         if (teamNumber != ERROR)
         this.score[teamNumber]--;
 
-        return (lastGoalPlayer.getName() + "'s last goal cancelled");
+        return new StringBuilder()
+                .append(lastGoalPlayer.getName())
+                .append(GameController
+                        .getInstance()
+                        .getResources()
+                        .getString(R.string.last_goal_cancelled))
+                .toString();
     }
 
     public Instance endMatch(String team) {
@@ -174,7 +189,13 @@ public class MatchController {
         return InstanceServiceImpl.getService()
                 .createInstance(new Instance()
                         .setType(InstanceType.Match)
-                        .setName("Match #" + gameController.getMatchNumber())
+                        .setName(new StringBuilder()
+                                .append(GameController
+                                        .getInstance()
+                                        .getResources()
+                                        .getString(R.string.match_number))
+                                .append(gameController.getMatchNumber())
+                                .toString())
                         .setCreatedTimestamp(this.createdTimeStamp)
                         .setAttributes(packMatchAttributes()));
     }

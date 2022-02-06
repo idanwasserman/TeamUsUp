@@ -21,14 +21,12 @@ import com.idan.teamusup.data.Instance;
 import com.idan.teamusup.fragments.Fragment_Profile;
 import com.idan.teamusup.logic.InstanceServiceImpl;
 import com.idan.teamusup.logic.interfaces.InstanceService;
-import com.idan.teamusup.services.MyLocation;
 import com.idan.teamusup.services.UserDatabase;
 
 
 public class Activity_Home extends AppCompatActivity
         implements Fragment_Profile.OnCompleteEditingListener
 {
-    private static final String TAG = "Activity_Home_TAG";
 
     private DrawerLayout    drawerLayout;
     private NavigationView  navigationView;

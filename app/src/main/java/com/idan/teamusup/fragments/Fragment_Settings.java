@@ -1,5 +1,7 @@
 package com.idan.teamusup.fragments;
 
+import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,14 +9,22 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RadioGroup;
 
-import com.airbnb.lottie.LottieAnimationView;
+import com.google.android.material.button.MaterialButton;
+import com.idan.teamusup.LocaleHelper;
 import com.idan.teamusup.R;
+import com.idan.teamusup.data.Level;
+
+import java.util.Locale;
+import java.util.Objects;
 
 
 public class Fragment_Settings extends Fragment {
 
-    private LottieAnimationView lottie_SPC_construction;
+    private MaterialButton settings_BTN_change;
+    private RadioGroup settings_RG_language;
+    private String language;
 
     public Fragment_Settings() {
         // Required empty public constructor
@@ -27,11 +37,39 @@ public class Fragment_Settings extends Fragment {
         View view = inflater.inflate(R.layout.fragment_settings, container, false);
 
         findViews(view);
+        this.settings_RG_language.setOnCheckedChangeListener(this.onCheckedChangeListener);
+        this.settings_BTN_change.setOnClickListener(v -> changeLanguage(this.language));
 
         return view;
     }
 
+    private final RadioGroup.OnCheckedChangeListener onCheckedChangeListener = (group, checkedId) -> {
+        switch (checkedId) {
+            case R.id.settings_RB_english:
+                this.language = LocaleHelper.ENGLISH;
+                break;
+            case R.id.settings_RB_hebrew:
+                this.language = LocaleHelper.HEBREW;
+                break;
+        }
+    };
+
+    private void changeLanguage(String language) {
+        LocaleHelper.setLocale(getContext(), language);
+        updateDirections(language);
+        Intent intent = Objects.requireNonNull(getActivity()).getIntent();
+        getActivity().finish();
+        startActivity(intent);
+    }
+
+    private void updateDirections(String language) {
+        Configuration configuration = getResources().getConfiguration();
+        configuration.setLayoutDirection(new Locale(language));
+        getResources().updateConfiguration(configuration, getResources().getDisplayMetrics());
+    }
+
     private void findViews(View view) {
-        lottie_SPC_construction = view.findViewById(R.id.lottie_SPC_construction);
+        this.settings_BTN_change = view.findViewById(R.id.settings_BTN_change);
+        this.settings_RG_language = view.findViewById(R.id.settings_RG_language);
     }
 }

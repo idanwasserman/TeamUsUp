@@ -52,7 +52,7 @@ public class Activity_NewGameForm extends AppCompatActivity {
     private MaterialTextView newGame_TXT_numOfSelected;
 
     // Details
-    private Integer timeSize, teamsSize, playersSize;
+    private Integer[] size;//timeSize, teamsSize, playersSize;
 
     // Helping objects
     private InstanceService instanceService;
@@ -81,6 +81,7 @@ public class Activity_NewGameForm extends AppCompatActivity {
 
     private void startNewGame() {
         GameController.init(
+                getResources(),
                 new ArrayList<>(this.chosenPlayers),
                 getSizeArray());
         Intent intent = new Intent(this, Activity_RandomGroups.class);
@@ -90,37 +91,35 @@ public class Activity_NewGameForm extends AppCompatActivity {
     }
 
     private int[] getSizeArray() {
-        int[] size = new int[Size.size.ordinal()];
-        size[Size.team.ordinal()] = this.teamsSize;
-        size[Size.player.ordinal()] = this.playersSize;
-        size[Size.time.ordinal()] = this.timeSize;
-        return size;
+        int[] sizeArr = new int[Size.size.ordinal()];
+        sizeArr[Size.team.ordinal()] = this.size[Size.team.ordinal()];
+        sizeArr[Size.player.ordinal()] = this.size[Size.player.ordinal()];
+        sizeArr[Size.time.ordinal()] = this.size[Size.time.ordinal()];
+        return sizeArr;
     }
 
     private Bundle packBundle() {
         Bundle bundle = new Bundle();
 
         bundle.putBoolean(Constants.isNew.name(), true);
-        bundle.putInt(Constants.playersSize.name(), this.playersSize);
-        bundle.putInt(Constants.teamsSize.name(), this.teamsSize);
-        bundle.putInt(Constants.timeSize.name(), this.timeSize);
+
+        bundle.putInt(Size.player.name(), this.size[Size.player.ordinal()]);
+        bundle.putInt(Size.team.name(), this.size[Size.team.ordinal()]);
+        bundle.putInt(Size.time.name(), this.size[Size.time.ordinal()]);
 
         return bundle;
     }
 
     private boolean checkAllFields() {
-        this.playersSize = getIntegerFromTextInputLayout(this.formSizes[Size.player.ordinal()]);
-        this.teamsSize = getIntegerFromTextInputLayout(this.formSizes[Size.team.ordinal()]);
-        this.timeSize = getIntegerFromTextInputLayout(this.formSizes[Size.time.ordinal()]);
-
-        Integer[] size = new Integer[Size.size.ordinal()];
-        size[Size.team.ordinal()] = this.teamsSize;
-        size[Size.player.ordinal()] = this.playersSize;
-        size[Size.time.ordinal()] = this.timeSize;
+        this.size = new Integer[Size.size.ordinal()];
+        int length = Size.size.ordinal();
+        for (int i = 0; i < length; i++) {
+            this.size[i] = getIntegerFromTextInputLayout(this.formSizes[i]);
+        }
 
         String[] result =  GameServiceImpl
                 .getService()
-                .checkAllFields(size, this.gamePlayers.size());
+                .checkAllFields(this.size, this.gamePlayers.size());
         if (result == null) return true;
 
         if (result[0].equals(Constants.Toast.name())) {

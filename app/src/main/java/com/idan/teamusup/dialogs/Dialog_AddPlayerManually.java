@@ -27,6 +27,8 @@ import com.idan.teamusup.data.Generator;
 import com.idan.teamusup.data.Level;
 import com.idan.teamusup.services.MyCamera;
 
+import java.util.Objects;
+
 
 public class Dialog_AddPlayerManually extends AppCompatDialogFragment {
 
@@ -96,7 +98,7 @@ public class Dialog_AddPlayerManually extends AppCompatDialogFragment {
     }
 
     private void updateViews() {
-        this.dialog_TXTI_name.getEditText().setText(this.name);
+        Objects.requireNonNull(this.dialog_TXTI_name.getEditText()).setText(this.name);
         if (this.level != Level.Normal) {
             this.dialog_RB_normal.setChecked(false);
             switch (this.level) {
@@ -110,7 +112,7 @@ public class Dialog_AddPlayerManually extends AppCompatDialogFragment {
         }
         if (this.photoUrl != null && !this.photoUrl.isEmpty()) {
             Glide
-                    .with(getActivity())
+                    .with(Objects.requireNonNull(getActivity()))
                     .load(photoUrl)
                     .into(this.dialog_IMG_image);
         }
@@ -126,17 +128,21 @@ public class Dialog_AddPlayerManually extends AppCompatDialogFragment {
     }
 
     private String getName() {
-        return this.dialog_TXTI_name.getEditText().getText().toString();
+        return Objects.requireNonNull(this.dialog_TXTI_name.getEditText()).getText().toString();
     }
 
     private void openCamera() {
         String title = getName();
-        if (title == null || title.isEmpty()) {
+        if (title.isEmpty()) {
             title = Generator.getInstance().generateRandomString();
         }
         MyCamera.getInstance().openCamera(title, this.activityResultLauncher, photo -> {
             dialog_IMG_image.setImageBitmap(photo);
-            photoUrl = MyCamera.getInstance().getImageUri(getActivity(), photo);
+            photoUrl = MyCamera
+                    .getInstance()
+                    .getImageUri(
+                            Objects.requireNonNull(getActivity()),
+                            photo);
         });
     }
 

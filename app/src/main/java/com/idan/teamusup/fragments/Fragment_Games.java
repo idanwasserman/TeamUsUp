@@ -21,7 +21,7 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textview.MaterialTextView;
 import com.idan.teamusup.R;
 import com.idan.teamusup.activities.Activity_NewGameForm;
-import com.idan.teamusup.adapters.AdapterGame;
+import com.idan.teamusup.adapters.GameAdapter;
 import com.idan.teamusup.data.Constants;
 import com.idan.teamusup.data.Instance;
 import com.idan.teamusup.data.InstanceType;
@@ -111,7 +111,7 @@ public class Fragment_Games extends Fragment {
     // Adapter
 
     private void initGameAdapter() {
-        AdapterGame adapterGame = new AdapterGame(getActivity(), gamesList)
+        GameAdapter adapterGame = new GameAdapter(getActivity(), gamesList)
                 .setGameItemClickListener(this.gameItemClickListener);
 
         this.games_LIST_games.setLayoutManager(new LinearLayoutManager(
@@ -121,7 +121,7 @@ public class Fragment_Games extends Fragment {
         this.games_LIST_games.setAdapter(adapterGame);
     }
 
-    private final AdapterGame.GameItemClickListener gameItemClickListener = this::gameClicked;
+    private final GameAdapter.GameItemClickListener gameItemClickListener = this::gameClicked;
 
     private void gameClicked(Instance game, int position) {
         // Update map

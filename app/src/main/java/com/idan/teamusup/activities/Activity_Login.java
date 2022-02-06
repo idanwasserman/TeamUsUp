@@ -23,7 +23,6 @@ public class Activity_Login extends AppCompatActivity {
     private static final String TAG = "TAG_Activity_Login";
 
     private FirebaseAuth firebaseAuth;
-    private FirebaseUser user;
     private FirebaseAuth.AuthStateListener authStateListener;
 
     @Override
@@ -36,9 +35,9 @@ public class Activity_Login extends AppCompatActivity {
     }
 
     private void checkUserAuthentication() {
-        this.user = firebaseAuth.getCurrentUser();
+        FirebaseUser user = firebaseAuth.getCurrentUser();
 
-        if (this.user != null) {
+        if (user != null) {
             // if the user is already authenticated then we will redirect to Home Page
             openDataLoadingActivity();
         } else {

@@ -8,31 +8,31 @@
     <fragment
         android:id="@+id/menuProfile"
         android:name="com.idan.teamusup.fragments.Fragment_Profile"
-        android:label="Profile"
+        android:label="@string/profile"
         tools:layout="@layout/fragment_profile" />
     <fragment
         android:id="@+id/menuSettings"
         android:name="com.idan.teamusup.fragments.Fragment_Settings"
-        android:label="Settings"
+        android:label="@string/settings"
         tools:layout="@layout/fragment_settings" />
     <fragment
         android:id="@+id/menuGames"
         android:name="com.idan.teamusup.fragments.Fragment_Games"
-        android:label="Games"
+        android:label="@string/games"
         tools:layout="@layout/fragment_games" />
     <fragment
         android:id="@+id/menuFriends"
         android:name="com.idan.teamusup.fragments.Fragment_Friends"
-        android:label="Friends"
+        android:label="@string/friends"
         tools:layout="@layout/fragment_friends" />
     <fragment
         android:id="@+id/menuAboutUs"
         android:name="com.idan.teamusup.fragments.Fragment_AboutUs"
-        android:label="fragment_about_us"
+        android:label="@string/about_us"
         tools:layout="@layout/fragment_about_us" />
     <fragment
         android:id="@+id/menuSupport"
         android:name="com.idan.teamusup.fragments.Fragment_Support"
-        android:label="fragment_support"
+        android:label="@string/support"
         tools:layout="@layout/fragment_support" />
 </navigation>

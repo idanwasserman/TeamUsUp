@@ -24,19 +24,19 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-public class AdapterGame extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class GameAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private static final String PATTERN = "dd/MM/yyyy";
     private final Activity activity;
     private final ArrayList<Instance> games;
     private GameItemClickListener gameItemClickListener;
 
-    public AdapterGame(Activity activity, ArrayList<Instance> _games) {
+    public GameAdapter(Activity activity, ArrayList<Instance> _games) {
         this.activity = activity;
         this.games = _games;
     }
 
-    public AdapterGame setGameItemClickListener(GameItemClickListener gameItemClickListener) {
+    public GameAdapter setGameItemClickListener(GameItemClickListener gameItemClickListener) {
         this.gameItemClickListener = gameItemClickListener;
         return this;
     }
@@ -71,6 +71,7 @@ public class AdapterGame extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         DateFormat formatter = new SimpleDateFormat(PATTERN);
         date = formatter.format(game.getCreatedTimestamp());
 
+        gameViewHolder.game_LBL_title.setText(game.getName());
         gameViewHolder.game_LBL_totalGames.setText(totalGames);
         gameViewHolder.game_LBL_topScorer.setText(topScorer);
         gameViewHolder.game_LBL_location.setText(location);
@@ -125,6 +126,7 @@ public class AdapterGame extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     public class GameViewHolder extends RecyclerView.ViewHolder {
 
+        public MaterialTextView game_LBL_title;
         public MaterialTextView game_LBL_totalGames;
         public MaterialTextView game_LBL_topScorer;
         public MaterialTextView game_LBL_location;
@@ -135,6 +137,7 @@ public class AdapterGame extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         public GameViewHolder(final View itemView) {
             super(itemView);
+            this.game_LBL_title = itemView.findViewById(R.id.game_LBL_title);
             this.game_LBL_totalGames = itemView.findViewById(R.id.game_LBL_totalGames);
             this.game_LBL_topScorer = itemView.findViewById(R.id.game_LBL_topScorer);
             this.game_LBL_location = itemView.findViewById(R.id.game_LBL_location);
