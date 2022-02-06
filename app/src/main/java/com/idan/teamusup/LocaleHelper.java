@@ -5,10 +5,6 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.preference.PreferenceManager;
-import android.text.TextUtils;
-import android.view.View;
-
-import androidx.core.view.ViewCompat;
 
 import java.util.Locale;
 
@@ -18,22 +14,26 @@ public class LocaleHelper {
 
     public static final String HEBREW = "iw";
     public static final String ENGLISH = "en";
+    private static String currLanguage = Locale.getDefault().getLanguage();
+
+    public static String getCurrLanguage() {
+        return currLanguage;
+    }
 
     public static void onCreate(Context context) {
-
-        String lang;
-        if(getLanguage(context).isEmpty()){
-            lang = getPersistedData(context, Locale.getDefault().getLanguage());
-        }else {
-            lang = getLanguage(context);
+        String language;
+        if (getLanguage(context).isEmpty()) {
+            language = getPersistedData(context, Locale.getDefault().getLanguage());
+        } else {
+            language = getLanguage(context);
         }
 
-        setLocale(context, lang);
+        setLocale(context, language);
     }
 
     public static void onCreate(Context context, String defaultLanguage) {
-        String lang = getPersistedData(context, defaultLanguage);
-        setLocale(context, lang);
+        String language = getPersistedData(context, defaultLanguage);
+        setLocale(context, language);
     }
 
     public static String getLanguage(Context context) {
@@ -41,6 +41,7 @@ public class LocaleHelper {
     }
 
     public static void setLocale(Context context, String language) {
+        currLanguage = language;
         persist(context, language);
         updateResources(context, language);
     }
