@@ -193,7 +193,8 @@ public class Activity_RandomGroups extends AppCompatActivity {
     // views methods:
 
     private void hideUnnecessaryFramesAndText() {
-        for (int i = this.teamsSize; i < 4; i++) {
+        int size = this.teamsSize;
+        for (int i = size; i < 4; i++) {
             this.frameLayouts[i].setVisibility(View.INVISIBLE);
             this.textViews[i].setVisibility(View.INVISIBLE);
         }

@@ -103,9 +103,9 @@ public class Activity_NewGameForm extends AppCompatActivity {
 
         bundle.putBoolean(Constants.isNew.name(), true);
 
-        bundle.putInt(Size.player.name(), this.size[Size.player.ordinal()]);
-        bundle.putInt(Size.team.name(), this.size[Size.team.ordinal()]);
-        bundle.putInt(Size.time.name(), this.size[Size.time.ordinal()]);
+        bundle.putInt(Constants.playersSize.name(), this.size[Size.player.ordinal()]);
+        bundle.putInt(Constants.teamsSize.name(), this.size[Size.team.ordinal()]);
+        bundle.putInt(Constants.timeSize.name(), this.size[Size.time.ordinal()]);
 
         return bundle;
     }
