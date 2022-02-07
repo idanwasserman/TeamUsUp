@@ -1,22 +1,19 @@
 package com.idan.teamusup.fragments;
 
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import androidx.fragment.app.Fragment;
+
 import com.google.android.material.button.MaterialButton;
 import com.idan.teamusup.LocaleHelper;
 import com.idan.teamusup.R;
 
-import java.util.Locale;
 import java.util.Objects;
 
 
@@ -65,16 +62,9 @@ public class Fragment_Settings extends Fragment {
         if (LocaleHelper.getCurrLanguage().equals(language)) return;
 
         LocaleHelper.setLocale(getContext(), language);
-        updateDirections(language);
         Intent intent = Objects.requireNonNull(getActivity()).getIntent();
         getActivity().finish();
         startActivity(intent);
-    }
-
-    private void updateDirections(String language) {
-        Configuration configuration = getResources().getConfiguration();
-        configuration.setLayoutDirection(new Locale(language));
-        getResources().updateConfiguration(configuration, getResources().getDisplayMetrics());
     }
 
     private void findViews(View view) {

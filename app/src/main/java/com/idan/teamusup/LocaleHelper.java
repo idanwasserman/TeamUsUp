@@ -6,6 +6,11 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.preference.PreferenceManager;
 
+import com.idan.teamusup.data.Constants;
+import com.idan.teamusup.data.Generator;
+import com.idan.teamusup.services.MySharedPreferences;
+import com.idan.teamusup.services.UserDatabase;
+
 import java.util.Locale;
 
 public class LocaleHelper {
@@ -42,8 +47,14 @@ public class LocaleHelper {
 
     public static void setLocale(Context context, String language) {
         currLanguage = language;
+        String languageKey = Generator.getInstance().createKey(
+                UserDatabase.getDatabase().getUser().getId(),
+                Constants.language.name());
+        MySharedPreferences.getInstance().putString(languageKey, language);
+
         persist(context, language);
         updateResources(context, language);
+        updateDirections(context, language);
     }
 
     private static String getPersistedData(Context context, String defaultLanguage) {
@@ -68,6 +79,13 @@ public class LocaleHelper {
         Configuration configuration = resources.getConfiguration();
         configuration.locale = locale;
 
+        resources.updateConfiguration(configuration, resources.getDisplayMetrics());
+    }
+
+    private static void updateDirections(Context context, String language) {
+        Resources resources = context.getResources();
+        Configuration configuration = resources.getConfiguration();
+        configuration.setLayoutDirection(new Locale(language));
         resources.updateConfiguration(configuration, resources.getDisplayMetrics());
     }
 }

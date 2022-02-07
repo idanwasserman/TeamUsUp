@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.idan.teamusup.LocaleHelper;
 import com.idan.teamusup.R;
 import com.idan.teamusup.data.Constants;
 import com.idan.teamusup.data.Generator;
@@ -52,8 +53,19 @@ public class Activity_DataLoading extends AppCompatActivity {
         initHelpingObjects();
         loadUserInstance();
         loadDatabase();
+        changeLanguage();
         anotherInit();
         MyLocation.getInstance().getLastLocation(this.callBack_location);
+    }
+
+    private void changeLanguage() {
+        String currLanguage = LocaleHelper.getCurrLanguage();
+        String lastLanguage = MySharedPreferences.getInstance().getString(
+                Generator.getInstance().createKey(this.userInstance.getId(), Constants.language.name()),
+                currLanguage);
+        if (currLanguage.equals(lastLanguage)) return;
+
+        LocaleHelper.setLocale(this, lastLanguage);
     }
 
     private void anotherInit() {
@@ -112,11 +124,6 @@ public class Activity_DataLoading extends AppCompatActivity {
 
     private void loadDatabase() {
         List<Instance> instances = this.instanceService.getDatabaseInstances(this.user);
-//        Toast.makeText(
-//                this,
-//                "Loaded " + instances.size() + " instances", // TODO delete this
-//                Toast.LENGTH_SHORT).show();
-
         UserDatabase.init(this.userInstance, instances);
     }
 

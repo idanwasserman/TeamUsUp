@@ -12,6 +12,7 @@ public enum Constants {
     instances,
     isNew,
 
+    language,
     level,
     location,
 

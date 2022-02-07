@@ -194,6 +194,12 @@ public class Activity_RandomGroups extends AppCompatActivity {
 
     private void hideUnnecessaryFramesAndText() {
         int size = this.teamsSize;
+        for (int i = 0; i < size; i++) {
+            String teamNum = getResources().getString(R.string.team_number);
+            this.textViews[i].setText(new StringBuilder()
+                    .append(teamNum)
+                    .append(i + 1));
+        }
         for (int i = size; i < 4; i++) {
             this.frameLayouts[i].setVisibility(View.INVISIBLE);
             this.textViews[i].setVisibility(View.INVISIBLE);

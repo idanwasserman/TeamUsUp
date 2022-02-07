@@ -154,7 +154,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:textSize="20sp"
-                                        android:text="team #1: "
+                                        android:text="@string/team_number"
                                         android:gravity="center"
                                         />
 
@@ -169,7 +169,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:textSize="20sp"
-                                        android:text="team #2: "
+                                        android:text="@string/team_number"
                                         android:gravity="center"
                                         />
 
@@ -200,7 +200,7 @@
                                         android:layout_height="wrap_content"
                                         android:textSize="20sp"
                                         android:gravity="center"
-                                        android:text="team #3: "
+                                        android:text="@string/team_number"
                                         />
 
                                     <Space
@@ -215,7 +215,7 @@
                                         android:layout_height="wrap_content"
                                         android:textSize="20sp"
                                         android:gravity="center"
-                                        android:text="team #4: "
+                                        android:text="@string/team_number"
                                         />
 
                                     <Space
