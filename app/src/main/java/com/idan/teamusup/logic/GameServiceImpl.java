@@ -112,7 +112,6 @@ public class GameServiceImpl implements GameService {
 
         sb      .append(this.resources.getString(R.string.team_number))
                 .append(teamNumber+1);
-//                .append(":");
 
         for (Instance player : team) {
             if (player == null) continue;
@@ -144,18 +143,16 @@ public class GameServiceImpl implements GameService {
             // Current player stats array
             Object[] currArr = getObjectArrFromList(gameTable, i);
 
+            int idIndex = PlayerStats.id.ordinal();
+            sbArr[idIndex].append(i + 1).append("\n");
+            int nameIndex = PlayerStats.name.ordinal();
+            sbArr[nameIndex].append(currArr[nameIndex]).append("\n");
+
+            int startIndex = PlayerStats.name.ordinal() + 1;
             // For each column
-            int startIndex = PlayerStats.id.ordinal() + 1;
             for (int j = startIndex; j < cols; j++) {
-                String str = currArr[j].toString();
-                if (j == startIndex) {
-                    sbArr[j].append(i + 1).append(")   ");
-                } else {
-                    double d = Double.parseDouble(str);
-                    int num = (int) d;
-                    str = num + "";
-                }
-                sbArr[j].append(str).append("\n");
+                sbArr[j].append((int) Double.parseDouble(currArr[j].toString()))
+                        .append("\n");
             }
         }
 

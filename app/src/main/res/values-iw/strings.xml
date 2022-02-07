@@ -113,4 +113,17 @@
     <string name="starting_match_number">מתחיל משחק #</string>
     <string name="no_matches_played">לא נערכו משחקים</string>
     <string name="game_saved">המשחק נשמר בהצלחה</string>
+    <string name="no_one_has_scored_yet">אף שחקן לא הבקיע עדיין</string>
+    <string name="game_day_number">יום משחקים #</string>
+    <string name="finding_friends_near_you">מחפש חברים לידך</string>
+    <string name="last_goal_cancelled">" - שער אחרון בוטל"</string>
+    <string name="pts">נק\'</string>
+    <string name="goals">שערים</string>
+    <string name="mp">משחקים</string>
+    <string name="w">נצחון</string>
+    <string name="d">תיקו</string>
+    <string name="l">הפסד</string>
+    <string name="gd">הפרש</string>
+    <string name="ga">שער זכות</string>
+    <string name="gf">שער חובה</string>
 </resources>

@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -51,7 +51,7 @@ public class Fragment_Friends extends Fragment {
 
     //Views
     private MaterialTextView friends_TXT_emptyTitle;
-    private FrameLayout friends_FRAME_searching;
+    private RelativeLayout friends_FRAME_searching;
     // Floating Action Buttons
     private FloatingActionButton friends_FAB_addFriends;
     private FloatingActionButton friends_FAB_byManual;
@@ -297,8 +297,7 @@ public class Fragment_Friends extends Fragment {
     };
 
     private void editPlayer(Instance player, int position) {
-        new Dialog_AddPlayerManually(
-                (Dialog_AddPlayerManually.AddPlayerDialogListener) (name, level, photoUrl) ->
+        new Dialog_AddPlayerManually((name, level, photoUrl) ->
                         editPlayer(player, position, name, level, photoUrl),
                 player.getName(),
                 (Level) player.getAttributes().get(Constants.level.name()),

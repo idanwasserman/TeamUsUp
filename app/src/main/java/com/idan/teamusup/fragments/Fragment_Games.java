@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -52,7 +53,7 @@ public class Fragment_Games extends Fragment {
 
     // Buttons
     private MaterialButton games_BTN_newGame;
-    private MaterialButton games_BTN_refreshLocation;
+    private ImageButton games_BTN_currentLocation;
 
     // Game table
     private MaterialTextView[] gameTable;
@@ -142,9 +143,9 @@ public class Fragment_Games extends Fragment {
 
         List<Object> gameTable = (List<Object>) o;
         String[] textArr = GameServiceImpl.getService().convertGameTableToText(gameTable);
-        int startIndex = PlayerStats.id.ordinal() + 1;
-        for (int i = startIndex; i < PlayerStats.size.ordinal(); i++) {
-            this.gameTable[i - startIndex].setText(textArr[i]);
+        int startIndex = PlayerStats.id.ordinal(), size = PlayerStats.size.ordinal();
+        for (int i = startIndex; i < size; i++) {
+            this.gameTable[i].setText(textArr[i]);
         }
     }
 
@@ -161,12 +162,7 @@ public class Fragment_Games extends Fragment {
     // Views
 
     private void initButtons() {
-        games_BTN_newGame.setOnClickListener(v ->
-                startActivity(new Intent(
-                        Objects.requireNonNull(getActivity()).getApplicationContext(),
-                        Activity_NewGameForm.class)));
-
-        games_BTN_refreshLocation.setOnClickListener(v ->
+        this.games_BTN_currentLocation.setOnClickListener(v ->
                 MyLocation.getInstance().setFocusOnMapByLocation(
                         this.mMap,
                         this.markerOptions,
@@ -174,21 +170,27 @@ public class Fragment_Games extends Fragment {
                                 this.userInstance.getLocation().getLat(),
                                 this.userInstance.getLocation().getLng()),
                         ZOOM));
+
+        this.games_BTN_newGame.setOnClickListener(v ->
+                startActivity(new Intent(
+                        Objects.requireNonNull(getActivity()).getApplicationContext(),
+                        Activity_NewGameForm.class)));
     }
 
     private void findViews(View view) {
         this.games_LIST_games = view.findViewById(R.id.games_LIST_games);
         this.games_BTN_newGame = view.findViewById(R.id.games_BTN_newGame);
-        this.games_BTN_refreshLocation = view.findViewById(R.id.games_BTN_refreshLocation);
+        this.games_BTN_currentLocation = view.findViewById(R.id.games_BTN_currentLocation);
 
         this.gameTable = new MaterialTextView[] {
+                view.findViewById(R.id.table_TXT_position),
                 view.findViewById(R.id.table_TXT_player),
+                view.findViewById(R.id.table_TXT_points),
                 view.findViewById(R.id.table_TXT_goals),
                 view.findViewById(R.id.table_TXT_matchesPlayed),
                 view.findViewById(R.id.table_TXT_wins),
                 view.findViewById(R.id.table_TXT_draws),
                 view.findViewById(R.id.table_TXT_losses),
-                view.findViewById(R.id.table_TXT_points),
                 view.findViewById(R.id.table_TXT_goalsScored),
                 view.findViewById(R.id.table_TXT_goalsAgainst),
                 view.findViewById(R.id.table_TXT_goalsDiff)

@@ -16,8 +16,9 @@ import java.util.Map;
 
 public class PlayerServiceImpl implements PlayerService {
 
+    private static final int RADIUS = 5;
     private static PlayerServiceImpl service;
-    private InstanceService instanceService;
+    private final InstanceService instanceService;
 
     private PlayerServiceImpl() {
         this.instanceService = InstanceServiceImpl.getService();
@@ -74,7 +75,7 @@ public class PlayerServiceImpl implements PlayerService {
     @Override
     public void getNearbyPlayers(Instance user, FirebaseRealtimeDB.CallBack_Users callBack_users) {
         FirebaseRealtimeDB.getRealtimeDB().getNearbyUsersIds(
-                user, 50, this.callBack_usersIds, callBack_users);
+                user, RADIUS, this.callBack_usersIds, callBack_users);
     }
 
     @Override

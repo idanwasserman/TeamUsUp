@@ -137,5 +137,15 @@
     <string name="no_one_has_scored_yet">No one has scored yet</string>
     <string name="last_goal_cancelled">\'s last goal cancelled</string>
     <string name="game_day_number">Game Day #</string>
+    <string name="finding_friends_near_you">Finding friends near you</string>
+    <string name="pts">Pts</string>
+    <string name="goals">Goals</string>
+    <string name="mp">MP</string>
+    <string name="w">W</string>
+    <string name="d">D</string>
+    <string name="l">L</string>
+    <string name="ga">GA</string>
+    <string name="gf">GF</string>
+    <string name="gd">GD</string>
 
 </resources>

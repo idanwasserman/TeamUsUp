@@ -12,48 +12,68 @@
         >
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginStart="64dp"
-            android:layout_marginTop="64dp"
             >
 
-            <com.google.android.material.textview.MaterialTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/language"
-                android:textSize="26sp"
-                />
-
-            <RadioGroup
-                android:layout_marginTop="5dp"
-                android:id="@+id/settings_RG_language"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_margin="8dp"
                 >
-                <RadioButton
-                    android:id="@+id/settings_RB_english"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="@string/english"/>
-                <RadioButton
-                    android:id="@+id/settings_RB_hebrew"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="@string/hebrew"/>
 
-            </RadioGroup>
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/language"
+                    android:textSize="26sp"
+                    />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/settings_BTN_change"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:backgroundTint="#4CAF50"
-                android:text="@string/change"
-                app:cornerRadius="50dp" />
+                <RadioGroup
+                    android:layout_marginTop="5dp"
+                    android:id="@+id/settings_RG_language"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+                    <RadioButton
+                        android:id="@+id/settings_RB_english"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="@string/english"/>
+                    <RadioButton
+                        android:id="@+id/settings_RB_hebrew"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="@string/hebrew"/>
+
+                </RadioGroup>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/settings_BTN_change"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="#4CAF50"
+                    android:text="@string/change"
+                    app:cornerRadius="50dp" />
+
+
+            </LinearLayout>
+
+
+
+
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:layout_marginTop="16dp"
+                android:background="#2196F3" />
 
         </LinearLayout>
+
 
     </RelativeLayout>
 

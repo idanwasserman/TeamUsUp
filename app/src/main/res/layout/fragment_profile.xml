@@ -12,43 +12,38 @@
         >
 
         <LinearLayout
-            android:layout_margin="16dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            >
+            android:layout_marginTop="16dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                >
+                android:layout_margin="4dp">
 
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/profile_picture"
-                    android:textSize="18sp"
-                    />
+                    android:textSize="18sp" />
 
                 <Space
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    />
+                    android:layout_weight="1" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/profile_BTN_editPicture"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:backgroundTint="#FFF"
                     android:text="@string/edit"
                     android:textAllCaps="false"
-                    app:cornerRadius="50dp"
-                    android:backgroundTint="#FFF"
                     android:textColor="#3F51B5"
                     android:textSize="14sp"
-                    />
-
+                    app:cornerRadius="50dp" />
 
 
             </LinearLayout>
@@ -57,48 +52,45 @@
                 android:id="@+id/profile_IMG_user"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="32dp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/icn_user"
-                app:riv_oval="true"
-                android:layout_marginBottom="32dp"
-                android:layout_gravity="center"/>
+                app:riv_oval="true" />
 
             <View
-                android:layout_marginBottom="16dp"
                 android:layout_width="match_parent"
                 android:layout_height="3dp"
-                android:background="#2196F3"/>
+                android:layout_marginBottom="16dp"
+                android:background="#2196F3" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                >
+                android:layout_margin="4dp"
+                android:orientation="horizontal">
 
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/username"
-                    android:textSize="18sp"
-                    />
+                    android:textSize="18sp" />
 
                 <Space
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    />
+                    android:layout_weight="1" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/profile_BTN_editUsername"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:backgroundTint="#FFF"
                     android:text="@string/edit"
                     android:textAllCaps="false"
-                    app:cornerRadius="50dp"
-                    android:backgroundTint="#FFF"
                     android:textColor="#3F51B5"
                     android:textSize="14sp"
-                    />
+                    app:cornerRadius="50dp" />
 
             </LinearLayout>
 
@@ -106,11 +98,11 @@
                 android:id="@+id/profile_TXT_username"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
                 android:text="@string/username"
                 android:textSize="26sp"
-                android:textStyle="bold"
-                android:layout_marginTop="10dp"
-                android:layout_gravity="center"/>
+                android:textStyle="bold" />
 
         </LinearLayout>
 

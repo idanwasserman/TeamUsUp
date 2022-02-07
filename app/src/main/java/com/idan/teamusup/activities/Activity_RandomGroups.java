@@ -124,9 +124,9 @@ public class Activity_RandomGroups extends AppCompatActivity {
 
     private final UpdateGameTableListener updateGameTableListener = gameTable -> {
         String[] textArr = GameServiceImpl.getService().convertGameTableToText(gameTable);
-        int startIndex = PlayerStats.id.ordinal() + 1;
-        for (int i = startIndex; i < PlayerStats.size.ordinal(); i++) {
-            this.gameTable[i - startIndex].setText(textArr[i]);
+        int startIndex = PlayerStats.id.ordinal(), size = PlayerStats.size.ordinal();
+        for (int i = startIndex; i < size; i++) {
+            this.gameTable[i].setText(textArr[i]);
         }
     };
 
@@ -237,12 +237,12 @@ public class Activity_RandomGroups extends AppCompatActivity {
 
         this.gameTable = new MaterialTextView[] {
                 findViewById(R.id.table_TXT_player),
+                findViewById(R.id.table_TXT_points),
                 findViewById(R.id.table_TXT_goals),
                 findViewById(R.id.table_TXT_matchesPlayed),
                 findViewById(R.id.table_TXT_wins),
                 findViewById(R.id.table_TXT_draws),
                 findViewById(R.id.table_TXT_losses),
-                findViewById(R.id.table_TXT_points),
                 findViewById(R.id.table_TXT_goalsScored),
                 findViewById(R.id.table_TXT_goalsAgainst),
                 findViewById(R.id.table_TXT_goalsDiff)
