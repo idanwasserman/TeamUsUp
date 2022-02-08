@@ -126,4 +126,8 @@
     <string name="gd">הפרש</string>
     <string name="ga">שער זכות</string>
     <string name="gf">שער חובה</string>
+    <string name="my_profile">הפרופיל שלי</string>
+    <string name="invalid_username">שם משתמש לא תקין</string>
+    <string name="goodbye">להתראות</string>
+    <string name="edit_level">ערוך רמה</string>
 </resources>

@@ -1,4 +1,4 @@
-package com.idan.teamusup;
+package com.idan.teamusup.services;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -8,8 +8,6 @@ import android.preference.PreferenceManager;
 
 import com.idan.teamusup.data.Constants;
 import com.idan.teamusup.data.Generator;
-import com.idan.teamusup.services.MySharedPreferences;
-import com.idan.teamusup.services.UserDatabase;
 
 import java.util.Locale;
 

@@ -21,7 +21,25 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_margin="4dp">
+                android:layout_margin="8dp"
+                >
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/my_profile"
+                    android:textSize="26sp"
+                    />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_margin="8dp">
 
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"
@@ -45,7 +63,6 @@
                     android:textSize="14sp"
                     app:cornerRadius="50dp" />
 
-
             </LinearLayout>
 
             <com.makeramen.roundedimageview.RoundedImageView
@@ -53,7 +70,6 @@
                 android:layout_width="150dp"
                 android:layout_height="150dp"
                 android:layout_gravity="center"
-                android:layout_marginBottom="32dp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/icn_user"
                 app:riv_oval="true" />
@@ -62,12 +78,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="3dp"
                 android:layout_marginBottom="16dp"
+                android:layout_marginTop="16dp"
                 android:background="#2196F3" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="4dp"
+                android:layout_margin="8dp"
                 android:orientation="horizontal">
 
                 <com.google.android.material.textview.MaterialTextView
@@ -101,6 +118,53 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
                 android:text="@string/username"
+                android:textSize="26sp"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:layout_marginBottom="16dp"
+                android:layout_marginTop="16dp"
+                android:background="#2196F3" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:orientation="horizontal">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/level"
+                    android:textSize="18sp" />
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/profile_BTN_editLevel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="#FFF"
+                    android:text="@string/edit"
+                    android:textAllCaps="false"
+                    android:textColor="#3F51B5"
+                    android:textSize="14sp"
+                    app:cornerRadius="50dp" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/profile_TXT_level"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:text="@string/normal"
                 android:textSize="26sp"
                 android:textStyle="bold" />
 

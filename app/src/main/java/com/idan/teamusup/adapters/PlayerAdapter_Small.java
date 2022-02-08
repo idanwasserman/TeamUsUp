@@ -15,17 +15,16 @@ import com.google.android.material.textview.MaterialTextView;
 import com.idan.teamusup.R;
 import com.idan.teamusup.data.Constants;
 import com.idan.teamusup.data.Instance;
-import com.idan.teamusup.data.InstanceType;
-import com.idan.teamusup.data.Level;
+import com.idan.teamusup.logic.InstanceServiceImpl;
 
 import java.util.ArrayList;
 import java.util.Map;
 
 public class PlayerAdapter_Small extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private Activity activity;
-    private ArrayList<Instance> players;
-    private PlayerItemClickListener playerItemClickListener;
+    private final Activity activity;
+    private final ArrayList<Instance> players;
+    private final PlayerItemClickListener playerItemClickListener;
 
     public PlayerAdapter_Small(
             Activity activity,
@@ -52,7 +51,8 @@ public class PlayerAdapter_Small extends RecyclerView.Adapter<RecyclerView.ViewH
             return;
 
         String photoUrl = getPhotoUrl(player);
-        String levelStr = getLevel(player);
+        String levelStr = InstanceServiceImpl.getService()
+                .getLevelStringFromAttributes(player.getAttributes());
 
         if (photoUrl != null && !photoUrl.isEmpty()) {
             Glide
@@ -75,18 +75,6 @@ public class PlayerAdapter_Small extends RecyclerView.Adapter<RecyclerView.ViewH
             return imageLink;
         }
         return (String) attributes.get(Constants.photoUrl.name());
-    }
-
-    private String getLevel(Instance player) {
-        final String DEFAULT = Level.Normal.name();
-        if (player.getType() != InstanceType.Player) return DEFAULT;
-
-        try {
-            return ((Level) player.getAttributes().get(Constants.level.name())).name();
-        } catch (ClassCastException e) {
-            player.getAttributes().put(Constants.level.name(), Level.Normal);
-            return DEFAULT;
-        }
     }
 
     @Override

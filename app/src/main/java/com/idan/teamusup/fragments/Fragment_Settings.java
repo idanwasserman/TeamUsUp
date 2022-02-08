@@ -11,7 +11,7 @@ import android.widget.RadioGroup;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.button.MaterialButton;
-import com.idan.teamusup.LocaleHelper;
+import com.idan.teamusup.services.LocaleHelper;
 import com.idan.teamusup.R;
 
 import java.util.Objects;

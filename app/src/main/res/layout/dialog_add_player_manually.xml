@@ -44,18 +44,18 @@
             >
             <RadioButton
                 android:id="@+id/dialog_RB_beginner"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="@string/beginner"/>
             <RadioButton
                 android:id="@+id/dialog_RB_normal"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:checked="true"
                 android:text="@string/normal"/>
             <RadioButton
                 android:id="@+id/dialog_RB_professional"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="@string/professional"/>
         </RadioGroup>

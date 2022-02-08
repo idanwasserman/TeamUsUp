@@ -9,6 +9,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.idan.teamusup.data.Constants;
 import com.idan.teamusup.data.Generator;
+import com.idan.teamusup.data.Level;
 import com.idan.teamusup.services.FirebaseRealtimeDB;
 import com.idan.teamusup.data.Instance;
 import com.idan.teamusup.data.InstanceType;
@@ -29,6 +30,7 @@ import java.util.stream.Collectors;
 public class InstanceServiceImpl implements InstanceService {
 
     private static final String TAG = "InstanceServiceImpl_TAG";
+    private static final Level DEFAULT_LEVEL = Level.Normal;
 
     private static InstanceServiceImpl service;
 
@@ -126,10 +128,27 @@ public class InstanceServiceImpl implements InstanceService {
         }
     }
 
+    @Override
+    public String getLevelStringFromAttributes(Map<String, Object> attributes) {
+        try {
+            return (String) attributes.get(Constants.level.name());
+        } catch (Exception ignored) {}
+
+        try {
+            Level level = (Level) attributes.get(Constants.level.name());
+            if (level != null) {
+                return level.name();
+            }
+        } catch (Exception ignored) {}
+
+        return Level.Normal.name();
+    }
+
     private Instance createNewUser(FirebaseUser user) {
         Map<String, Object> attributes = new HashMap<>();
         attributes.put(Constants.photoUrl.name(), getPhotoUrl(user));
         attributes.put(Constants.isNew.name(), true);
+        attributes.put(Constants.level.name(), DEFAULT_LEVEL);
 
         return new Instance()
                 .setCreatedTimestamp(new Date())

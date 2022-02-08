@@ -4,6 +4,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.idan.teamusup.data.Instance;
 
 import java.util.List;
+import java.util.Map;
 
 public interface InstanceService {
 
@@ -18,4 +19,6 @@ public interface InstanceService {
     Instance getUserInstance(FirebaseUser user);
 
     List<Instance> getDatabaseInstances(FirebaseUser user);
+
+    String getLevelStringFromAttributes(Map<String, Object> attributes);
 }
