@@ -7,6 +7,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
@@ -25,6 +26,7 @@ import com.idan.teamusup.data.PlayerStats;
 import com.idan.teamusup.logic.GameController;
 import com.idan.teamusup.logic.GameServiceImpl;
 import com.idan.teamusup.logic.MyRandom;
+import com.idan.teamusup.services.MyPopupWindow;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -35,6 +37,7 @@ import java.util.List;
 public class Activity_RandomGroups extends AppCompatActivity {
 
     // Views
+    private ImageButton random_BTN_info;
     private MaterialButton random_BTN_start;
     private MaterialButton random_BTN_random;
     private MaterialButton random_BTN_view;
@@ -207,6 +210,7 @@ public class Activity_RandomGroups extends AppCompatActivity {
     }
 
     private void findViews() {
+        this.random_BTN_info = findViewById(R.id.random_BTN_info);
         this.random_BTN_start = findViewById(R.id.random_BTN_start);
         this.random_BTN_random = findViewById(R.id.random_BTN_random);
         this.random_BTN_view = findViewById(R.id.random_BTN_view);
@@ -236,6 +240,7 @@ public class Activity_RandomGroups extends AppCompatActivity {
         };
 
         this.gameTable = new MaterialTextView[] {
+                findViewById(R.id.table_TXT_position),
                 findViewById(R.id.table_TXT_player),
                 findViewById(R.id.table_TXT_points),
                 findViewById(R.id.table_TXT_goals),
@@ -262,6 +267,9 @@ public class Activity_RandomGroups extends AppCompatActivity {
         this.random_BTN_start.setOnClickListener(v -> startMatch());
         this.random_BTN_view.setOnClickListener(v -> changeViews());
         this.random_BTN_finish.setOnClickListener(v -> onBackPressed());
+        this.random_BTN_info.setOnClickListener(v -> MyPopupWindow.createPopupWindow(
+                getApplicationContext(), v,
+                getResources().getString(R.string.random_info_popup)));
     }
 
     @Override

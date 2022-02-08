@@ -13,16 +13,37 @@
             android:layout_height="match_parent"
             >
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/friends_TXT_listTitle"
+            <LinearLayout
+                android:id="@+id/titleLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/my_friends"
-                android:textSize="24sp"
-                android:layout_marginStart="64dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="4dp"
                 android:layout_marginBottom="4dp"
-                />
+                android:orientation="horizontal"
+                android:padding="4dp">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="4dp"
+                    android:text="@string/my_friends"
+                    android:textSize="26sp" />
+
+                <ImageButton
+                    android:id="@+id/friends_BTN_info"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="8dp"
+                    android:background="#00FFFFFF"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/icn_info" />
+
+            </LinearLayout>
+
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/friends_TXT_emptyTitle"
@@ -33,7 +54,7 @@
                 android:textSize="18sp"
                 android:layout_centerHorizontal="true"
                 android:layout_margin="16dp"
-                android:layout_below="@+id/friends_TXT_listTitle"
+                android:layout_below="@+id/titleLayout"
                 android:visibility="invisible"
                 />
 
@@ -42,7 +63,7 @@
                 android:id="@+id/friends_LIST_players"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/friends_TXT_listTitle"
+                android:layout_below="@+id/titleLayout"
                 android:orientation="horizontal" />
 
             <!-- FABs -->
@@ -67,9 +88,9 @@
                 android:layout_above="@+id/friends_FAB_addFriends"
                 android:layout_alignEnd="@+id/friends_FAB_addFriends"
                 android:layout_marginBottom="16dp"
+                android:contentDescription="@string/TODO"
                 android:visibility="invisible"
-                app:srcCompat="@drawable/icn_location"
-                android:contentDescription="@string/TODO" />
+                app:srcCompat="@drawable/icn_location" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/friends_FAB_byText"

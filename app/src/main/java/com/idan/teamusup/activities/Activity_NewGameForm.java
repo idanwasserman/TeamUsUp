@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,6 +26,7 @@ import com.idan.teamusup.logic.GameController;
 import com.idan.teamusup.logic.GameServiceImpl;
 import com.idan.teamusup.logic.InstanceServiceImpl;
 import com.idan.teamusup.logic.interfaces.InstanceService;
+import com.idan.teamusup.services.MyPopupWindow;
 import com.idan.teamusup.services.UserDatabase;
 
 import java.util.ArrayList;
@@ -48,6 +50,7 @@ public class Activity_NewGameForm extends AppCompatActivity {
 
     // Views
     private MaterialButton form_BTN_submit;
+    private ImageButton form_BTN_info;
     private TextInputLayout[] formSizes;
     private MaterialTextView newGame_TXT_numOfSelected;
 
@@ -69,8 +72,14 @@ public class Activity_NewGameForm extends AppCompatActivity {
         findViews();
         setPlayersLists();
         initAdapters();
+        initButtons();
+    }
 
+    private void initButtons() {
         this.form_BTN_submit.setOnClickListener(v -> submit());
+        this.form_BTN_info.setOnClickListener(v -> MyPopupWindow.createPopupWindow(
+                getApplicationContext(), v,
+                getResources().getString(R.string.new_game_form_info_popup)));
     }
 
     private void submit() {
@@ -222,6 +231,8 @@ public class Activity_NewGameForm extends AppCompatActivity {
         this.newGame_LIST_gamePlayers = findViewById(R.id.newGame_LIST_gamePlayers);
 
         this.form_BTN_submit = findViewById(R.id.form_BTN_submit);
+        this.form_BTN_info = findViewById(R.id.form_BTN_info);
+
         this.formSizes = new TextInputLayout[Size.size.ordinal()];
         this.formSizes[Size.team.ordinal()] = findViewById(R.id.form_TXTI_teamsSize);
         this.formSizes[Size.player.ordinal()] = findViewById(R.id.form_TXTI_playersSize);

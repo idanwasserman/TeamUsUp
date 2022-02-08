@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -23,8 +24,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textview.MaterialTextView;
-import com.idan.teamusup.adapters.PlayerAdapter_Small;
 import com.idan.teamusup.R;
+import com.idan.teamusup.adapters.PlayerAdapter_Small;
 import com.idan.teamusup.data.Constants;
 import com.idan.teamusup.data.Instance;
 import com.idan.teamusup.data.InstanceType;
@@ -38,13 +39,13 @@ import com.idan.teamusup.logic.PlayerServiceImpl;
 import com.idan.teamusup.logic.interfaces.InstanceService;
 import com.idan.teamusup.logic.interfaces.PlayerService;
 import com.idan.teamusup.services.FirebaseRealtimeDB;
+import com.idan.teamusup.services.MyPopupWindow;
 import com.idan.teamusup.services.UserDatabase;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 
 public class Fragment_Friends extends Fragment {
@@ -52,6 +53,7 @@ public class Fragment_Friends extends Fragment {
     //Views
     private MaterialTextView friends_TXT_emptyTitle;
     private RelativeLayout friends_FRAME_searching;
+    private ImageButton friends_BTN_info;
     // Floating Action Buttons
     private FloatingActionButton friends_FAB_addFriends;
     private FloatingActionButton friends_FAB_byManual;
@@ -277,7 +279,7 @@ public class Fragment_Friends extends Fragment {
 
         @Override
         public void deletePlayerClicked(Instance player, int position) {
-            new AlertDialog.Builder(getActivity())
+            new AlertDialog.Builder(activity)
                     .setMessage(new StringBuilder()
                             .append(getResources().getString(R.string.delete_alert))
                             .append(" ")
@@ -300,10 +302,10 @@ public class Fragment_Friends extends Fragment {
         new Dialog_AddPlayerManually((name, level, photoUrl) ->
                         editPlayer(player, position, name, level, photoUrl),
                 player.getName(),
-                (Level) player.getAttributes().get(Constants.level.name()),
+                Level.valueOf(this.instanceService.getLevelStringFromAttributes(player.getAttributes())),
                 (String) player.getAttributes().get(Constants.photoUrl.name()),
                 true)
-                        .show(Objects.requireNonNull(getActivity()).getSupportFragmentManager(),
+                        .show(this.activity.getSupportFragmentManager(),
                                 "edit player dialog");
     }
 
@@ -322,15 +324,19 @@ public class Fragment_Friends extends Fragment {
 
         this.friends_FAB_byManual.setOnClickListener(v ->
                 new Dialog_AddPlayerManually(this.addPlayerDialogListener).show(
-                        Objects.requireNonNull(getActivity()).getSupportFragmentManager(),
+                        this.activity.getSupportFragmentManager(),
                         "add player manually dialog"));
 
         this.friends_FAB_byText.setOnClickListener(v ->
                 new Dialog_AddPlayersByText(this.addPlayersByTextDialogListener).show(
-                        Objects.requireNonNull(getActivity()).getSupportFragmentManager(),
+                        this.activity.getSupportFragmentManager(),
                         "add players by text dialog"));
 
         this.friends_FAB_byLocation.setOnClickListener(v -> byLocationFabClicked());
+
+        this.friends_BTN_info.setOnClickListener(v -> MyPopupWindow.createPopupWindow(
+                this.activity.getApplicationContext(), v,
+                this.activity.getResources().getString(R.string.friends_info_popup)));
     }
 
     private void byLocationFabClicked() {
@@ -393,6 +399,7 @@ public class Fragment_Friends extends Fragment {
         this.friends_TXT_text = view.findViewById(R.id.friends_TXT_text);
         this.friends_TXT_location = view.findViewById(R.id.friends_TXT_location);
 
+        this.friends_BTN_info = view.findViewById(R.id.friends_BTN_info);
         this.friends_FRAME_searching = view.findViewById(R.id.friends_FRAME_searching);
         this.friends_TXT_emptyTitle = view.findViewById(R.id.friends_TXT_emptyTitle);
     }

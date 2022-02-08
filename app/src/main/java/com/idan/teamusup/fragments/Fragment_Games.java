@@ -1,5 +1,6 @@
 package com.idan.teamusup.fragments;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -8,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -31,6 +34,7 @@ import com.idan.teamusup.logic.GameServiceImpl;
 import com.idan.teamusup.logic.InstanceServiceImpl;
 import com.idan.teamusup.logic.interfaces.InstanceService;
 import com.idan.teamusup.services.MyLocation;
+import com.idan.teamusup.services.MyPopupWindow;
 import com.idan.teamusup.services.UserDatabase;
 
 import java.util.ArrayList;
@@ -54,12 +58,14 @@ public class Fragment_Games extends Fragment {
     // Buttons
     private MaterialButton games_BTN_newGame;
     private ImageButton games_BTN_currentLocation;
+    private ImageButton games_BTN_info;
 
     // Game table
     private MaterialTextView[] gameTable;
 
     private Instance userInstance;
     private InstanceService instanceService;
+    private AppCompatActivity activity;
 
 
     public Fragment_Games() {
@@ -83,9 +89,13 @@ public class Fragment_Games extends Fragment {
         return view;
     }
 
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        this.activity = (AppCompatActivity) context;
+    }
 
     // Map
-
     private void initMap() {
         // Initialize map fragment
         SupportMapFragment supportMapFragment = (SupportMapFragment)
@@ -110,7 +120,6 @@ public class Fragment_Games extends Fragment {
 
 
     // Adapter
-
     private void initGameAdapter() {
         GameAdapter adapterGame = new GameAdapter(getActivity(), gamesList)
                 .setGameItemClickListener(this.gameItemClickListener);
@@ -175,12 +184,17 @@ public class Fragment_Games extends Fragment {
                 startActivity(new Intent(
                         Objects.requireNonNull(getActivity()).getApplicationContext(),
                         Activity_NewGameForm.class)));
+
+        this.games_BTN_info.setOnClickListener(v -> MyPopupWindow.createPopupWindow(
+                this.activity.getApplicationContext(), v,
+                this.activity.getResources().getString(R.string.games_info_popup)));
     }
 
     private void findViews(View view) {
         this.games_LIST_games = view.findViewById(R.id.games_LIST_games);
         this.games_BTN_newGame = view.findViewById(R.id.games_BTN_newGame);
         this.games_BTN_currentLocation = view.findViewById(R.id.games_BTN_currentLocation);
+        this.games_BTN_info = view.findViewById(R.id.games_BTN_info);
 
         this.gameTable = new MaterialTextView[] {
                 view.findViewById(R.id.table_TXT_position),

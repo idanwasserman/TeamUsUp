@@ -19,7 +19,7 @@ import java.util.Objects;
 
 public class Fragment_Settings extends Fragment {
 
-    private MaterialButton settings_BTN_change;
+    private MaterialButton settings_BTN_changeLanguage;
     private RadioGroup settings_RG_language;
     private RadioButton settings_RB_english, settings_RB_hebrew;
     private String radioGroupLanguage;
@@ -35,19 +35,30 @@ public class Fragment_Settings extends Fragment {
         View view = inflater.inflate(R.layout.fragment_settings, container, false);
 
         findViews(view);
-        this.settings_RG_language.setOnCheckedChangeListener(this.onCheckedChangeListener);
-        this.settings_BTN_change.setOnClickListener(v -> changeLanguage(this.radioGroupLanguage));
+        initRadioGroupListeners();
+        initDefaultRadioButtons();
+        initButtons();
 
+        return view;
+    }
+
+    private void initDefaultRadioButtons() {
         if (LocaleHelper.HEBREW.equals(LocaleHelper.getCurrLanguage())) {
             this.settings_RB_hebrew.setChecked(true);
         } else {
             this.settings_RB_english.setChecked(true);
         }
-
-        return view;
     }
 
-    private final RadioGroup.OnCheckedChangeListener onCheckedChangeListener = (group, checkedId) -> {
+    private void initRadioGroupListeners() {
+        this.settings_RG_language.setOnCheckedChangeListener(this.onCheckedLanguageChangeListener);
+    }
+
+    private void initButtons() {
+        this.settings_BTN_changeLanguage.setOnClickListener(v -> changeLanguage(this.radioGroupLanguage));
+    }
+
+    private final RadioGroup.OnCheckedChangeListener onCheckedLanguageChangeListener = (group, checkedId) -> {
         switch (checkedId) {
             case R.id.settings_RB_english:
                 this.radioGroupLanguage = LocaleHelper.ENGLISH;
@@ -68,7 +79,7 @@ public class Fragment_Settings extends Fragment {
     }
 
     private void findViews(View view) {
-        this.settings_BTN_change = view.findViewById(R.id.settings_BTN_change);
+        this.settings_BTN_changeLanguage = view.findViewById(R.id.settings_BTN_changeLanguage);
         this.settings_RG_language = view.findViewById(R.id.settings_RG_language);
         this.settings_RB_english = view.findViewById(R.id.settings_RB_english);
         this.settings_RB_hebrew = view.findViewById(R.id.settings_RB_hebrew);

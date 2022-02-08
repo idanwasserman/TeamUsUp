@@ -19,24 +19,18 @@
     <string name="support">Support</string>
     <string name="about_us">About Us</string>
     <string name="verified">Verified</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="games">Games</string>
     <string name="camera">Camera</string>
     <string name="close">Close</string>
     <string name="no">No</string>
     <string name="yes">Yes</string>
     <string name="logout">Logout</string>
-    <string name="title_activity_new_game">Activity_NewGame</string>
 
     <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
+
     <string name="next">Next</string>
     <string name="previous">Previous</string>
 
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="under_construction">Under Construction</string>
     <string name="cancel">Cancel</string>
     <string name="welcome_back">Welcome back</string>
@@ -90,7 +84,7 @@
     <string name="how_many_players_in_a_team">How many players in a team?</string>
     <string name="how_many_teams">How many teams?</string>
     <string name="how_long_is_a_game">How long is a game?</string>
-    <string name="all_players">All players</string>
+    <string name="all_players">All Players</string>
     <string name="click_to_add_player_to_new_game">(click to add player to new game)</string>
     <string name="click_to_remove_player">(click to remove player)</string>
     <string name="players_has_been_chosen">player(s) has been chosen</string>
@@ -151,5 +145,66 @@
     <string name="invalid_username">Invalid username</string>
     <string name="goodbye">Goodbye</string>
     <string name="edit_level">Edit Level</string>
+    <string name="friends_info_popup">
+        This is your friends/players list
+        \n
+        \nIn order to start a new game, you need to have on the list here all the players who will participate in the game.
+        \nYou can add players in several ways (click the PLUS button below):
+        \n *   Manual typing one after the other
+        \n *   Convert text to a list of players
+        \n *   Find other users near you
+        \n
+        \nAfter adding enough players, you can go to the games page and start a new game…
+    </string>
+    <string name="games_info_popup">
+        This is your games page.
+        \nTo start a new game you will need to have all the participating players in your friends/players list.
+        \nIf you have not added yet - Go to your \"Friends\" page and add players.
+        \nThen come back to this page and click on "New Game".
+        \n
+        \nBesides, here you can see your games history.
+        \nYou can scroll through the list of games by swiping right and left.
+        \nTo view the points table - click on a specific game and you will be able to see at what location you played (map below).
+    </string>
+    <string name="new_game_form_info_popup">
+        Fill out the form and select players to start a new game…
+        \n
+        \n *   How many players in a team? Select a number in the range 2-11.
+        \n *   How many groups? Select a number in the 2-4 range.
+        \n *   What is the length of the game (minutes)? Select a number in the range 1-99.
+        \n
+        \nIf you have selected 2 teams - the number of players must be exact (2 * the number of players you have selected).
+        \n
+        \nIf you have selected more than 2 teams - you do not have to choose the exact number of players.
+        \nFor example: for 3 teams and 7 players in a team - you can choose between 15 and 21 players.
+        \n15 - The minimum required to have two teams and one player spare for a third team.
+        \n21 - The maximum required to divide them all into 3 teams.
+    </string>
+    <string name="random_info_popup">
+        This is the middle page before starting each match.
+        \n
+        \nRANDOM - to random new teams.
+        \nVIEW - to change players\' view (text / players\' cards).
+        \nSTART - to start the next match.
+        \nFINISH - to finish game and save data.
+        \n
+        \nAfter each match, the points table below will be updated.
+        \nFirst place is the player with the most points.
+        \nIf there is a tie in the number of points, the number of goals will be checked.
+    </string>
+    <string name="match_info_popup">
+        This is the match page
+        \n
+        \nYou can start/pause/reset the timer for the match whenever you want.
+        \n
+        \nClick on a player card whenever he scores (the score will be updated accordingly).
+        \nClick UNDO to cancel last goal
+        \n
+        \nClick FINISH to finish the match (even if timer is still running)
+        \n
+        \nThe winning team will continue to play in the next match as well.
+        \n
+        \nIf the result ends in a draw - you will have to choose a "winning" team that will continue to the next game (the game will still be considered a draw in terms of points).
+    </string>
 
 </resources>

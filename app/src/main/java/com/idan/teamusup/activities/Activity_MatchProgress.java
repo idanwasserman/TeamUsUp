@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Vibrator;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,6 +23,7 @@ import com.idan.teamusup.data.Constants;
 import com.idan.teamusup.data.Instance;
 import com.idan.teamusup.logic.GameController;
 import com.idan.teamusup.logic.MatchController;
+import com.idan.teamusup.services.MyPopupWindow;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -39,6 +41,7 @@ public class Activity_MatchProgress extends AppCompatActivity {
     private MaterialTextView match_TXT_title;
     private MaterialTextView[] match_TXT_score;
     private MaterialTextView match_TXT_countDown;
+    private ImageButton match_BTN_info;
     private MaterialButton match_BTN_startPause;
     private MaterialButton match_BTN_reset;
     private MaterialButton match_BTN_undo;
@@ -272,6 +275,9 @@ public class Activity_MatchProgress extends AppCompatActivity {
         this.match_BTN_reset.setOnClickListener(v -> resetTimer());
         this.match_BTN_undo.setOnClickListener(v -> undoLastGoal());
         this.match_BTN_end.setOnClickListener(v -> endMatch());
+        this.match_BTN_info.setOnClickListener(v -> MyPopupWindow.createPopupWindow(
+                getApplicationContext(), v,
+                getResources().getString(R.string.match_info_popup)));
     }
 
     private void findViews() {
@@ -279,6 +285,7 @@ public class Activity_MatchProgress extends AppCompatActivity {
                 findViewById(R.id.match_TXT_score1),
                 findViewById(R.id.match_TXT_score2)
         };
+        this.match_BTN_info = findViewById(R.id.match_BTN_info);
         this.match_TXT_countDown = findViewById(R.id.match_TXT_countDown);
         this.match_BTN_startPause = findViewById(R.id.match_BTN_startPause);
         this.match_BTN_reset = findViewById(R.id.match_BTN_reset);

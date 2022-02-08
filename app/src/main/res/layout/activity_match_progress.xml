@@ -12,25 +12,63 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/match_TXT_title"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="8dp"
-            android:text="@string/matches"
-            android:textSize="24sp" />
+            android:orientation="horizontal"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="8dp"
+            >
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/match_TXT_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/matches"
+                android:textSize="26sp"
+                />
+
+            <ImageButton
+                android:id="@+id/match_BTN_info"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="16dp"
+                android:background="#00FFFFFF"
+                android:scaleType="centerCrop"
+                android:src="@drawable/icn_info" />
+
+        </LinearLayout>
 
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#1414FF">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/match_LIST_team1"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal" />
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                >
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/BLUE"
+                    android:textSize="20sp"
+                    android:textColor="@color/white"
+                    android:layout_margin="8dp"
+                    />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/match_LIST_team1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" />
+
+            </LinearLayout>
+
+
 
         </FrameLayout>
 
@@ -39,11 +77,29 @@
             android:layout_height="wrap_content"
             android:background="#FF1414">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/match_LIST_team2"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal" />
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                >
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/RED"
+                    android:textSize="20sp"
+                    android:textColor="@color/white"
+                    android:layout_margin="8dp"
+                    />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/match_LIST_team2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" />
+
+            </LinearLayout>
+
 
         </FrameLayout>
 
@@ -56,7 +112,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_margin="8dp">
 
 
             <com.google.android.material.textview.MaterialTextView
@@ -108,7 +165,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="8dp">
+                    >
 
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/match_TXT_countDown"

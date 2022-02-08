@@ -14,15 +14,33 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:layout_margin="8dp"
+            android:padding="8dp">
 
-            <com.google.android.material.textview.MaterialTextView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/fill_form"
-                android:textSize="18sp"
-                android:layout_gravity="center"
-                />
+                android:orientation="horizontal"
+                >
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/fill_form"
+                    android:textSize="20sp"
+                    />
+
+                <ImageButton
+                    android:id="@+id/form_BTN_info"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="16dp"
+                    android:background="#00FFFFFF"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/icn_info" />
+
+            </LinearLayout>
 
 
             <com.google.android.material.textfield.TextInputLayout
@@ -71,14 +89,12 @@
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
                 android:text="@string/all_players"
-                android:textSize="18sp" />
+                android:textSize="20sp" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
                 android:text="@string/click_to_add_player_to_new_game"
                 android:textSize="12sp" />
 
@@ -93,7 +109,6 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:padding="4dp"
-                android:gravity="center_horizontal"
                 >
 
                 <com.google.android.material.textview.MaterialTextView
@@ -101,7 +116,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:text="@string/game_players"
-                    android:textSize="18sp"
+                    android:textSize="20sp"
                     android:layout_marginEnd="8dp"/>
 
                 <com.google.android.material.textview.MaterialTextView
@@ -125,7 +140,6 @@
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
                 android:text="@string/click_to_remove_player"
                 android:textSize="12sp" />
 

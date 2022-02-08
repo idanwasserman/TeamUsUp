@@ -37,6 +37,16 @@
                     android:text="@string/my_games"
                     android:textSize="26sp" />
 
+                <ImageButton
+                    android:id="@+id/games_BTN_info"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="8dp"
+                    android:background="#00FFFFFF"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/icn_info" />
+
                 <Space
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"

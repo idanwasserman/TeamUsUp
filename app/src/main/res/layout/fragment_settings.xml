@@ -15,7 +15,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_margin="16dp">
+            android:layout_margin="16dp"
+            >
 
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="wrap_content"
@@ -60,7 +61,7 @@
                     </RadioGroup>
 
                     <com.google.android.material.button.MaterialButton
-                        android:id="@+id/settings_BTN_change"
+                        android:id="@+id/settings_BTN_changeLanguage"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:backgroundTint="#4CAF50"
@@ -71,12 +72,6 @@
                 </LinearLayout>
 
             </com.google.android.material.card.MaterialCardView>
-
-
-<!--            <View-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="3dp"-->
-<!--                android:background="#2196F3" />-->
 
         </LinearLayout>
 
