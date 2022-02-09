@@ -40,6 +40,7 @@
                     android:layout_marginStart="8dp"
                     android:background="#00FFFFFF"
                     android:scaleType="centerCrop"
+                    android:contentDescription="@string/TODO"
                     android:src="@drawable/icn_info" />
 
             </LinearLayout>
@@ -66,92 +67,19 @@
                 android:layout_below="@+id/titleLayout"
                 android:orientation="horizontal" />
 
-            <!-- FABs -->
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/friends_FAB_addFriends"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
-                android:layout_marginEnd="4dp"
-                android:layout_marginBottom="4dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="8dp"
                 android:backgroundTint="#673AB7"
                 android:clickable="true"
                 android:contentDescription="@string/TODO"
                 android:focusable="true"
                 app:srcCompat="@drawable/icn_plus" />
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/friends_FAB_byLocation"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_above="@+id/friends_FAB_addFriends"
-                android:layout_alignEnd="@+id/friends_FAB_addFriends"
-                android:layout_marginBottom="16dp"
-                android:contentDescription="@string/TODO"
-                android:visibility="invisible"
-                app:srcCompat="@drawable/icn_location" />
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/friends_FAB_byText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_above="@id/friends_FAB_byLocation"
-                android:layout_alignEnd="@+id/friends_FAB_addFriends"
-                android:layout_marginBottom="16dp"
-                android:visibility="invisible"
-                app:srcCompat="@drawable/icn_text_format"
-                android:contentDescription="@string/TODO"/>
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/friends_FAB_byManual"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_above="@id/friends_FAB_byText"
-                android:layout_alignEnd="@+id/friends_FAB_addFriends"
-                android:layout_marginBottom="16dp"
-                android:visibility="invisible"
-                app:srcCompat="@drawable/icn_manual_click"
-                android:contentDescription="@string/TODO"/>
-
-            <!-- FABs texts -->
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/friends_TXT_manual"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignTop="@id/friends_FAB_byManual"
-                android:layout_alignEnd="@id/friends_FAB_addFriends"
-                android:layout_alignBottom="@id/friends_FAB_byManual"
-                android:layout_marginEnd="70dp"
-                android:gravity="center"
-                android:text="@string/manual_typing"
-                android:visibility="invisible" />
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/friends_TXT_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignTop="@id/friends_FAB_byText"
-                android:layout_alignEnd="@id/friends_FAB_addFriends"
-                android:layout_alignBottom="@id/friends_FAB_byText"
-                android:layout_marginEnd="70dp"
-                android:gravity="center"
-                android:text="@string/convert_text"
-                android:visibility="invisible"
-                />
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/friends_TXT_location"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignTop="@id/friends_FAB_byLocation"
-                android:layout_alignEnd="@id/friends_FAB_addFriends"
-                android:layout_alignBottom="@id/friends_FAB_byLocation"
-                android:layout_marginEnd="70dp"
-                android:gravity="center"
-                android:text="@string/find_friends"
-                android:visibility="invisible"
-                />
 
 
             <!-- find by location frame -->
@@ -182,10 +110,135 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginBottom="16dp"
                     android:text="@string/finding_friends_near_you"
-                    android:textSize="18sp"
-                    android:textColor="@color/black"/>
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
 
             </RelativeLayout>
+
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/friends_CARD_buttons"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@id/friends_FAB_addFriends"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:backgroundTint="#D9000000"
+                android:checkable="true"
+                android:clickable="true"
+                android:elevation="8dp"
+                android:focusable="true"
+                app:cardCornerRadius="8dp"
+                android:visibility="invisible"
+                app:cardElevation="4dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="8dp"
+                    >
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="4dp"
+                            android:orientation="horizontal">
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/friends_TXT_manual"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginEnd="12dp"
+                                android:text="@string/manual_typing"
+                                android:textColor="@color/white"
+                                />
+
+                            <Space
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1" />
+
+                            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                                android:id="@+id/friends_FAB_byManual"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:contentDescription="@string/TODO"
+                                app:srcCompat="@drawable/icn_manual_click" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="4dp"
+                            android:orientation="horizontal">
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/friends_TXT_text"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:text="@string/convert_text"
+                                android:textColor="@color/white"
+                                />
+
+                            <Space
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1" />
+
+                            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                                android:id="@+id/friends_FAB_byText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:contentDescription="@string/TODO"
+                                app:srcCompat="@drawable/icn_text_format" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="4dp"
+                            android:orientation="horizontal">
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/friends_TXT_location"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:text="@string/find_friends"
+                                android:textColor="@color/white"
+                                />
+
+                            <Space
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1" />
+
+                            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                                android:id="@+id/friends_FAB_byLocation"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:contentDescription="@string/TODO"
+                                app:srcCompat="@drawable/icn_location" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+
+                </RelativeLayout>
+
+
+            </com.google.android.material.card.MaterialCardView>
 
         </RelativeLayout>
 

@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textview.MaterialTextView;
 import com.idan.teamusup.R;
@@ -54,15 +55,12 @@ public class Fragment_Friends extends Fragment {
     private MaterialTextView friends_TXT_emptyTitle;
     private RelativeLayout friends_FRAME_searching;
     private ImageButton friends_BTN_info;
+    private MaterialCardView friends_CARD_buttons;
     // Floating Action Buttons
     private FloatingActionButton friends_FAB_addFriends;
     private FloatingActionButton friends_FAB_byManual;
     private FloatingActionButton friends_FAB_byText;
     private FloatingActionButton friends_FAB_byLocation;
-    // FABs Texts
-    private MaterialTextView friends_TXT_manual;
-    private MaterialTextView friends_TXT_text;
-    private MaterialTextView friends_TXT_location;
     // FABs animations
     private Animation rotateOpen;
     private Animation rotateClose;
@@ -245,6 +243,7 @@ public class Fragment_Friends extends Fragment {
         dialog_chooseNearbyUsers.show(
                 this.activity.getSupportFragmentManager(),
                 "choose nearby users dialog");
+        this.friends_FRAME_searching.setVisibility(View.INVISIBLE);
     };
 
     // Listeners:
@@ -357,12 +356,7 @@ public class Fragment_Friends extends Fragment {
     private void setVisibility(boolean clicked) {
         int visibility = clicked ? View.INVISIBLE : View.VISIBLE;
 
-        this.friends_FAB_byManual.setVisibility(visibility);
-        this.friends_FAB_byText.setVisibility(visibility);
-        this.friends_FAB_byLocation.setVisibility(visibility);
-        this.friends_TXT_manual.setVisibility(visibility);
-        this.friends_TXT_text.setVisibility(visibility);
-        this.friends_TXT_location.setVisibility(visibility);
+        this.friends_CARD_buttons.setVisibility(visibility);
     }
 
     private void setAnimation(boolean clicked) {
@@ -395,13 +389,10 @@ public class Fragment_Friends extends Fragment {
         this.friends_FAB_byText = view.findViewById(R.id.friends_FAB_byText);
         this.friends_FAB_byLocation = view.findViewById(R.id.friends_FAB_byLocation);
 
-        this.friends_TXT_manual = view.findViewById(R.id.friends_TXT_manual);
-        this.friends_TXT_text = view.findViewById(R.id.friends_TXT_text);
-        this.friends_TXT_location = view.findViewById(R.id.friends_TXT_location);
-
         this.friends_BTN_info = view.findViewById(R.id.friends_BTN_info);
         this.friends_FRAME_searching = view.findViewById(R.id.friends_FRAME_searching);
         this.friends_TXT_emptyTitle = view.findViewById(R.id.friends_TXT_emptyTitle);
+        this.friends_CARD_buttons = view.findViewById(R.id.friends_CARD_buttons);
     }
 
     private void findAnimations() {
