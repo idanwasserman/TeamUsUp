@@ -76,7 +76,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:padding="4dp"
-                                android:background="#03A9F4"
+                                android:background="#032BF4"
                                 >
 
                                 <androidx.recyclerview.widget.RecyclerView
@@ -91,6 +91,7 @@
                                 android:id="@+id/frame2"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:padding="4dp"
                                 android:background="#FF2229"
                                 >
 
@@ -106,6 +107,7 @@
                                 android:id="@+id/frame3"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:padding="4dp"
                                 android:background="#673AB7"
                                 >
 
@@ -121,6 +123,7 @@
                                 android:id="@+id/frame4"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:padding="4dp"
                                 android:background="#FFEB3B"
                                 >
 

@@ -55,7 +55,8 @@ public class Fragment_Games extends Fragment {
     private MarkerOptions markerOptions;
     private final int ZOOM = 15;
 
-    // Buttons
+    // Views
+    private MaterialTextView games_TXT_emptyTitle;
     private MaterialButton games_BTN_newGame;
     private ImageButton games_BTN_currentLocation;
     private ImageButton games_BTN_info;
@@ -121,7 +122,7 @@ public class Fragment_Games extends Fragment {
 
     // Adapter
     private void initGameAdapter() {
-        GameAdapter adapterGame = new GameAdapter(getActivity(), gamesList)
+        GameAdapter adapterGame = new GameAdapter(getActivity(), this.gamesList)
                 .setGameItemClickListener(this.gameItemClickListener);
 
         this.games_LIST_games.setLayoutManager(new LinearLayoutManager(
@@ -161,7 +162,9 @@ public class Fragment_Games extends Fragment {
     private void setGamesFromDatabase() {
         this.gamesList = (ArrayList<Instance>) this.instanceService
                 .getAllInstancesByType(InstanceType.Game.name());
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+        if (this.gamesList.isEmpty()) {
+            this.games_TXT_emptyTitle.setVisibility(View.VISIBLE);
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             Collections.sort(this.gamesList, Comparator.comparing(Instance::getCreatedTimestamp));
             Collections.reverse(this.gamesList);
         }
@@ -191,6 +194,7 @@ public class Fragment_Games extends Fragment {
     }
 
     private void findViews(View view) {
+        this.games_TXT_emptyTitle = view.findViewById(R.id.games_TXT_emptyTitle);
         this.games_LIST_games = view.findViewById(R.id.games_LIST_games);
         this.games_BTN_newGame = view.findViewById(R.id.games_BTN_newGame);
         this.games_BTN_currentLocation = view.findViewById(R.id.games_BTN_currentLocation);

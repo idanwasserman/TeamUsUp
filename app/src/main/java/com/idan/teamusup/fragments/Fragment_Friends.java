@@ -176,6 +176,8 @@ public class Fragment_Friends extends Fragment {
             toastText = getResources().getString(R.string.zero_players_added);
             Toast.makeText(this.activity, toastText, Toast.LENGTH_SHORT).show();
             return;
+        } else if (this.playersInstances.size() == 0) {
+            this.friends_TXT_emptyTitle.setVisibility(View.INVISIBLE);
         }
 
         // Add players to list
@@ -216,6 +218,8 @@ public class Fragment_Friends extends Fragment {
             String text = getResources().getString(R.string.zero_users_chosen);
             Toast.makeText(this.activity, text, Toast.LENGTH_SHORT).show();
             return;
+        } else if (this.playersInstances.size() == 0) {
+            this.friends_TXT_emptyTitle.setVisibility(View.INVISIBLE);
         }
 
         List<Instance> players = this.playerService.convertUsersToPlayers(this.userInstance, chosenUsers);
@@ -355,7 +359,6 @@ public class Fragment_Friends extends Fragment {
 
     private void setVisibility(boolean clicked) {
         int visibility = clicked ? View.INVISIBLE : View.VISIBLE;
-
         this.friends_CARD_buttons.setVisibility(visibility);
     }
 

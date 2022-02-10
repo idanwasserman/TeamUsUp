@@ -81,7 +81,7 @@
     <string name="choose_nearby_explanation">לחץ על שחקן להוספה\\הסרה מרשימה. לאחר מכן לחץ על להגיש להוספת השחקנים לחברים שלך</string>
     <string name="enter_password">הכנס סיסמה</string>
     <string name="verify">אמת</string>
-    <string name="empty_list_explanation">הרשימה ריקה. לחץ על + להוספת שחקנים</string>
+    <string name="empty_friends_list_explanation">הרשימה ריקה.\n לחץ על \'+\' להוספת שחקנים</string>
     <string name="find_nearby_explanation">לחץ על שחקן להוספה\\הסרה מרשימה. לאחר מכן לחץ על להגיש להוספת השחקנים לחברים שלך</string>
     <string name="language">שפה</string>
     <string name="change">שנה</string>
@@ -191,4 +191,6 @@
         \n
         \nבמידה והתוצאה תסתיים בתיקו - תצטרך לבחור קבוצה "מנצחת" שתמשיך למשחק הבא (המשחק עדיין ייחשב כתוצאת תיקו מבחינת הנקודות).
     </string>
+    <string name="empty_games_list_explanation">רשימת המשחקים ריקה</string>
+
 </resources>

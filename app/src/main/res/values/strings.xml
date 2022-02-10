@@ -97,7 +97,7 @@
     <string name="find_nearby_explanation">Click on a player to add/remove to list\nThen click submit to add them to your friends</string>
     <string name="enter_password">Enter Password</string>
     <string name="verify">Verify</string>
-    <string name="empty_list_explanation">List is empty\nClick plus button to add players</string>
+    <string name="empty_friends_list_explanation">List is empty\nClick plus button to add players</string>
     <string name="language">Language</string>
     <string name="change">Change</string>
     <string name="this_field_is_required">This fields is required</string>
@@ -206,5 +206,6 @@
         \n
         \nIf the result ends in a draw - you will have to choose a "winning" team that will continue to the next game (the game will still be considered a draw in terms of points).
     </string>
+    <string name="empty_games_list_explanation">Games list is empty</string>
 
 </resources>

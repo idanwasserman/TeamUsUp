@@ -11,9 +11,54 @@
         android:layout_height="match_parent"
         >
 
+        <LinearLayout
+            android:id="@+id/titleLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="4dp"
+            android:padding="4dp"
+            >
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="4dp"
+                android:text="@string/my_games"
+                android:textSize="26sp" />
+
+            <ImageButton
+                android:id="@+id/games_BTN_info"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="8dp"
+                android:background="#00FFFFFF"
+                android:scaleType="centerCrop"
+                android:src="@drawable/icn_info" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/games_BTN_newGame"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#2196F3"
+                android:text="@string/new_game"
+                app:cornerRadius="50dp"
+                />
+
+        </LinearLayout>
+
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_below="@id/titleLayout"
             >
 
             <LinearLayout
@@ -21,48 +66,15 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_margin="4dp"
-                android:padding="4dp"
-                >
-
                 <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/games_TXT_emptyTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_margin="4dp"
-                    android:text="@string/my_games"
-                    android:textSize="26sp" />
-
-                <ImageButton
-                    android:id="@+id/games_BTN_info"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="8dp"
-                    android:background="#00FFFFFF"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/icn_info" />
-
-                <Space
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:text="@string/empty_games_list_explanation"
+                    android:textSize="18sp"
+                    android:layout_margin="16dp"
+                    android:visibility="gone"
                     />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/games_BTN_newGame"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="#2196F3"
-                    android:text="@string/new_game"
-                    app:cornerRadius="50dp"
-                    />
-
-            </LinearLayout>
 
                 <!-- Games list -->
                 <androidx.recyclerview.widget.RecyclerView
