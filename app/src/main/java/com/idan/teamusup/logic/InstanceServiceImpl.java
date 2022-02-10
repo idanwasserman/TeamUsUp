@@ -130,8 +130,12 @@ public class InstanceServiceImpl implements InstanceService {
 
     @Override
     public String getLevelStringFromAttributes(Map<String, Object> attributes) {
+        String levelStr;
         try {
-            return (String) attributes.get(Constants.level.name());
+             levelStr = (String) attributes.get(Constants.level.name());
+             if (levelStr != null && !levelStr.isEmpty()) {
+                 return levelStr;
+             }
         } catch (Exception ignored) {}
 
         try {
@@ -141,6 +145,7 @@ public class InstanceServiceImpl implements InstanceService {
             }
         } catch (Exception ignored) {}
 
+        attributes.put(Constants.level.name(), Level.Normal);
         return Level.Normal.name();
     }
 

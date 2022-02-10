@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".fragments.Fragment_Profile">
 
-    <RelativeLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
@@ -31,6 +31,22 @@
                     android:text="@string/my_profile"
                     android:textSize="26sp"
                     />
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"/>
+
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/profile_BTN_logout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:backgroundTint="#F44336"
+                    android:text="@string/logout"
+                    android:textAllCaps="false"
+                    app:cornerRadius="50dp" />
 
             </LinearLayout>
 
@@ -181,20 +197,9 @@
                 android:layout_marginTop="16dp"
                 android:background="#2196F3" />
 
+
         </LinearLayout>
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/profile_BTN_logout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="16dp"
-            android:backgroundTint="#F44336"
-            android:text="@string/logout"
-            android:textAllCaps="false"
-            app:cornerRadius="50dp" />
-
-    </RelativeLayout>
+    </ScrollView>
 
 </FrameLayout>
