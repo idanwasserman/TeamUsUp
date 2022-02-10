@@ -192,5 +192,6 @@
         \nבמידה והתוצאה תסתיים בתיקו - תצטרך לבחור קבוצה "מנצחת" שתמשיך למשחק הבא (המשחק עדיין ייחשב כתוצאת תיקו מבחינת הנקודות).
     </string>
     <string name="empty_games_list_explanation">רשימת המשחקים ריקה</string>
+    <string name="location_permissions_denied_msg">אנא אפשר הרשאת מיקום עבור תכונות האפליקציה</string>
 
 </resources>

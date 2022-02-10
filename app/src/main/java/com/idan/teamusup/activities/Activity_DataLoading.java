@@ -1,11 +1,13 @@
 package com.idan.teamusup.activities;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -28,6 +30,7 @@ import com.idan.teamusup.services.MyLocation;
 import com.idan.teamusup.logic.Validator;
 import com.idan.teamusup.logic.interfaces.InstanceService;
 
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -55,6 +58,22 @@ public class Activity_DataLoading extends AppCompatActivity {
         loadDatabase();
         changeLanguage();
         anotherInit();
+        MyLocation.getInstance().getLastLocation(this.callBack_location);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(
+            int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        for (int result : grantResults) {
+            if (result == PackageManager.PERMISSION_DENIED) {
+                String text = getResources().getString(R.string.location_permissions_denied_msg);
+                Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
+                openHomeActivity();
+                return;
+            }
+        }
         MyLocation.getInstance().getLastLocation(this.callBack_location);
     }
 
@@ -128,10 +147,6 @@ public class Activity_DataLoading extends AppCompatActivity {
     }
 
     private void updateUserInstance(double lat, double lng) {
-        if (lat == 0 && lng == 0) {
-            MyLocation.getInstance().getLastLocation(this.callBack_location);
-        }
-
         this.userInstance.setLocation(new Location(lat, lng));
         this.instanceService.updateUserLocation(this.userInstance);
 

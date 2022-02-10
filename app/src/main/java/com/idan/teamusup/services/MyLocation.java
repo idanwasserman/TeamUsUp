@@ -35,6 +35,11 @@ public class MyLocation {
     private FusedLocationProviderClient locationProvider;
     private double lat, lng;
 
+    public static final String[] LOCATION_PERMISSIONS = {
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.ACCESS_FINE_LOCATION
+    };
+
     public static MyLocation getInstance() {
         return instance;
     }
@@ -77,7 +82,7 @@ public class MyLocation {
         } else {
             // if permissions aren't available, request for permissions
             requestPermissions();
-            callBack_location.setLocation(0, 0);
+//            callBack_location.setLocation(0, 0);
         }
     }
 
@@ -126,10 +131,7 @@ public class MyLocation {
     private void requestPermissions() {
         ActivityCompat.requestPermissions(
                 this.activity,
-                new String[]{
-                        Manifest.permission.ACCESS_COARSE_LOCATION,
-                        Manifest.permission.ACCESS_FINE_LOCATION
-                },
+                LOCATION_PERMISSIONS,
                 PERMISSION_ID);
     }
 

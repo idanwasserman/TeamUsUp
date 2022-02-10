@@ -207,5 +207,6 @@
         \nIf the result ends in a draw - you will have to choose a "winning" team that will continue to the next game (the game will still be considered a draw in terms of points).
     </string>
     <string name="empty_games_list_explanation">Games list is empty</string>
+    <string name="location_permissions_denied_msg">Please allow location permission for app features</string>
 
 </resources>
