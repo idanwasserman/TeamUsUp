@@ -13,7 +13,6 @@ import java.io.ByteArrayOutputStream;
 import java.util.Date;
 
 public class MyCamera {
-    private final static String TAG = "TAG_MyCamera";
 
     private static MyCamera instance;
     private CallBack_PhotoUrl callBack_photoUrl;
@@ -44,7 +43,6 @@ public class MyCamera {
         this.callBack_photoUrl.setPhotoUrl(photo);
     }
 
-    // FIXME check permissions
     public String getImageUri(Context inContext, Bitmap inImage) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);

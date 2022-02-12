@@ -7,7 +7,6 @@ import android.content.res.Resources;
 import android.preference.PreferenceManager;
 
 import com.idan.teamusup.data.Constants;
-import com.idan.teamusup.data.Generator;
 
 import java.util.Locale;
 

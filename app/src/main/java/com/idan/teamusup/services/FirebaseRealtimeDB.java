@@ -25,8 +25,6 @@ public class FirebaseRealtimeDB {
     private GeoQuery geoQuery;
 
     private static final String TAG = "FirebaseRealtimeDB_TAG";
-    private static final String HOST = "10.0.2.2";
-    private static final int PORT = 9000;
 
     private static final String USERS_PATH = "USERS";
     private static final String USERS_LOCATIONS_PATH = "USERS_LOCATIONS";
@@ -34,7 +32,6 @@ public class FirebaseRealtimeDB {
 
     private FirebaseRealtimeDB() {
         this.database = FirebaseDatabase.getInstance();
-//        this.database.useEmulator(HOST, PORT);
         this.geoFire = new GeoFire(this.database.getReference(USERS_LOCATIONS_PATH));
     }
 
@@ -150,10 +147,11 @@ public class FirebaseRealtimeDB {
                                 for (DataSnapshot child : snapshot.getChildren()) {
                                     try {
                                         Instance user = child.getValue(Instance.class);
+                                        assert user != null;
                                         if (usersIds.contains(user.getId())) {
                                             users.add(user);
                                         }
-                                    } catch (Exception e) {}
+                                    } catch (Exception ignored) {}
                                 }
                                 if (callBack_users != null) {
                                     callBack_users.usersReady(users);

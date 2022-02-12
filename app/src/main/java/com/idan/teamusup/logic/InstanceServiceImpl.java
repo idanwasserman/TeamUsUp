@@ -8,7 +8,7 @@ import com.google.firebase.auth.UserInfo;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.idan.teamusup.data.Constants;
-import com.idan.teamusup.data.Generator;
+import com.idan.teamusup.services.Generator;
 import com.idan.teamusup.data.Level;
 import com.idan.teamusup.services.FirebaseRealtimeDB;
 import com.idan.teamusup.data.Instance;

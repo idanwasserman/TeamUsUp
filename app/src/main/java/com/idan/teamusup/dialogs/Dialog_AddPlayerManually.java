@@ -23,7 +23,7 @@ import com.bumptech.glide.Glide;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputLayout;
 import com.idan.teamusup.R;
-import com.idan.teamusup.data.Generator;
+import com.idan.teamusup.services.Generator;
 import com.idan.teamusup.data.Level;
 import com.idan.teamusup.services.MyCamera;
 

@@ -56,11 +56,12 @@ public class PlayerServiceImpl implements PlayerService {
         List<Instance> players = new ArrayList<>();
         if (text == null || text.isEmpty()) return players;
 
-        Map<String, Object> attributes = new HashMap<>();
-        attributes.put(Constants.level.name(), Level.Normal);
         String[] lines = text.split("\n");
         for (String line : lines) {
             if (line.isEmpty()) continue;
+
+            Map<String, Object> attributes = new HashMap<>();
+            attributes.put(Constants.level.name(), Level.Normal);
 
             players.add(
                     this.instanceService.createInstance(

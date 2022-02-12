@@ -59,7 +59,6 @@ public class MatchController {
     }
 
     public int getWinningTeamNumber() {
-        //FIXME
         if (this.score[0] == this.score[1]) return DRAW;
         else {
             if (this.score[0] > this.score[1]) return 0;
@@ -68,7 +67,6 @@ public class MatchController {
     }
 
     private int getLosingTeamNumber() {
-        //FIXME
         return getWinningTeamNumber() == 0 ? 1 : 0;
     }
 

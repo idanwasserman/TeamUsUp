@@ -6,7 +6,7 @@ import android.content.SharedPreferences;
 public class MySharedPreferences {
 
     private static MySharedPreferences instance;
-    private SharedPreferences sharedPreferences;
+    private final SharedPreferences sharedPreferences;
 
     public static MySharedPreferences getInstance() {
         return instance;

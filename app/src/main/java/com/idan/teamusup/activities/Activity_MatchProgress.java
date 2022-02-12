@@ -59,7 +59,6 @@ public class Activity_MatchProgress extends AppCompatActivity {
     private int timeSize;
 
     // Helping object
-//    private Bundle bundle;
     private Vibrator vibrator;
     private MatchController matchController;
     private GameController gameController;

@@ -14,6 +14,8 @@ import androidx.appcompat.app.AppCompatDialogFragment;
 import com.google.android.material.textfield.TextInputLayout;
 import com.idan.teamusup.R;
 
+import java.util.Objects;
+
 
 public class Dialog_AddPlayersByText extends AppCompatDialogFragment {
 
@@ -39,7 +41,7 @@ public class Dialog_AddPlayersByText extends AppCompatDialogFragment {
         final String HINT = "Enter a list of players' names separated with new lines\n\n" +
                 "For example:\n\n" +
                 "Idan W\nGuy I\nMessi\nBrad Pitt\nDonald Trump\nAlice\nBob\n\n[Total: 7]";
-        this.dialog_TXTI_text.getEditText().setHint(HINT);
+        Objects.requireNonNull(this.dialog_TXTI_text.getEditText()).setHint(HINT);
         final String dialogTitle = "Add players by text";
         builder
                 .setView(view)
@@ -54,7 +56,7 @@ public class Dialog_AddPlayersByText extends AppCompatDialogFragment {
     }
 
     private String getTextFromLayout() {
-        return this.dialog_TXTI_text.getEditText().getText().toString();
+        return Objects.requireNonNull(this.dialog_TXTI_text.getEditText()).getText().toString();
     }
 
     @Override

@@ -15,7 +15,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.idan.teamusup.services.LocaleHelper;
 import com.idan.teamusup.R;
 import com.idan.teamusup.data.Constants;
-import com.idan.teamusup.data.Generator;
+import com.idan.teamusup.services.Generator;
 import com.idan.teamusup.logic.GameServiceImpl;
 import com.idan.teamusup.logic.MyRandom;
 import com.idan.teamusup.logic.PlayerServiceImpl;
@@ -30,7 +30,6 @@ import com.idan.teamusup.services.MyLocation;
 import com.idan.teamusup.logic.Validator;
 import com.idan.teamusup.logic.interfaces.InstanceService;
 
-import java.util.Arrays;
 import java.util.List;
 
 
@@ -131,10 +130,11 @@ public class Activity_DataLoading extends AppCompatActivity {
                         Toast.LENGTH_SHORT).show();
                 this.userInstance.getAttributes().put(Constants.isNew.name(), false);
             } else {
-                Toast.makeText(
-                        this,
-                        getResources().getString(R.string.welcome_back),
-                        Toast.LENGTH_SHORT).show();
+                String text = new StringBuilder(getResources().getString(R.string.welcome_back))
+                        .append(" ")
+                        .append(this.userInstance.getName())
+                        .toString();
+                Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
             }
         } else {
             this.userInstance.getAttributes().put(Constants.isNew.name(), false);
